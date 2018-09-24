@@ -1,5 +1,3 @@
+/assets
 /node_modules
-/public
-/coverage
 /flow-typed/npm
-*.json

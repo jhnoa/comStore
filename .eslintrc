@@ -20,7 +20,7 @@
     // Flow (eslint-plugin-flowtype)
     "flowtype/delimiter-dangle": ["warn", "always-multiline"],
     "flowtype/no-dupe-keys": "error",
-    "flowtype/object-type-delimiter": ["warn", "comma"],
+    "flowtype/object-type-delimiter": ["warn", "semicolon"],
     "flowtype/semi": "warn",
     "flowtype/type-id-match": ["warn", "^[A-Z]"],
 

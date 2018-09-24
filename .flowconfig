@@ -1,13 +1,17 @@
 [ignore]
-<PROJECT_ROOT>/node_modules/react-native/.*
+# Ignore compiled code.
+<PROJECT_ROOT>/assets/.*
 
 [include]
 
 [libs]
 
-[lints]
-
 [options]
-module.name_mapper='^react-native$' -> '<PROJECT_ROOT>/node_modules/react-native-web/src'
+esproposal.class_static_fields=enable
+esproposal.class_instance_fields=enable
 
-[strict]
+module.system=haste
+module.name_mapper='^.+\.css$' -> 'CSSModuleStub'
+
+suppress_type=$FlowIssue
+suppress_comment=\\(.\\|\n\\)*\\$FlowIssue
