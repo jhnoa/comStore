@@ -1,7 +1,7 @@
 {
-  "name": "computer-store",
-  "description": "Computer Store Website built with gatsby",
+  "name": "vospay-website",
   "version": "1.0.0",
+  "private": true,
   "scripts": {
     "build": "gatsby build",
     "develop": "gatsby develop",
@@ -24,7 +24,8 @@
     "react-helmet": "^5.2.0",
     "react-native": "^0.55.3",
     "react-native-web": "^0.6.1",
-    "react-scroll-into-view": "^1.2.0"
+    "react-scroll-into-view": "^1.2.0",
+    "react-tabs": "^2.3.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -50,10 +51,5 @@
     "bracketSpacing": false,
     "singleQuote": true,
     "trailingComma": "all"
-  },
-  "jest": {
-    "verbose": true,
-    "globalSetup": "./jest/setup.js",
-    "globalTeardown": "./jest/teardown.js"
   }
 }

@@ -1,17 +1,12 @@
+// @flow
+
 import React from 'react';
-import {Link} from 'gatsby';
+import {View, Text} from 'react-native';
 
-import Layout from '../components/layout';
-
-type LayoutPage = () => typeof Layout;
-
-const IndexPage: LayoutPage = () => (
-  <Layout>
-    <h1>Hi people</h1>
-    <p>Welcome to your new Gatsby site.</p>
-    <p>Now go build something great.</p>
-    <Link to="/page-2/">Go to page 2</Link>
-  </Layout>
+const IndexPage = () => (
+  <View>
+    <Text style={{fontSize: 20}}>Hi World</Text>
+  </View>
 );
 
 export default IndexPage;

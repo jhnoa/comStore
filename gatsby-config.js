@@ -1,23 +1,24 @@
 module.exports = {
   siteMetadata: {
-    title: 'Computer Store',
+    title: 'VOSPAY',
   },
   plugins: [
     'gatsby-plugin-react-helmet',
     `gatsby-plugin-react-native-web`,
     `gatsby-plugin-react-next`,
     {
-      resolve: `gatsby-plugin-manifest`,
+      resolve: `gatsby-plugin-google-analytics`,
       options: {
-        name: 'gatsby-starter-default',
-        short_name: 'starter',
-        start_url: '/',
-        background_color: '#663399',
-        theme_color: '#663399',
-        display: 'minimal-ui',
-        icon: 'src/images/gatsby-icon.png', // This path is relative to the root of the site.
+        trackingId: 'UA-122934050-1',
+        // Puts tracking script in the head instead of the body
+        head: false,
+        // Setting this parameter is optional
+        anonymize: true,
+        // Setting this parameter is also optional
+        respectDNT: true,
+        // Avoids sending pageview hits from custom paths
+        exclude: ['/preview/**', '/do-not-track/me/too/'],
       },
     },
-    'gatsby-plugin-offline',
   ],
 };
