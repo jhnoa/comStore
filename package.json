@@ -8,7 +8,10 @@
     "format": "prettier-eslint --write \"src/**/*.js\"",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "flow",
-    "test": "yarn lint && yarn typecheck"
+    "test":
+      "yarn lint && yarn typecheck && jest --testPathPattern __tests__ --coverage",
+    "postinstall": "flow-typed install",
+    "precommit": "yarn lint && yarn typecheck"
   },
   "dependencies": {
     "babel-runtime": "^6.26.0",
