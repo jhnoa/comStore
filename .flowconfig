@@ -1,7 +1,9 @@
 [ignore]
-<PROJECT_ROOT>/node_modules/react-native/.*
+<PROJECT_ROOT>/node_modules/**
+<PROJECT_ROOT>/.cache/**
 
 [include]
+<PROJECT_ROOT>/src/**
 
 [libs]
 

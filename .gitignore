@@ -3,6 +3,7 @@
 node_modules
 flow-typed
 yarn-error.log
+coverage
 
 # Build directory
 /public

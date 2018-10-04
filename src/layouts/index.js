@@ -50,7 +50,7 @@ export default Layout;
 //       }
 //     }
 //   }
-// `
+// `;
 
 /* <Helmet
   title={'Vospay'}
