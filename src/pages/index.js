@@ -14,7 +14,7 @@ const IndexPage = () => (
         height: 1500,
       }}
     >
-      <Text style={{fontSize: 20}}>Hi World</Text>
+      <Text style={{fontSize: 20}}>Hi {process.env.pageTitle}</Text>
     </View>
   </Layout>
 );
