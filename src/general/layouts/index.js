@@ -26,17 +26,8 @@ class Layout extends React.Component<Props> {
             {name: 'keywords', content: 'loan, payment, vospay, credit'},
           ]}
         />
-        <View
-          style={{
-            flex: 1,
-            justifyContent: 'center',
-            alignItems: 'center',
-            flexDirection: 'column',
-          }}
-        >
-          {children}
-        </View>
-      </View>
+        {children}
+        
     );
   }
 }
@@ -45,13 +36,14 @@ export default Layout;
 
 let styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    display: 'flex',
     flex: 1,
     width: '100%',
     margin: 0,
     padding: 0,
     justifyContent: 'center',
     alignItems: 'center',
+    backgroundColor: 'red',
   },
 });
 
