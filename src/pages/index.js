@@ -4,27 +4,29 @@ import React from 'react';
 import {View, Text, TouchableOpacity} from 'react-native';
 import Layout from '../general/layouts/index';
 
-let menuSection = (name) => (
+let menuSection = (name, styles, children) => (
   <TouchableOpacity
-    style={{
-      flex: 1,
-      alignItems: 'center',
-      justifyContent: 'center',
-      borderWidth: 1,
-    }}
+    style={[
+      {
+        alignItems: 'center',
+        justifyContent: 'center',
+        //borderWidth: 1,
+        padding: 5,
+        paddingHorizontal: 15,
+      },
+      styles,
+    ]}
     onPress={() => {
       console.log(name);
     }}
   >
+    {children}
     <Text style={{fontSize: 20}}>{name}</Text>
   </TouchableOpacity>
 );
 
 const IndexPage = () => (
   <Layout title={'Home'}>
-    <View style={{flex: 1, justifyContent: 'flex-start'}}>
-      <Text style={{fontSize: 20}}>Ha</Text>
-    </View>
     <View
       style={{
         flexDirection: 'row',
@@ -36,6 +38,7 @@ const IndexPage = () => (
       }}
     >
       {menuSection('Home')}
+      {menuSection('', {flex: 1})}
       {menuSection('Simulation')}
       {menuSection('About Us')}
       {menuSection('Catalog')}
