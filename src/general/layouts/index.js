@@ -27,7 +27,7 @@ class Layout extends React.Component<Props> {
           ]}
         />
         {children}
-        
+      </View>
     );
   }
 }
