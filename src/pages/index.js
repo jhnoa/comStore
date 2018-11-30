@@ -1,13 +1,14 @@
 // @flow
 
 import React from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, Image} from 'react-native';
 import Layout from '../general/layouts/index';
 
 let menuSection = (name, styles, children) => (
   <TouchableOpacity
     style={[
       {
+        flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
         //borderWidth: 1,
@@ -37,7 +38,15 @@ const IndexPage = () => (
         backgroundColor: 'blue',
       }}
     >
-      {menuSection('Home')}
+      {menuSection(
+        '',
+        {},
+        <Image
+          resizeMode="contain"
+          style={{height: 20, width: 40}}
+          source={require('../assets/picture/google.png')}
+        />,
+      )}
       {menuSection('', {flex: 1})}
       {menuSection('Simulation')}
       {menuSection('About Us')}
