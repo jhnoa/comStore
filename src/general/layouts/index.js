@@ -2,9 +2,10 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
-import {View, StyleSheet} from 'react-native';
-
+import {View, StyleSheet, Dimensions} from 'react-native';
 import './index.css';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 type Props = {
   children: React$Node,
@@ -36,12 +37,13 @@ export default Layout;
 
 let styles = StyleSheet.create({
   container: {
-    position: 'absolute',
+    // position: 'absolute',
     flex: 1,
-    width: '100%',
-    height: '100%',
+    width: windowWidth,
+    height: windowHeight,
     margin: 0,
     padding: 0,
+    paddingTop: 75,
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: 'red',
