@@ -1,37 +1,23 @@
 // @flow
 
 import React from 'react';
-import {View, Text, TouchableOpacity, Image, Button} from 'react-native';
+import {
+  View,
+  Text,
+  TouchableOpacity,
+  Image,
+  Button,
+  Dimensions,
+} from 'react-native';
 import Layout from '../general/layouts/index';
 import Carousel from 'nuka-carousel';
+import Footer from '../general/coreUI/footer';
+import Header from '../general/coreUI/header';
 
+const windowSize = Dimensions.get('window').width;
 const IndexPage = () => (
   <Layout title={'Home'}>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        // height: '100%',
-        backgroundColor: 'blue',
-      }}
-    >
-      {menuSection(
-        '',
-        {},
-        <Image
-          resizeMode="contain"
-          style={{height: 20, width: 40}}
-          source={require('../assets/picture/google.png')}
-        />,
-      )}
-      {menuSection('', {flex: 1})}
-      {menuSection('Simulation')}
-      {menuSection('Catalog')}
-      {menuSection('About Us')}
-    </View>
+    <Header />
     <Carousel
       style={{flex: 1, paddingTop: 10}}
       // slideWidth={0.9}
@@ -109,21 +95,9 @@ const IndexPage = () => (
         style={{height: 150, width: 280}}
         source={require('../assets/picture/google.png')}
       />
-      <button style={{width: '10%', marginBottom: 10}}>Wham</button>
+      <Button title="wham" />
     </View>
-    <View
-      style={{
-        flex: 1,
-        flexDirection: 'row',
-        width: '100%',
-        alignItems: 'center',
-        justifyContent: 'center',
-        backgroundColor: 'silver',
-      }}
-    >
-      <Text style={{fontSize: 20}}>Welldamnson production</Text>
-    </View>
-    <View style={{flex: 1}} />
+    <Footer />
   </Layout>
 );
 
