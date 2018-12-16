@@ -9,74 +9,96 @@ import {
   Button,
   StyleSheet,
   Dimensions,
+  TextInput,
 } from 'react-native';
 import Layout from '../general/layouts/index';
-import Footer from '../general/coreUI/footer';
-import Header from '../general/coreUI/header';
 
 const windowSize = Dimensions.get('window').width;
 
 const LoginPage = () => (
-  <Layout title={'Home'}>
-    {/* header */}
-    <Header />
+  <Layout title={'Home'} noPadding>
+    <View
+      style={{
+        flex: 0.2,
+        height: 200,
+        marginBottom: 5,
+        justifyContent: 'center',
+        alignItems: 'center',
+      }}
+    >
+      <Text style={styles.H1}>Login</Text>
+    </View>
 
     <View
       style={{
-        flex: 1,
-        background: 'grey',
-        width: '95%',
-        marginBottom: 5,
-        marginTop: 10,
-        flexDirection: 'column',
-        justifyContent: 'flex-end',
+        height: 200,
+        flexWrap: 'wrap',
+        justifyContent: 'flex-start',
         alignItems: 'center',
-        padding: 10,
       }}
     >
-      {/* <View style={{flex: 1}}>
-        <Text style={{fontSize: 30}}>Description about Simulation</Text>
-      </View> */}
-      <View style={{flexWrap: 'wrap'}}>
-        <Image
-          resizeMode="contain"
-          style={styles.image}
-          source={require('../assets/picture/google.png')}
+      {/* Email */}
+      <View
+        style={{
+          flex: 0.5,
+          flexDirection: 'row',
+        }}
+      >
+        <TextInput style={styles.textBox} placeholder="Masukan Email Anda" />
+      </View>
+      {/* password */}
+      <View
+        style={{
+          flex: 0.5,
+          flexDirection: 'row',
+        }}
+      >
+        <TextInput
+          style={styles.textBox}
+          secureTextEntry
+          placeholder={'Masukan Password'}
         />
       </View>
-      <View>
-        <Button title="Simulate" />
+      {/* login submit */}
+      <View
+        style={{
+          flex: 0.5,
+          flexDirection: 'row',
+          justifyContent: 'center',
+          alignItems: 'center',
+        }}
+      >
+        <Button title="Login" onPress={() => {}} />
       </View>
     </View>
-    <View
-      style={{
-        flex: 1,
-        background: 'purple',
-        width: '95%',
-        marginTop: 5,
-        marginBottom: 10,
-        padding: 10,
-        justifyContent: 'flex-end',
-        alignItems: 'center',
-      }}
-    >
-      <Image
-        resizeMode="contain"
-        style={styles.image}
-        source={require('../assets/picture/google.png')}
-      />
-      <Button title="wham" />
-    </View>
-
-    <Footer />
   </Layout>
 );
 
 export default LoginPage;
 
 let styles = StyleSheet.create({
+  H1: {
+    fontSize: 40,
+    fontFamily: 'Gill Sans',
+  },
+  H3: {
+    fontSize: 20,
+    marginRight: 10,
+    fontFamily: 'Gill Sans',
+  },
   image: {
     width: windowSize / 5,
     height: windowSize / 10,
+  },
+  textBox: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    textAlign: 'center',
+    height: 40,
+    width: 300,
+    borderColor: 'black',
+    borderWidth: 2,
+    // placeholderTextColor: 'white',
+    marginHorizontal: 20,
   },
 });
