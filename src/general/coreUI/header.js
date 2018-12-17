@@ -44,6 +44,7 @@ let headerMenu = {
     menuSection('About Us', {}, null, () => {
       console.log('YOU SEE NOTHING');
     }),
+    menuSection('Log Out'),
   ],
   unauthenticated: [
     menuSection(
@@ -56,6 +57,10 @@ let headerMenu = {
       />,
     ),
     menuSection('', {flex: 1}),
+    menuSection('Catalog'),
+    menuSection('About Us'),
+    menuSection('Login'),
+    menuSection('Register'),
   ],
 };
 

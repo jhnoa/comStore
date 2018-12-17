@@ -97,7 +97,7 @@ class IndexPage extends React.Component {
             style={{height: 150, width: 280}}
             source={require('../assets/picture/google.png')}
           />
-          <Button title="wham" onPress={() => {}} />
+          <Button title="Catalog" onPress={() => {}} />
         </View>
         <Footer />
       </Layout>
