@@ -46,7 +46,7 @@ class ItemFrag extends React.Component {
           <Image
             resizeMode="contain"
             style={{flex: 1}}
-            source={require('../assets/picture/google.png')}
+            source={require('../../assets/picture/google.png')}
           />
         </View>
         {/* dropdown kiri end */}

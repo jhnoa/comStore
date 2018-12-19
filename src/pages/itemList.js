@@ -17,7 +17,14 @@ import Header from '../general/coreUI/header';
 import Category from '../constant/catbarang';
 
 const windowSize = Dimensions.get('window').width;
-class ProductPage extends React.Component {
+
+type Props = {};
+type State = {
+  sortBy: string,
+  category: string,
+  brand: string,
+};
+class ProductPage extends React.Component<Props, State> {
   state = {sortBy: '', category: '', brand: ''};
   render() {
     return (

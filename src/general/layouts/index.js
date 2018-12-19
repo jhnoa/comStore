@@ -8,13 +8,18 @@ const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 type Props = {
-  width: Number,
-  height: Number,
+  noPadding: boolean,
   children: React$Node,
   title?: string,
 };
+type State = {
+  width: number,
+  height: number,
+  paddingTop: number,
+  paddingBottom: number,
+};
 
-class Layout extends React.Component<Props> {
+class Layout extends React.Component<Props, State> {
   state = {
     width: windowWidth,
     height: windowHeight,
