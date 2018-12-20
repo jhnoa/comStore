@@ -5,6 +5,6 @@ import {navigateTo} from 'gatsby-link';
 let logout = async () => {
   await removeStorage('Authorization');
   await removeStorage('AuthorizationTime');
-  navigateTo('/');
+  return true;
 };
 export default logout;

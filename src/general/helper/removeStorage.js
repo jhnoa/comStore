@@ -7,7 +7,9 @@ let removeStorage = async (key: string) => {
     await AsyncStorage.removeItem(key);
   } catch (error) {
     // Error saving data
+    return false;
   }
+  return true;
 };
 
 export default removeStorage;

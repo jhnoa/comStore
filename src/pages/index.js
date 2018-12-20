@@ -9,23 +9,33 @@ import Header from '../general/coreUI/header';
 import Login from '../general/coreUI/login';
 import Reg from '../general/coreUI/register';
 import Modal from 'modal-enhanced-react-native-web';
-
+import isAuthenticated from '../general/helper/auth/auth';
 const windowSize = Dimensions.get('window').width;
 class IndexPage extends React.Component {
   state = {
     loginModal: false,
     regModal: false,
+    isLoggedIn: false,
   };
+  async componentDidMount() {
+    let isLoggedIn = await isAuthenticated();
+    this.setState({isLoggedIn});
+  }
   render() {
+    let {isLoggedIn} = this.state;
+    console.log(isLoggedIn);
     return (
       <Layout title={'Home'}>
         <Header
-          isLogin={false}
+          isLogin={isLoggedIn}
           onLoginPressed={() => {
             this.setState({loginModal: true});
           }}
           onRegPressed={() => {
             this.setState({regModal: true});
+          }}
+          onLogoutPressed={() => {
+            this.setState({isLoggedIn: false});
           }}
         />
         <Carousel
@@ -67,7 +77,9 @@ class IndexPage extends React.Component {
           isVisible={this.state.loginModal}
           onBackdropPress={() => this.setState({loginModal: false})}
         >
-          <Login />
+          <Login
+            success={() => this.setState({loginModal: false, isLoggedIn: true})}
+          />
         </Modal>
         {/* register modal */}
         <Modal

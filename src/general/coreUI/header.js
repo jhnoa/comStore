@@ -1,6 +1,6 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
-
+import Logout from '../helper/auth/logout';
 let menuSection = (name, styles, children, onPress) => {
   let defaultFunction = () => {
     console.log(name);
@@ -27,11 +27,17 @@ let menuSection = (name, styles, children, onPress) => {
   );
 };
 
-class HeaderPart extends React.Component {
+type Props = {
+  onLoginPressed: Function,
+  onRegPressed: Function,
+  isLogin?: boolean,
+};
+
+class HeaderPart extends React.Component<Props> {
   state = {
     onLoginPressed: this.props.onLoginPressed,
     onRegPressed: this.props.onRegPressed,
-    login: this.props.isLogin === true ? 'authenticated' : 'unauthenticated',
+    isLogin: this.props.isLogin,
   };
   headerMenu = {
     authenticated: [
@@ -50,7 +56,11 @@ class HeaderPart extends React.Component {
       menuSection('About Us', {}, null, () => {
         console.log('YOU SEE NOTHING');
       }),
-      menuSection('Log Out'),
+      menuSection('Log Out', {}, null, () => {
+        if (Logout()) {
+          this.props.onLogoutPressed();
+        }
+      }),
     ],
     unauthenticated: [
       menuSection(
@@ -69,7 +79,12 @@ class HeaderPart extends React.Component {
       menuSection('Register', {}, null, this.props.onRegPressed),
     ],
   };
+  componentWillReceiveProps(nextProps) {
+    console.log(nextProps);
+    this.setState((state) => ({...nextProps}));
+  }
   render() {
+    console.log(this.state);
     return (
       <View
         style={{
@@ -87,7 +102,11 @@ class HeaderPart extends React.Component {
           backgroundColor: 'blue',
         }}
       >
-        {this.headerMenu[this.state.login]}
+        {
+          this.headerMenu[
+            this.state.isLogin === true ? 'authenticated' : 'unauthenticated'
+          ]
+        }
       </View>
     );
   }

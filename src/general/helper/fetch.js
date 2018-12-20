@@ -14,16 +14,24 @@ let makeParams = async (method?: string, data?: Object): RequestOptions => {
 
   if (now - AuthorizationTime < oneMonth) {
     let Authorization = await getStorage('Authorization');
-    header['Authorization'] = Authorization;
+    header = {...header, Authorization};
   }
-  if (method === 'PATCH' || method === 'PUT' || method === 'POST') {
-    params['headers'] = {
+  params = {
+    ...params,
+    headers: {
       ...header,
-      'Content-Type': 'application/json; charset=utf-8',
+    },
+  };
+  if (method === 'PATCH' || method === 'PUT' || method === 'POST') {
+    params = {
+      ...params,
+      headers: {
+        ...params.headers,
+        'Content-Type': 'application/json; charset=utf-8',
+      },
     };
     params['body'] = JSON.stringify(data);
   }
-
   return params;
 };
 

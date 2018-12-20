@@ -9,6 +9,7 @@ let getStorage = async (key: string) => {
       return value;
     }
   } catch (error) {
+    return false;
     // Error retrieving data
   }
 };

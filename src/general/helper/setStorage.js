@@ -7,7 +7,9 @@ let setStorage = async (key: string, value: string) => {
     await AsyncStorage.setItem(key, value);
   } catch (error) {
     // Error saving data
+    return false;
   }
+  return true;
 };
 
 export default setStorage;
