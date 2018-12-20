@@ -8,6 +8,7 @@ let config: Config = {
   registerURL: 'http://localhost:3030/registration',
   catalogURL: 'http://localhost:3030/item-list',
   userProfileURL: 'http://localhost:3030/user-profile',
+  simulasiURL: 'http://localhost:3030/simulasi',
 };
 
 export default config;
