@@ -15,7 +15,6 @@ type Props = {
 };
 type State = {
   width: number,
-  height: number,
   paddingTop: number,
   paddingBottom: number,
 };
@@ -23,13 +22,13 @@ type State = {
 class Layout extends React.Component<Props, State> {
   state = {
     width: windowWidth,
-    height: windowHeight,
+    // height: windowHeight,
     paddingTop: this.props.noPadding === true ? 0 : 60,
     paddingBottom: this.props.noPadding === true ? 0 : 30,
   };
   handler = (dims: DimensionsHandlerProps) => {
-    let {width, height} = dims.window;
-    this.setState({width, height});
+    let {width} = dims.window;
+    this.setState({width});
   };
   componentDidMount() {
     Dimensions.addEventListener('change', this.handler);
@@ -44,11 +43,9 @@ class Layout extends React.Component<Props, State> {
     let pageTitle = this.props.title
       ? `${this.props.title} - ${config.companyName}`
       : config.companyName;
-    let {width, height, paddingTop, paddingBottom} = this.state;
+    let {width, paddingTop, paddingBottom} = this.state;
     return (
-      <View
-        style={[styles.container, {height, width, paddingTop, paddingBottom}]}
-      >
+      <View style={[styles.container, {width, paddingTop, paddingBottom}]}>
         <Helmet
           title={pageTitle}
           meta={[
