@@ -4,20 +4,28 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  Image,
-  Button,
   StyleSheet,
   Dimensions,
   TextInput,
+  Button,
 } from 'react-native';
-import Layout from '../general/layouts/index';
+import {H1, H3} from '../../constant/fontsize';
 
 const windowSize = Dimensions.get('window').width;
 
-const RegisterPage = () => (
-  <Layout title={'Home'} noPadding>
-    <View style={{flex: 0.2, marginBottom: 25}}>
+let RegisterPage = () => (
+  <View
+    style={{
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      borderRadius: 30,
+      backgroundColor: 'grey',
+      width: 500,
+      height: 500,
+    }}
+  >
+    <View style={{marginBottom: 30}}>
       <Text style={styles.H1}>Daftarkan diri anda sekarang</Text>
     </View>
 
@@ -26,7 +34,7 @@ const RegisterPage = () => (
         height: 300,
         flexWrap: 'wrap',
         justifyContent: 'flex-start',
-        alignItems: 'baseline',
+        alignItems: 'center',
       }}
     >
       {/* Email */}
@@ -82,22 +90,17 @@ const RegisterPage = () => (
       >
         <TextInput style={styles.textBox} placeholder="Masukan No. HP Anda" />
       </View>
+
+      <Button title="register" onPress={() => {}} />
     </View>
-  </Layout>
+  </View>
 );
 
 export default RegisterPage;
 
 let styles = StyleSheet.create({
-  H1: {
-    fontSize: 40,
-    fontFamily: 'Gill Sans',
-  },
-  H3: {
-    fontSize: 20,
-    marginRight: 10,
-    fontFamily: 'Gill Sans',
-  },
+  H1,
+  H3,
   image: {
     width: windowSize / 5,
     height: windowSize / 10,
@@ -111,6 +114,6 @@ let styles = StyleSheet.create({
     borderColor: 'black',
     borderWidth: 2,
     // placeholderTextColor: 'white',
-    marginHorizontal: 20,
+    marginHorizontal: 30,
   },
 });

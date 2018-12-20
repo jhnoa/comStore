@@ -1,77 +1,94 @@
 // @flow
 
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  StyleSheet,
-  Image,
-  Button,
-  Dimensions,
-  Picker,
-} from 'react-native';
+import {View, Text, StyleSheet, Image, Button, Dimensions} from 'react-native';
 import Layout from '../general/layouts/index';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
+import Login from '../general/coreUI/login';
+import Reg from '../general/coreUI/register';
+import Modal from 'modal-enhanced-react-native-web';
 
 const windowSize = Dimensions.get('window').width;
 class Sandbox extends React.Component {
-  state = {sortBy: '', category: '', brand: ''};
+  state = {
+    loginModal: false,
+    regModal: false,
+  };
   render() {
+    console.log(this.state);
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          height: 100,
-          width: 500,
-          borderWidth: 5,
-          borderColor: 'black',
-        }}
-      >
-        {/* dropdown kiri start */}
+      <Layout title={'Home'}>
+        <Header
+          isLogin={false}
+          onLoginPressed={() => {
+            this.setState({loginModal: true});
+          }}
+          onRegPressed={() => {
+            this.setState({regModal: true});
+          }}
+        />
+        {/* login modal */}
+        <Modal
+          isVisible={this.state.loginModal}
+          onBackdropPress={() => this.setState({loginModal: false})}
+        >
+          <Login />
+        </Modal>
+        {/* register modal */}
+        <Modal
+          isVisible={this.state.regModal}
+          onBackdropPress={() => this.setState({regModal: false})}
+        >
+          <Reg />
+        </Modal>
         <View
           style={{
-            flex: 0.2,
-            padding: 20,
+            flex: 1,
+            backgroundColor: 'grey',
+            width: '95%',
+            marginBottom: 5,
+            marginTop: 10,
+            flexDirection: 'column',
             justifyContent: 'center',
-            backgroundColor: 'white',
-            height: 90,
+            alignItems: 'center',
+            padding: 10,
+          }}
+        >
+          {/* <View style={{flex: 1}}>
+        <Text style={{fontSize: 30}}>Description about Simulation</Text>
+      </View> */}
+          <View>
+            <Image
+              resizeMode="contain"
+              style={{height: 150, width: 280}}
+              source={require('../assets/picture/google.png')}
+            />
+          </View>
+          <View>
+            <Button title="Simulate" onPress={() => {}} />
+          </View>
+        </View>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'purple',
+            width: '95%',
+            marginTop: 5,
+            marginBottom: 10,
+            justifyContent: 'flex-end',
+            alignItems: 'center',
           }}
         >
           <Image
             resizeMode="contain"
-            style={{flex: 1}}
+            style={{height: 150, width: 280}}
             source={require('../assets/picture/google.png')}
           />
+          <Button title="Catalog" onPress={() => {}} />
         </View>
-        {/* dropdown kiri end */}
-        {/* itemlist kanan start */}
-        <View
-          style={{
-            flex: 0.8,
-            padding: 20,
-            borderLeftWidth: 5,
-            justifyContent: 'center',
-            backgroundColor: 'beige',
-            height: 90,
-          }}
-        >
-          <View style={{flexDirection: 'row'}}>
-            <Text>Nama Barang : </Text>
-            <Text>This is Placeholder</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>Brand Barang : </Text>
-            <Text>This is Placeholder</Text>
-          </View>
-          <View style={{flexDirection: 'row'}}>
-            <Text>Price : </Text>
-            <Text>This is Placeholder</Text>
-          </View>
-        </View>
-        {/* itemlist kanan end */}
-      </View>
+        <Footer />
+      </Layout>
     );
   }
 }

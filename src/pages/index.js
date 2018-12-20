@@ -1,25 +1,33 @@
 // @flow
 
 import React from 'react';
-import {
-  View,
-  Text,
-  TouchableOpacity,
-  Image,
-  Button,
-  Dimensions,
-} from 'react-native';
+import {View, Text, Image, Button, Dimensions} from 'react-native';
 import Layout from '../general/layouts/index';
 import Carousel from 'nuka-carousel';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
+import Login from '../general/coreUI/login';
+import Reg from '../general/coreUI/register';
+import Modal from 'modal-enhanced-react-native-web';
 
 const windowSize = Dimensions.get('window').width;
 class IndexPage extends React.Component {
+  state = {
+    loginModal: false,
+    regModal: false,
+  };
   render() {
     return (
       <Layout title={'Home'}>
-        <Header isLogin={true} />
+        <Header
+          isLogin={false}
+          onLoginPressed={() => {
+            this.setState({loginModal: true});
+          }}
+          onRegPressed={() => {
+            this.setState({regModal: true});
+          }}
+        />
         <Carousel
           style={{flex: 1, paddingTop: 10}}
           // slideWidth={0.9}
@@ -54,6 +62,20 @@ class IndexPage extends React.Component {
             src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"
           />
         </Carousel>
+        {/* login modal */}
+        <Modal
+          isVisible={this.state.loginModal}
+          onBackdropPress={() => this.setState({loginModal: false})}
+        >
+          <Login />
+        </Modal>
+        {/* register modal */}
+        <Modal
+          isVisible={this.state.regModal}
+          onBackdropPress={() => this.setState({regModal: false})}
+        >
+          <Reg />
+        </Modal>
         <View
           style={{
             flex: 1,

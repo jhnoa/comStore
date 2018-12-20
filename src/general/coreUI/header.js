@@ -27,48 +27,48 @@ let menuSection = (name, styles, children, onPress) => {
   );
 };
 
-let headerMenu = {
-  authenticated: [
-    menuSection(
-      '',
-      {},
-      <Image
-        resizeMode="contain"
-        style={{height: 20, width: 40}}
-        source={require('../../assets/picture/google.png')}
-      />,
-    ),
-    menuSection('', {flex: 1}),
-    menuSection('Simulation'),
-    menuSection('Catalog'),
-    menuSection('About Us', {}, null, () => {
-      console.log('YOU SEE NOTHING');
-    }),
-    menuSection('Log Out'),
-  ],
-  unauthenticated: [
-    menuSection(
-      '',
-      {},
-      <Image
-        resizeMode="contain"
-        style={{height: 20, width: 40}}
-        source={require('../../assets/picture/google.png')}
-      />,
-    ),
-    menuSection('', {flex: 1}),
-    menuSection('Catalog'),
-    menuSection('About Us'),
-    menuSection('Login'),
-    menuSection('Register'),
-  ],
-};
-
 class HeaderPart extends React.Component {
   state = {
+    onLoginPressed: this.props.onLoginPressed,
+    onRegPressed: this.props.onRegPressed,
     login: this.props.isLogin === true ? 'authenticated' : 'unauthenticated',
   };
-
+  headerMenu = {
+    authenticated: [
+      menuSection(
+        '',
+        {},
+        <Image
+          resizeMode="contain"
+          style={{height: 20, width: 40}}
+          source={require('../../assets/picture/google.png')}
+        />,
+      ),
+      menuSection('', {flex: 1}),
+      menuSection('Simulation'),
+      menuSection('Catalog'),
+      menuSection('About Us', {}, null, () => {
+        console.log('YOU SEE NOTHING');
+      }),
+      menuSection('Log Out'),
+    ],
+    unauthenticated: [
+      menuSection(
+        '',
+        {},
+        <Image
+          resizeMode="contain"
+          style={{height: 20, width: 40}}
+          source={require('../../assets/picture/google.png')}
+        />,
+      ),
+      menuSection('', {flex: 1}),
+      menuSection('Catalog'),
+      menuSection('About Us'),
+      menuSection('Login', {}, null, this.props.onLoginPressed),
+      menuSection('Register', {}, null, this.props.onRegPressed),
+    ],
+  };
   render() {
     return (
       <View
@@ -87,7 +87,7 @@ class HeaderPart extends React.Component {
           backgroundColor: 'blue',
         }}
       >
-        {headerMenu[this.state.login]}
+        {this.headerMenu[this.state.login]}
       </View>
     );
   }

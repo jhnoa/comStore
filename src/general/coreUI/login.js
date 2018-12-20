@@ -4,24 +4,32 @@ import React from 'react';
 import {
   View,
   Text,
-  TouchableOpacity,
-  Image,
   Button,
   StyleSheet,
   Dimensions,
   TextInput,
 } from 'react-native';
-import Layout from '../general/layouts/index';
+import {H1, H3} from '../../constant/fontsize';
 
 const windowSize = Dimensions.get('window').width;
 
-const LoginPage = () => (
-  <Layout title={'Home'} noPadding>
+let LoginPage = () => (
+  <View
+    style={{
+      justifyContent: 'center',
+      alignItems: 'center',
+      alignSelf: 'center',
+      borderRadius: 30,
+      backgroundColor: 'grey',
+      width: 400,
+      height: 350,
+    }}
+  >
     <View
       style={{
-        flex: 0.2,
-        height: 200,
+        height: 100,
         marginBottom: 5,
+        backgroundColor: 'grey',
         justifyContent: 'center',
         alignItems: 'center',
       }}
@@ -71,21 +79,14 @@ const LoginPage = () => (
         <Button title="Login" onPress={() => {}} />
       </View>
     </View>
-  </Layout>
+  </View>
 );
 
 export default LoginPage;
 
 let styles = StyleSheet.create({
-  H1: {
-    fontSize: 40,
-    fontFamily: 'Gill Sans',
-  },
-  H3: {
-    fontSize: 20,
-    marginRight: 10,
-    fontFamily: 'Gill Sans',
-  },
+  H1,
+  H3,
   image: {
     width: windowSize / 5,
     height: windowSize / 10,
