@@ -4,11 +4,12 @@ import React from 'react';
 import Helmet from 'react-helmet';
 import {View, StyleSheet, Dimensions} from 'react-native';
 import './index.css';
+import config from '../../constant/config';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
 type Props = {
-  noPadding: boolean,
+  noPadding?: boolean,
   children: React$Node,
   title?: string,
 };
@@ -26,7 +27,7 @@ class Layout extends React.Component<Props, State> {
     paddingTop: this.props.noPadding === true ? 0 : 60,
     paddingBottom: this.props.noPadding === true ? 0 : 30,
   };
-  handler = (dims) => {
+  handler = (dims: DimensionsHandlerProps) => {
     let {width, height} = dims.window;
     this.setState({width, height});
   };
@@ -41,8 +42,8 @@ class Layout extends React.Component<Props, State> {
   render() {
     let {children} = this.props;
     let pageTitle = this.props.title
-      ? `${this.props.title} - ${String(process.env.pageTitle)}`
-      : String(process.env.pageTitle);
+      ? `${this.props.title} - ${config.companyName}`
+      : config.companyName;
     let {width, height, paddingTop, paddingBottom} = this.state;
     return (
       <View
@@ -75,17 +76,6 @@ let styles = StyleSheet.create({
     backgroundColor: 'red',
   },
 });
-
-// // $FlowFixMe
-// export const query = graphql`
-//   query SiteTitleQuery {
-//     site {
-//       siteMetadata {
-//         title
-//       }
-//     }
-//   }
-// `;
 
 /*   link={[{rel: 'shortcut icon', type: 'image/png', href: `${favicon}`}]}
  */

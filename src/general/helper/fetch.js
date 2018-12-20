@@ -27,7 +27,11 @@ let makeParams = async (method?: string, data?: Object): RequestOptions => {
   return params;
 };
 
-let myFetch = async (url: string, method?: string, data?: Object) => {
+let myFetch = async (
+  url: string,
+  method?: string,
+  data?: Object,
+): Promise<*> => {
   let params: RequestOptions = await makeParams(method, data);
   return fetch(url, params).then((response) => response.json()); // parses response to JSON
 };
@@ -47,5 +51,5 @@ export {makeParams};
 // METHOD: PATCH
 // PARAMS: (URL, 'PATCH', {data})
 
-// METHOD: REMOVE
+// METHOD: DELETE
 // PARAMS: (URL, 'DELETE')
