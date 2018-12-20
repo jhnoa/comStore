@@ -1,21 +1,26 @@
 // @flow
 
 import React from 'react';
-import {isLoggedIn} from '../../backend/auth';
+import isAuthenticated from './auth/auth';
 import {navigateTo} from 'gatsby-link';
 
 function connect(BaseComponent: *) {
-  class Authenticated extends React.Component<*> {
-    componentDidMount() {
-      let authenticated = isLoggedIn();
+  class Authenticated extends React.Component<*, {visible: boolean}> {
+    state = {visible: false};
+    async componentDidMount() {
+      let authenticated = await isAuthenticated();
       if (!authenticated) {
-        navigateTo('/login');
+        navigateTo('/');
+      } else {
+        this.setState({visible: true});
       }
     }
 
     render() {
       let props = this.props;
-      return <BaseComponent {...props} />;
+      let component =
+        this.state.visible === true ? <BaseComponent {...props} /> : [];
+      return component;
     }
   }
 
