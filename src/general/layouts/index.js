@@ -3,7 +3,7 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import {View, StyleSheet, Dimensions} from 'react-native';
-import './index.css';
+import './imp.css';
 import config from '../../constant/config';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -64,7 +64,8 @@ export default Layout;
 let styles = StyleSheet.create({
   container: {
     // position: 'absolute',
-    // flex: 1,
+    flex: 1,
+    height: '100%',
     margin: 0,
     padding: 0,
     //paddingTop: 75,

@@ -43,6 +43,7 @@ class IndexPage extends React.Component {
           // slideWidth={0.9}
           width="70%"
           heightMode={'max'}
+          disableKeyboardControls
           initialSlideHeight={600}
           wrapAround={true}
           //renderCenterLeftControls={({previousSlide}) =>(<)}
@@ -124,7 +125,7 @@ class IndexPage extends React.Component {
             marginBottom: 10,
             justifyContent: 'flex-end',
             alignItems: 'center',
-            padding:10,
+            padding: 10,
           }}
         >
           <Image
