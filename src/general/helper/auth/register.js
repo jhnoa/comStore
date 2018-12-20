@@ -12,8 +12,13 @@ type Props = {
 };
 
 let register = async (props: Props) => {
-  await fetch(config.registerURL, 'POST', {
-    ...props,
-  });
+  try {
+    await fetch(config.registerURL, 'POST', {
+      ...props,
+    });
+  } catch (e) {
+    return false;
+  }
+  return true;
 };
 export default register;

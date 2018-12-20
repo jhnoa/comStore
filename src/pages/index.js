@@ -86,7 +86,7 @@ class IndexPage extends React.Component {
           isVisible={this.state.regModal}
           onBackdropPress={() => this.setState({regModal: false})}
         >
-          <Reg />
+          <Reg success={() => this.setState({regModal: false})} />
         </Modal>
         <View
           style={{
