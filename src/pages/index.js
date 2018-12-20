@@ -11,6 +11,7 @@ import Reg from '../general/coreUI/register';
 import Modal from 'modal-enhanced-react-native-web';
 import isAuthenticated from '../general/helper/auth/auth';
 const windowSize = Dimensions.get('window').width;
+
 class IndexPage extends React.Component {
   state = {
     loginModal: false,

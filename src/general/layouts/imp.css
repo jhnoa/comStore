@@ -1,8 +1,15 @@
-html {
+html,
+body,
+#react-root {
   -ms-text-size-adjust: 100%;
   -webkit-text-size-adjust: 100%;
   /* below are Audy's tips */
   margin: 0;
   padding: 0;
   overflow-x: hidden;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
