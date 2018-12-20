@@ -124,6 +124,7 @@ class IndexPage extends React.Component {
             marginBottom: 10,
             justifyContent: 'flex-end',
             alignItems: 'center',
+            padding:10,
           }}
         >
           <Image

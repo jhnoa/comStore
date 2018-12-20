@@ -95,7 +95,7 @@ class HeaderPart extends React.Component<Props> {
           height: 50,
           zIndex: 1,
           flexDirection: 'row',
-          width: '100%',
+          flexWrap: 'wrap',
           alignItems: 'center',
           justifyContent: 'center',
           // height: '100%',
