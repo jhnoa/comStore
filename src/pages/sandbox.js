@@ -2,9 +2,10 @@
 
 import React from 'react';
 import {
+  CheckBox,
   View,
   Text,
-  TextInput,
+  ScrollView,
   StyleSheet,
   Image,
   Button,
@@ -14,18 +15,29 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
+import Capital from '../general/helper/capitalize';
+import formatCurrency from '../general/helper/numberToCurrency';
 
 const windowSize = Dimensions.get('window').width;
+
+type Item = {
+  name: string,
+  category: string,
+  brand: string,
+  price: number,
+  picture: string,
+};
 type Props = {};
 type State = {};
 
 class Sandbox extends React.Component<Props, State> {
   state = {
-    ItemName: 'AMD Ryzen 5 2600 ',
-    jester: '',
-    joker: '',
+    totalItem: {},
+    totalPrice: 0,
   };
+
   render() {
+    let {data} = this.state;
     console.log(this.state);
     return (
       <Layout>
@@ -39,48 +51,16 @@ class Sandbox extends React.Component<Props, State> {
           }}
         >
           <View style={styles.container}>
-            {/* atas */}
-            <Text style={{fontSize: 30, marginBottom: 20}}>
-              Pilih Rentang Harga PC
-            </Text>
-            {/* bawah */}
-            <View
-              style={{
-                justifyContent: 'center',
-                alignItems: 'center',
-                width: 550,
-                flexDirection: 'row',
-                padding: 10,
-              }}
-            >
-              {/* image */}
-              <View style={styles.boxrow}>
-                <View style={styles.boxcol}>
-                  {/* label */}
-                  <Text style={styles.textin}>Informasi Barang</Text>
-                  {/* ilist */}
-                  <View style={styles.boxrowv3}>
-                    <Text>
-                      Silahkan lihat penawaran kami disini apabila anda ingin
-                      memiliki PC dengan rentang harga sekitar 5-10 juta
-                    </Text>
-                  </View>
-                </View>
-                <View style={styles.boxrowv2}>
-                  <Text>
-                    Silahkan lihat penawaran kami disini apabila anda ingin
-                    memiliki PC dengan rentang harga sekitar 5-10 juta
-                  </Text>
-                </View>
+            <View style={styles.boxcol}>
+              <View style={styles.boxrowv3}>
+                <CheckBox style={{marginHorizontal: 10, marginTop: 5}} />
+                <Text>Kore</Text>
               </View>
-              {/* descbar */}
-              {/* EoBar */}
+
+              <View style={styles.boxrowv2}>
+                <Text>This is going yo be a long long text</Text>
+              </View>
             </View>
-            <Button
-              style={{paddingRight: 20, alignSelf:'flex-end'}}
-              title="Kembali"
-              onPress={() => {}}
-            />
           </View>
         </View>
         <Footer />
@@ -92,8 +72,8 @@ class Sandbox extends React.Component<Props, State> {
 export default Sandbox;
 let styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width-100,
-    height: Dimensions.get('window').height-240,
+    width: Dimensions.get('screen').width - 100,
+    height: Dimensions.get('window').height - 240,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',
@@ -106,27 +86,21 @@ let styles = StyleSheet.create({
     justifyContent: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.7)',
     width: 1000,
-    height: 300,
+    height: Dimensions.get('window').height - 420,
     alignItems: 'center',
     marginHorizontal: 20,
   },
   btn: {marginBottom: 5},
   boxrowv2: {
     flexDirection: 'row',
-    alignItems: 'baseline',
     padding: 5,
-    marginHorizontal: 10,
-    width: 355,
-    marginBottom: 10,
-    backgroundColor: 'rgba(255,255,255, 0.8)',
+    justifyContent: 'center',
   },
   boxrowv3: {
-    flex: 1,
     flexDirection: 'row',
     padding: 5,
   },
   boxcol: {
-    height: 250,
     flexDirection: 'column',
     alignItems: 'baseline',
     padding: 5,
@@ -150,5 +124,10 @@ let styles = StyleSheet.create({
     width: 150,
     alignSelf: 'center',
     margin: 5,
+  },
+  contentContainer: {
+    padding: 20,
+    alignItems: 'flex-start',
+    justifyContent: 'space-between',
   },
 });
