@@ -30,7 +30,7 @@ type Item = {
 type Props = {};
 type State = {};
 
-class Sandbox extends React.Component<Props, State> {
+class simulateManual extends React.Component<Props, State> {
   state = {
     caseStd: '',
     caseTwr: '',
@@ -166,7 +166,7 @@ class Sandbox extends React.Component<Props, State> {
   }
 }
 
-export default Sandbox;
+export default simulateManual;
 let styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width - 100,
