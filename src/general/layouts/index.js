@@ -71,7 +71,7 @@ let styles = StyleSheet.create({
     //paddingTop: 75,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: 'red',
+    // backgroundColor: 'red',
   },
 });
 

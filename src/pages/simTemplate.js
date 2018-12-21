@@ -19,7 +19,7 @@ const windowSize = Dimensions.get('window').width;
 type Props = {};
 type State = {};
 
-class Sandbox extends React.Component<Props, State> {
+class simTemp extends React.Component<Props, State> {
   state = {
     ItemName: 'AMD Ryzen 5 2600 ',
     jester: '',
@@ -55,29 +55,64 @@ class Sandbox extends React.Component<Props, State> {
             >
               {/* image */}
               <View style={styles.boxrow}>
-                <View style={styles.boxcol}>
-                  {/* label */}
-                  <Text style={styles.textin}>Informasi Barang</Text>
-                  {/* ilist */}
-                  <View style={styles.boxrowv3}>
-                    <Text>
-                      Silahkan lihat penawaran kami disini apabila anda ingin
-                      memiliki PC dengan rentang harga sekitar 5-10 juta
-                    </Text>
-                  </View>
-                </View>
+                <Image
+                  resizeMode="contain"
+                  style={styles.imej}
+                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                />
                 <View style={styles.boxrowv2}>
                   <Text>
                     Silahkan lihat penawaran kami disini apabila anda ingin
                     memiliki PC dengan rentang harga sekitar 5-10 juta
                   </Text>
                 </View>
+                <Button
+                  style={styles.btn}
+                  title="Simulate"
+                  onPress={() => {}}
+                />
               </View>
               {/* descbar */}
+              <View style={styles.boxrow}>
+                <Image
+                  resizeMode="contain"
+                  style={styles.imej}
+                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                />
+                <View style={styles.boxrowv2}>
+                  <Text>
+                    Silahkan lihat penawaran kami disini apabila anda ingin
+                    memiliki PC dengan rentang harga sekitar 10-15 juta
+                  </Text>
+                </View>
+                <Button
+                  style={styles.btn}
+                  title="Simulate"
+                  onPress={() => {}}
+                />
+              </View>
               {/* EoBar */}
+              <View style={styles.boxrow}>
+                <Image
+                  resizeMode="contain"
+                  style={styles.imej}
+                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                />
+                <View style={styles.boxrowv2}>
+                  <Text>
+                    Silahkan lihat penawaran kami disini apabila anda ingin
+                    memiliki PC dengan rentang harga diatas 15 juta
+                  </Text>
+                </View>
+                <Button
+                  style={styles.btn}
+                  title="Simulate"
+                  onPress={() => {}}
+                />
+              </View>
             </View>
             <Button
-              style={{paddingRight: 20, alignSelf:'flex-end'}}
+              style={{paddingRight: 20}}
               title="Kembali"
               onPress={() => {}}
             />
@@ -89,11 +124,10 @@ class Sandbox extends React.Component<Props, State> {
   }
 }
 
-export default Sandbox;
+export default simTemp;
 let styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width-100,
-    height: Dimensions.get('window').height-240,
+    width: 1500,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',
@@ -101,11 +135,10 @@ let styles = StyleSheet.create({
     flexDirection: 'column',
   },
   boxrow: {
-    flexDirection: 'row',
-    flexWrap: 'nowrap',
+    flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.7)',
-    width: 1000,
+    width: 400,
     height: 300,
     alignItems: 'center',
     marginHorizontal: 20,
@@ -115,30 +148,20 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'baseline',
     padding: 5,
-    marginHorizontal: 10,
     width: 355,
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255, 0.8)',
   },
-  boxrowv3: {
-    flex: 1,
-    flexDirection: 'row',
-    padding: 5,
-  },
   boxcol: {
-    height: 250,
-    flexDirection: 'column',
-    alignItems: 'baseline',
-    padding: 5,
-    marginHorizontal: 10,
-    width: 555,
-    marginBottom: 10,
-    backgroundColor: 'rgba(255,255,255, 0.8)',
+    justifyContent: 'center',
+    width: 200,
+    height: 200,
+    alignItems: 'center',
+    marginRight: 20,
   },
   textin: {
     fontSize: 20,
-    alignSelf: 'center',
-    fontWeight: 'bold',
+    width: 450,
   },
   itemLabel: {
     fontSize: 15,

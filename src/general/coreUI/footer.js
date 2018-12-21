@@ -3,7 +3,7 @@ import {View, Text, StyleSheet} from 'react-native';
 
 const FooterPart = () => (
   <View style={styles.footer}>
-    <Text style={{fontSize: 20}}>Welldamnson production</Text>
+    <Text style={{fontSize: 20}}>#Insert Copyright Here#</Text>
   </View>
 );
 
