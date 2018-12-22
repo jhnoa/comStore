@@ -28,7 +28,13 @@ type Item = {
   picture: string,
 };
 type Props = {};
-type State = {};
+type State = {
+  caseStd: string,
+  caseTwr: string,
+  checkStd: boolean,
+  totalItem: Object,
+  totalPrice: Number,
+};
 
 class simulateManual extends React.Component<Props, State> {
   state = {

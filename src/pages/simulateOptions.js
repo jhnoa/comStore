@@ -14,7 +14,7 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
-
+import Auth from '../general/helper/authMiddleware';
 const windowSize = Dimensions.get('window').width;
 type Props = {};
 type State = {};
@@ -59,8 +59,8 @@ class simChoice extends React.Component<Props, State> {
                 />
                 <View style={styles.boxrowv2}>
                   <Text>
-                    Yah pokoknya yg ini disimpan buat jatahnya si preset, ini
-                    buat yg Templated
+                    Pilih ini untuk menikmati rancangan yang telah disesuaikan
+                    dengan budget anda
                   </Text>
                 </View>
                 <Button title="Simulate" onPress={() => {}} />
@@ -74,8 +74,8 @@ class simChoice extends React.Component<Props, State> {
                 />
                 <View style={styles.boxrowv2}>
                   <Text>
-                    Yah pokoknya yg ini disimpan buat jatahnya si preset, ini
-                    buat yg Manualy Created
+                    Pilih ini untuk menentukan sendiri rancangan yang anda
+                    inginkan
                   </Text>
                 </View>
                 <Button title="Simulate" onPress={() => {}} />
@@ -89,7 +89,7 @@ class simChoice extends React.Component<Props, State> {
   }
 }
 
-export default simChoice;
+export default Auth(simChoice);
 let styles = StyleSheet.create({
   container: {
     width: 1200,

@@ -11,7 +11,7 @@ import Reg from '../coreUI/register';
 import Login from '../coreUI/login';
 import Modal from 'modal-enhanced-react-native-web';
 import isAuthenticated from '../helper/auth/auth';
-
+import {navigateTo} from 'gatsby-link';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -19,18 +19,19 @@ type Props = {
   noPadding?: boolean,
   children: React$Node,
   title?: string,
-  openLogin?: boolean,
+  isLoggedIn?: Function,
 };
 type State = {
   width: number,
   paddingTop: number,
   paddingBottom: number,
-  openLogin: boolean,
+  isLoggedIn: boolean,
+  loginModal: boolean,
+  regModal: boolean,
 };
 
 class Layout extends React.Component<Props, State> {
   state = {
-    openLogin: this.props.openLogin || false,
     width: windowWidth,
     // height: windowHeight,
     paddingTop: this.props.noPadding === true ? 0 : 60,
@@ -46,8 +47,11 @@ class Layout extends React.Component<Props, State> {
   };
   async componentDidMount() {
     Dimensions.addEventListener('change', this.handler);
-    let isLoggedIn = await isAuthenticated();
-    this.setState((state) => ({...state, isLoggedIn}));
+    let isLoggedIn: boolean = await isAuthenticated();
+    this.props.isLoggedIn && this.props.isLoggedIn();
+    this.setState((state) => {
+      return {...state, isLoggedIn};
+    });
   }
 
   componentWillUnmount() {
@@ -60,15 +64,8 @@ class Layout extends React.Component<Props, State> {
       ? `${this.props.title} - ${config.companyName}`
       : config.companyName;
     let {width, paddingTop, paddingBottom} = this.state;
-    let {isLoggedIn, openLogin, loginModal} = this.state;
-    if (!loginModal && openLogin) {
-      this.setState((state) => {
-        console.log(state);
-        return {...state, loginModal: true};
-      });
-    }
-    console.log('openLogin: ' + openLogin);
-    console.log('isLoggedIn: ' + isLoggedIn);
+    let {isLoggedIn} = this.state;
+
     return (
       <View style={[styles.container, {width, paddingTop, paddingBottom}]}>
         <Helmet
@@ -88,13 +85,14 @@ class Layout extends React.Component<Props, State> {
           }}
           onLogoutPressed={() => {
             this.setState({isLoggedIn: false});
+            navigateTo('/');
           }}
         />
         <Modal
           isVisible={this.state.loginModal}
           onBackdropPress={() => {
             console.log('backdrop pressed');
-            this.setState({loginModal: false, openLogin: false});
+            this.setState({loginModal: false});
           }}
         >
           <Login
@@ -102,7 +100,6 @@ class Layout extends React.Component<Props, State> {
               this.setState({
                 loginModal: false,
                 isLoggedIn: true,
-                openLogin: false,
               })
             }
           />

@@ -4,23 +4,27 @@ import React from 'react';
 import {View, Text, Image, Button, Dimensions} from 'react-native';
 import Layout from '../general/layouts/index';
 import Carousel from 'nuka-carousel';
-import Footer from '../general/coreUI/footer';
-import Header from '../general/coreUI/header';
-import Login from '../general/coreUI/login';
-import Reg from '../general/coreUI/register';
 import isAuthenticated from '../general/helper/auth/auth';
+import {navigateTo} from 'gatsby-link';
+
 const windowSize = Dimensions.get('window').width;
 
-class IndexPage extends React.Component {
+type Props = {};
+
+type State = {
+  isLoggedIn: boolean,
+};
+
+class IndexPage extends React.Component<Props, State> {
   state = {
-    loginModal: false,
     isLoggedIn: false,
   };
   render() {
-    let {isLoggedIn, loginModal} = this.state;
-    console.log(loginModal);
     return (
-      <Layout title={'Home'} openLogin={loginModal}>
+      <Layout
+        title={'Home'}
+        isLoggedIn={() => this.setState({isLoggedIn: true})}
+      >
         <Carousel
           style={{flex: 1, paddingTop: 10}}
           // slideWidth={0.9}
@@ -108,10 +112,10 @@ class IndexPage extends React.Component {
 
   _simulate = () => {
     if (!this.state.isLoggedIn) {
-      console.log('open Login');
-      this.setState((state) => {
-        return {...state, loginModal: true};
-      });
+      window.alert('Please Login To Continue!');
+    } else {
+      //navigate to simulate Option
+      navigateTo('simulateOptions');
     }
   };
 }
