@@ -20,6 +20,7 @@ class IndexPage extends React.Component<Props, State> {
     isLoggedIn: false,
   };
   render() {
+    console.log(this.state);
     return (
       <Layout
         title={'Home'}
@@ -104,7 +105,12 @@ class IndexPage extends React.Component<Props, State> {
             style={{height: 150, width: 280}}
             source={require('../assets/picture/google.png')}
           />
-          <Button title="Catalog" onPress={() => {}} />
+          <Button
+            title="Catalog"
+            onPress={() => {
+              navigateTo('itemList');
+            }}
+          />
         </View>
       </Layout>
     );

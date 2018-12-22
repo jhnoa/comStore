@@ -48,7 +48,9 @@ class Layout extends React.Component<Props, State> {
   async componentDidMount() {
     Dimensions.addEventListener('change', this.handler);
     let isLoggedIn: boolean = await isAuthenticated();
-    this.props.isLoggedIn && this.props.isLoggedIn();
+    if (isLoggedIn === true) {
+      this.props.isLoggedIn && this.props.isLoggedIn();
+    }
     this.setState((state) => {
       return {...state, isLoggedIn};
     });

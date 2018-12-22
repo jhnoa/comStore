@@ -1,10 +1,14 @@
 import React from 'react';
 import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Logout from '../helper/auth/logout';
+import {navigateTo} from 'gatsby-link';
 let menuSection = (name, styles, children, onPress) => {
   let defaultFunction = () => {
-    console.log(name);
+    console.log('name');
   };
+  console.log(name);
+  console.log(typeof onPress);
+  let func = onPress || defaultFunction;
   return (
     <TouchableOpacity
       key={Math.random()}
@@ -19,7 +23,7 @@ let menuSection = (name, styles, children, onPress) => {
         },
         styles,
       ]}
-      onPress={onPress || defaultFunction}
+      onPress={() => func()}
     >
       {children}
       <Text style={{fontSize: 20}}>{name}</Text>
@@ -50,10 +54,17 @@ class HeaderPart extends React.Component<Props> {
           style={{height: 20, width: 40}}
           source={require('../../assets/picture/google.png')}
         />,
+        () => {
+          navigateTo('/');
+        },
       ),
       menuSection('', {flex: 1}),
-      menuSection('Simulation'),
-      menuSection('Catalog'),
+      menuSection('Simulation', {}, null, () => {
+        navigateTo('simulateOptions');
+      }),
+      menuSection('Catalog', {}, null, () => {
+        navigateTo('itemList');
+      }),
       menuSection('Log Out', {}, null, () => {
         if (Logout()) {
           this.props.onLogoutPressed();
@@ -69,9 +80,14 @@ class HeaderPart extends React.Component<Props> {
           style={{height: 20, width: 40}}
           source={require('../../assets/picture/google.png')}
         />,
+        () => {
+          navigateTo('/');
+        },
       ),
       menuSection('', {flex: 1}),
-      menuSection('Catalog'),
+      menuSection('Catalog', {}, null, () => {
+        navigateTo('itemList');
+      }),
       menuSection('Login', {}, null, this.props.onLoginPressed),
       menuSection('Register', {}, null, this.props.onRegPressed),
     ],

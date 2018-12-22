@@ -15,7 +15,7 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
-
+import Auth from '../general/helper/authMiddleware';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -170,11 +170,11 @@ class simChoice extends React.Component<Props, State> {
   }
 }
 
-export default simChoice;
+export default Auth(simChoice);
 let styles = StyleSheet.create({
   container: {
     width: windowWidth - 100,
-    height: 800,
+    height: windowHeight - 90,
     padding: 20,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',
@@ -186,7 +186,7 @@ let styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     width: '60%',
-    height: 650,
+    height: windowHeight - 90 - 60 - 60,
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255, 0.8)',
   },
@@ -213,7 +213,10 @@ let styles = StyleSheet.create({
   },
   boxcol: {
     width: '95%',
-    height: 400,
+    // height: 400,
+    flexGrow: 1,
+    flex: 1,
+    flexShrink: 0,
     borderRadius: 5,
     borderWidth: 1,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
@@ -233,7 +236,7 @@ let styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     width: '39%',
-    height: 650,
+    height: windowHeight - 90 - 60 - 60,
     marginLeft: '1%',
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255, 0.8)',

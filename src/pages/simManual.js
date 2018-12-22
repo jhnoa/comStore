@@ -211,7 +211,7 @@ class simulateManual extends React.Component<Props, State> {
                 }
                 onPress={() => {
                   navigateTo({
-                    pathname: '/',
+                    pathname: 'simMnStep2',
                     state: {
                       checkStd: this.state.checkStd,
                       case:
