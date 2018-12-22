@@ -8,37 +8,19 @@ import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Login from '../general/coreUI/login';
 import Reg from '../general/coreUI/register';
-import Modal from 'modal-enhanced-react-native-web';
 import isAuthenticated from '../general/helper/auth/auth';
 const windowSize = Dimensions.get('window').width;
 
 class IndexPage extends React.Component {
   state = {
     loginModal: false,
-    regModal: false,
     isLoggedIn: false,
   };
-  async componentDidMount() {
-    let isLoggedIn = await isAuthenticated();
-    this.setState({isLoggedIn});
-  }
   render() {
-    let {isLoggedIn} = this.state;
-    console.log(isLoggedIn);
+    let {isLoggedIn, loginModal} = this.state;
+    console.log(loginModal);
     return (
-      <Layout title={'Home'}>
-        <Header
-          isLogin={isLoggedIn}
-          onLoginPressed={() => {
-            this.setState({loginModal: true});
-          }}
-          onRegPressed={() => {
-            this.setState({regModal: true});
-          }}
-          onLogoutPressed={() => {
-            this.setState({isLoggedIn: false});
-          }}
-        />
+      <Layout title={'Home'} openLogin={loginModal}>
         <Carousel
           style={{flex: 1, paddingTop: 10}}
           // slideWidth={0.9}
@@ -74,22 +56,6 @@ class IndexPage extends React.Component {
             src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"
           />
         </Carousel>
-        {/* login modal */}
-        <Modal
-          isVisible={this.state.loginModal}
-          onBackdropPress={() => this.setState({loginModal: false})}
-        >
-          <Login
-            success={() => this.setState({loginModal: false, isLoggedIn: true})}
-          />
-        </Modal>
-        {/* register modal */}
-        <Modal
-          isVisible={this.state.regModal}
-          onBackdropPress={() => this.setState({regModal: false})}
-        >
-          <Reg success={() => this.setState({regModal: false})} />
-        </Modal>
         <View
           style={{
             flex: 1,
@@ -114,7 +80,7 @@ class IndexPage extends React.Component {
             />
           </View>
           <View>
-            <Button title="Simulate" onPress={() => {}} />
+            <Button title="Simulate" onPress={() => this._simulate()} />
           </View>
         </View>
         <View
@@ -136,10 +102,18 @@ class IndexPage extends React.Component {
           />
           <Button title="Catalog" onPress={() => {}} />
         </View>
-        <Footer />
       </Layout>
     );
   }
+
+  _simulate = () => {
+    if (!this.state.isLoggedIn) {
+      console.log('open Login');
+      this.setState((state) => {
+        return {...state, loginModal: true};
+      });
+    }
+  };
 }
 
 export default IndexPage;
