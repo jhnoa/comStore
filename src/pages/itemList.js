@@ -28,8 +28,7 @@ class ProductPage extends React.Component<Props, State> {
   state = {sortBy: '', category: '', brand: ''};
   render() {
     return (
-      <Layout title={'Home'}>
-        <Header isLogin={true} />
+      <Layout title={'Catalog'}>
         <View
           style={{
             width: '100%',
@@ -113,7 +112,6 @@ class ProductPage extends React.Component<Props, State> {
             </View>
           </View>
         </View>
-        <Footer />
       </Layout>
     );
   }

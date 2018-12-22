@@ -44,7 +44,6 @@ class Sandbox extends React.Component<Props, State> {
     console.log(this.state);
     return (
       <Layout>
-        <Header />
         <View
           style={{
             width: '100%',
@@ -160,7 +159,6 @@ class Sandbox extends React.Component<Props, State> {
             </View>
           </View>
         </View>
-        <Footer />
       </Layout>
     );
   }

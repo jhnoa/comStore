@@ -18,8 +18,7 @@ class Profile extends React.Component {
   componentDidMount() {}
   render() {
     return (
-      <Layout>
-        <Header />
+      <Layout title={'Profile'}>
         <View
           style={{
             width: '100%',
@@ -57,7 +56,6 @@ class Profile extends React.Component {
             </View>
           </View>
         </View>
-        <Footer />
       </Layout>
     );
   }

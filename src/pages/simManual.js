@@ -43,8 +43,7 @@ class simulateManual extends React.Component<Props, State> {
     let {data} = this.state;
     console.log(this.state);
     return (
-      <Layout>
-        <Header />
+      <Layout title={'Pilih Casing'}>
         <View
           style={{
             width: '100%',
@@ -160,7 +159,6 @@ class simulateManual extends React.Component<Props, State> {
             </View>
           </View>
         </View>
-        <Footer />
       </Layout>
     );
   }
@@ -170,7 +168,7 @@ export default simulateManual;
 let styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width - 100,
-    height: Dimensions.get('window').height - 240,
+    height: 600,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',

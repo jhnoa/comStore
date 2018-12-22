@@ -28,8 +28,7 @@ class simTemp extends React.Component<Props, State> {
   render() {
     console.log(this.state);
     return (
-      <Layout>
-        <Header />
+      <Layout title={'Pilih Range Budget'}>
         <View
           style={{
             width: '100%',
@@ -118,7 +117,6 @@ class simTemp extends React.Component<Props, State> {
             />
           </View>
         </View>
-        <Footer />
       </Layout>
     );
   }

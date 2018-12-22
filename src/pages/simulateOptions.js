@@ -28,8 +28,7 @@ class simChoice extends React.Component<Props, State> {
   render() {
     console.log(this.state);
     return (
-      <Layout>
-        <Header />
+      <Layout title={'Simulasi'}>
         <View
           style={{
             width: '100%',
@@ -85,7 +84,6 @@ class simChoice extends React.Component<Props, State> {
             </View>
           </View>
         </View>
-        <Footer />
       </Layout>
     );
   }
