@@ -7,8 +7,8 @@ type Props = {
   pengiriman: string,
 };
 
-let editProfile = async (props: Props) => {
+let patchToPayment = async (props: Props) => {
   let url = config.simulasiURL;
   return await fetch(url, 'PATCH', props);
 };
-export default editProfile;
+export default patchToPayment;

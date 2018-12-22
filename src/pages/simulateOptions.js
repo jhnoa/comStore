@@ -15,16 +15,12 @@ import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Auth from '../general/helper/authMiddleware';
+import {navigateTo} from 'gatsby-link';
 const windowSize = Dimensions.get('window').width;
 type Props = {};
 type State = {};
 
 class simChoice extends React.Component<Props, State> {
-  state = {
-    ItemName: 'AMD Ryzen 5 2600 ',
-    jester: '',
-    joker: '',
-  };
   render() {
     console.log(this.state);
     return (
@@ -63,7 +59,12 @@ class simChoice extends React.Component<Props, State> {
                     dengan budget anda
                   </Text>
                 </View>
-                <Button title="Simulate" onPress={() => {}} />
+                <Button
+                  title="Simulate"
+                  onPress={() => {
+                    navigateTo('simTemplate');
+                  }}
+                />
               </View>
               {/* descbar */}
               <View style={styles.boxrow}>
@@ -78,7 +79,12 @@ class simChoice extends React.Component<Props, State> {
                     inginkan
                   </Text>
                 </View>
-                <Button title="Simulate" onPress={() => {}} />
+                <Button
+                  title="Simulate"
+                  onPress={() => {
+                    navigateTo('simManual');
+                  }}
+                />
               </View>
               {/* EoBar */}
             </View>

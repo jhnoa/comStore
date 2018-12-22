@@ -17,7 +17,8 @@ import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
-
+import {navigateTo} from 'gatsby-link';
+import getClientListItem from '../general/helper/catalog/getClientListItem';
 const windowSize = Dimensions.get('window').width;
 
 type Item = {
@@ -29,24 +30,39 @@ type Item = {
 };
 type Props = {};
 type State = {
-  caseStd: string,
-  caseTwr: string,
+  caseStd: number,
+  caseTwr: number,
   checkStd: boolean,
-  totalItem: Object,
-  totalPrice: Number,
+  casingData: {all: Array<Object>, tower: Array<Object>},
 };
 
 class simulateManual extends React.Component<Props, State> {
   state = {
-    caseStd: '',
-    caseTwr: '',
+    caseStd: -1,
+    caseTwr: -1,
     checkStd: true,
-    totalItem: {},
-    totalPrice: 0,
+    casingData: {all: [], tower: []},
   };
-
+  async componentDidMount() {
+    let listItem = await getClientListItem({$limit: 9999});
+    let casing = {
+      all: [],
+      tower: [],
+    };
+    for (let index = 0; index < listItem.length; index++) {
+      const part = listItem[index];
+      if (part.category.startsWith('casing')) {
+        if (part.casing.startsWith('all')) {
+          casing.all.push(part);
+        } else if (part.casing.startsWith('tower')) {
+          casing.tower.push(part);
+        }
+      }
+    }
+    this.setState({casingData: casing});
+  }
   render() {
-    let {data} = this.state;
+    let {casingData} = this.state;
     console.log(this.state);
     return (
       <Layout title={'Pilih Casing'}>
@@ -101,10 +117,18 @@ class simulateManual extends React.Component<Props, State> {
                     onValueChange={(itemValue, itemIndex) =>
                       this.setState({caseStd: itemValue})
                     }
+                    enabled={this.state.checkStd === true ? true : false}
                   >
-                    <Picker.Item label="Pilih Casing Standard" value="Bd0" />
-                    <Picker.Item label="Dell" value="Bd1" />
-                    <Picker.Item label="HP" value="Bd2" />
+                    <Picker.Item label="Pilih Casing Standard" value={-1} />
+                    {casingData.all.map((casing) => {
+                      return (
+                        <Picker.Item
+                          key={casing.itemId}
+                          label={casing.name}
+                          value={casing.itemId}
+                        />
+                      );
+                    })}
                   </Picker>
                   {/* EoBar */}
                 </View>
@@ -148,10 +172,18 @@ class simulateManual extends React.Component<Props, State> {
                     onValueChange={(itemValue, itemIndex) =>
                       this.setState({caseTwr: itemValue})
                     }
+                    enabled={this.state.checkStd === true ? false : true}
                   >
-                    <Picker.Item label="Pilih Casing Tower" value="Bd0" />
-                    <Picker.Item label="Asus RoG" value="Bd1" />
-                    <Picker.Item label="Corsair" value="Bd2" />
+                    <Picker.Item label="Pilih Casing Tower" value={-1} />
+                    {casingData.tower.map((casing) => {
+                      return (
+                        <Picker.Item
+                          key={casing.itemId}
+                          label={casing.name}
+                          value={casing.itemId}
+                        />
+                      );
+                    })}
                   </Picker>
                   {/* EoBar */}
                 </View>
@@ -160,8 +192,36 @@ class simulateManual extends React.Component<Props, State> {
             {/* EoPartition */}
             {/* Buttonbelow */}
             <View style={styles.boxrowv2}>
-              <Button title="Kembali" onPress={() => {}} />
-              <Button title="Lanjutkan" onPress={() => {}} />
+              <Button
+                title="Kembali"
+                onPress={() => {
+                  window.history.back();
+                }}
+              />
+              <Button
+                title="Lanjutkan"
+                disabled={
+                  this.state.checkStd === true
+                    ? this.state.caseStd >= 0
+                      ? false
+                      : true
+                    : this.state.caseTwr >= 0
+                      ? false
+                      : true
+                }
+                onPress={() => {
+                  navigateTo({
+                    pathname: '/',
+                    state: {
+                      checkStd: this.state.checkStd,
+                      case:
+                        this.state.checkStd === true
+                          ? this.state.caseStd
+                          : this.state.caseTwr,
+                    },
+                  });
+                }}
+              />
             </View>
           </View>
         </View>

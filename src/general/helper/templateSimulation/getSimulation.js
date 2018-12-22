@@ -3,8 +3,8 @@
 import fetch from '../fetch';
 import config from '../../../constant/config';
 
-let getSimulation = async () => {
-  let url = config.simulasiURL;
+let clearAllParts = async () => {
+  let url = config.templateSimulationURL;
   return await fetch(url);
 };
-export default getSimulation;
+export default clearAllParts;

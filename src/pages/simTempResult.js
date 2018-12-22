@@ -16,6 +16,8 @@ import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
+import Auth from '../general/helper/authMiddleware';
+import {navigateTo} from 'gatsby-link';
 
 const windowSize = Dimensions.get('window').width;
 
@@ -134,7 +136,7 @@ let defaultData = [
 
 class simchoiceresult extends React.Component<Props, State> {
   state = {
-    data: this.props.data || defaultData,
+    data: this.props.location.state,
     totalItem: {},
     totalPrice: 0,
   };
@@ -151,7 +153,10 @@ class simchoiceresult extends React.Component<Props, State> {
   }
   render() {
     let {data} = this.state;
-    console.log(this.state);
+    if (data === undefined) {
+      navigateTo('simTemplate');
+    }
+    console.log(this.props);
     return (
       <Layout title={'Hasil Rekomendasi'}>
         <View
@@ -257,7 +262,9 @@ class simchoiceresult extends React.Component<Props, State> {
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Kembali"
-                onPress={() => {}}
+                onPress={() => {
+                  window.history.back();
+                }}
               />
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
@@ -277,7 +284,7 @@ class simchoiceresult extends React.Component<Props, State> {
   }
 }
 
-export default simchoiceresult;
+export default Auth(simchoiceresult);
 let styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width - 100,

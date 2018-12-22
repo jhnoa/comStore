@@ -14,19 +14,27 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
-
+import Auth from '../general/helper/authMiddleware';
+import getSimulation from '../general/helper/templateSimulation/getSimulation';
+import {navigateTo} from 'gatsby-link';
 const windowSize = Dimensions.get('window').width;
+
 type Props = {};
-type State = {};
+type State = {data: Array<Object>};
 
 class simTemp extends React.Component<Props, State> {
   state = {
-    ItemName: 'AMD Ryzen 5 2600 ',
-    jester: '',
-    joker: '',
+    data: [],
   };
+
+  async componentDidMount() {
+    let data = await getSimulation();
+    this.setState({data});
+  }
+
   render() {
     console.log(this.state);
+
     return (
       <Layout title={'Pilih Range Budget'}>
         <View
@@ -53,67 +61,36 @@ class simTemp extends React.Component<Props, State> {
               }}
             >
               {/* image */}
-              <View style={styles.boxrow}>
-                <Image
-                  resizeMode="contain"
-                  style={styles.imej}
-                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
-                />
-                <View style={styles.boxrowv2}>
-                  <Text>
-                    Silahkan lihat penawaran kami disini apabila anda ingin
-                    memiliki PC dengan rentang harga sekitar 5-10 juta
-                  </Text>
+              {this.state.data.map((element) => (
+                <View style={styles.boxrow}>
+                  <Image
+                    resizeMode="contain"
+                    style={styles.imej}
+                    source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                  />
+                  <View style={styles.boxrowv2}>
+                    <Text>{element.description}</Text>
+                  </View>
+                  <Button
+                    style={styles.btn}
+                    title="Simulate"
+                    onPress={() => {
+                      navigateTo({
+                        pathname: 'simTempResult',
+                        state: element.parts,
+                      });
+                    }}
+                  />
                 </View>
-                <Button
-                  style={styles.btn}
-                  title="Simulate"
-                  onPress={() => {}}
-                />
-              </View>
+              ))}
               {/* descbar */}
-              <View style={styles.boxrow}>
-                <Image
-                  resizeMode="contain"
-                  style={styles.imej}
-                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
-                />
-                <View style={styles.boxrowv2}>
-                  <Text>
-                    Silahkan lihat penawaran kami disini apabila anda ingin
-                    memiliki PC dengan rentang harga sekitar 10-15 juta
-                  </Text>
-                </View>
-                <Button
-                  style={styles.btn}
-                  title="Simulate"
-                  onPress={() => {}}
-                />
-              </View>
-              {/* EoBar */}
-              <View style={styles.boxrow}>
-                <Image
-                  resizeMode="contain"
-                  style={styles.imej}
-                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
-                />
-                <View style={styles.boxrowv2}>
-                  <Text>
-                    Silahkan lihat penawaran kami disini apabila anda ingin
-                    memiliki PC dengan rentang harga diatas 15 juta
-                  </Text>
-                </View>
-                <Button
-                  style={styles.btn}
-                  title="Simulate"
-                  onPress={() => {}}
-                />
-              </View>
             </View>
             <Button
               style={{paddingRight: 20}}
               title="Kembali"
-              onPress={() => {}}
+              onPress={() => {
+                window.history.back();
+              }}
             />
           </View>
         </View>
@@ -122,7 +99,7 @@ class simTemp extends React.Component<Props, State> {
   }
 }
 
-export default simTemp;
+export default Auth(simTemp);
 let styles = StyleSheet.create({
   container: {
     width: 1500,
