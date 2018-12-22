@@ -41,6 +41,7 @@ class ProductPage extends React.Component<Props, State> {
             <View
               style={{
                 flexDirection: 'row',
+                flex: 1,
                 width: windowSize * 0.85,
                 borderWidth: 1,
               }}
@@ -48,11 +49,16 @@ class ProductPage extends React.Component<Props, State> {
               {/* dropdown kiri start */}
               <View
                 style={{
-                  flex: 0.2,
+                  // flex: 2,
                   padding: 20,
                   justifyContent: 'center',
                   backgroundColor: 'white',
-                  height: Dimensions.get('window').height - 320,
+                  width: 300,
+                  // height: Dimensions.get('window').height - 320,
+                  // flex: 1,
+                  // flexGrow: 1,
+                  // flexShrink: 1,
+                  // marginVertical: 40,
                 }}
               >
                 <View style={styles.dropdownbody}>
@@ -100,10 +106,14 @@ class ProductPage extends React.Component<Props, State> {
               {/* itemlist kanan start */}
               <ScrollView
                 style={{
-                  flex: 0.8,
+                  flex: 8,
                   padding: 20,
                   backgroundColor: 'beige',
-                  height: Dimensions.get('window').height - 320,
+                  // height: Dimensions.get('window').height - 320,
+                  // flex: 1,
+                  flexGrow: 1,
+                  flexShrink: 0,
+                  // marginVertical: 40,
                 }}
               >
                 <Button title="itemlist 2 row" />
@@ -120,8 +130,8 @@ class ProductPage extends React.Component<Props, State> {
 export default ProductPage;
 let styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width - 100,
-    height: Dimensions.get('window').height - 240,
+    width: Dimensions.get('window').width - 100,
+    height: Dimensions.get('window').height - 90 - 40,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'center',
