@@ -16,8 +16,6 @@ import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
-import Auth from '../general/helper/authMiddleware';
-import {navigateTo} from 'gatsby-link';
 
 const windowSize = Dimensions.get('window').width;
 
@@ -134,9 +132,9 @@ let defaultData = [
   },
 ];
 
-class simchoiceresult extends React.Component<Props, State> {
+class shoppingcart extends React.Component<Props, State> {
   state = {
-    data: this.props.location.state,
+    data: this.props.data || defaultData,
     totalItem: {},
     totalPrice: 0,
   };
@@ -153,10 +151,7 @@ class simchoiceresult extends React.Component<Props, State> {
   }
   render() {
     let {data} = this.state;
-    if (data === undefined) {
-      navigateTo('simTemplate');
-    }
-    console.log(this.props);
+    console.log(this.state);
     return (
       <Layout title={'Hasil Rekomendasi'}>
         <View
@@ -169,9 +164,7 @@ class simchoiceresult extends React.Component<Props, State> {
         >
           <View style={styles.container}>
             {/* atas */}
-            <Text style={{fontSize: 30, marginBottom: 20}}>
-              Hasil Rekomendasi Berdasarkan Harga
-            </Text>
+            <Text style={{fontSize: 30, marginBottom: 20}}>Shopping Cart</Text>
             {/* bawah */}
             <View
               style={{
@@ -183,7 +176,7 @@ class simchoiceresult extends React.Component<Props, State> {
               }}
             >
               {/* image */}
-              <View style={styles.boxrow}>
+              <View style={styles.boxcolv2}>
                 <View style={styles.boxcol}>
                   {/* label */}
                   <Text style={styles.textin}>Informasi Barang</Text>
@@ -225,25 +218,14 @@ class simchoiceresult extends React.Component<Props, State> {
                 <View
                   style={{
                     flexDirection: 'column',
-                    alignItems: 'baseline',
+                    alignItems: 'center',
                     padding: 5,
                     marginHorizontal: 10,
-                    width: 355,
+                    width: 555,
                     marginBottom: 10,
                     backgroundColor: 'rgba(255,255,255, 0.8)',
                   }}
                 >
-                  <Text>
-                    Jumlah Item:{'\n'}
-                    {Object.keys(this.state.totalItem).map((label) => {
-                      return (
-                        Capital(label) +
-                        ': ' +
-                        this.state.totalItem[label] +
-                        '\n'
-                      );
-                    })}
-                  </Text>
                   <Text syle={{fontSize: 20, fontWeight: '900'}}>
                     <b>Total Harga: {formatCurrency(this.state.totalPrice)}</b>
                   </Text>
@@ -262,15 +244,9 @@ class simchoiceresult extends React.Component<Props, State> {
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Kembali"
-                onPress={() => {
-                  window.history.back();
-                }}
-              />
-              <Button
-                style={{paddingRight: 20, alignSelf: 'flex-end'}}
-                title="Menuju Simulasi Manual"
                 onPress={() => {}}
               />
+
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Checkout"
@@ -284,11 +260,11 @@ class simchoiceresult extends React.Component<Props, State> {
   }
 }
 
-export default Auth(simchoiceresult);
+export default shoppingcart;
 let styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width - 100,
-    height: 700,
+    height: 750,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',
@@ -320,8 +296,18 @@ let styles = StyleSheet.create({
     flexDirection: 'row',
     padding: 5,
   },
+  boxcolv2: {
+    flexDirection: 'column',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.7)',
+    width: 1000,
+    height: Dimensions.get('window').height - 420,
+    alignItems: 'center',
+    marginHorizontal: 20,
+  },
   boxcol: {
-    height: Dimensions.get('window').height - 480,
+    height: 400,
     flexDirection: 'column',
     alignItems: 'baseline',
     padding: 5,

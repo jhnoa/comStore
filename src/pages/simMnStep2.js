@@ -104,7 +104,7 @@ class simChoice extends React.Component<Props, State> {
                   />
                 </View>
                 {/* as you can see it's a button there */}
-                <View style={{height:20}}/>
+                <Text> </Text>
                 {/* spacer */}
                 <View style={styles.boxcol}>
                   <Text>To Be Filled with Item Info & price</Text>

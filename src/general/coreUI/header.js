@@ -54,9 +54,6 @@ class HeaderPart extends React.Component<Props> {
       menuSection('', {flex: 1}),
       menuSection('Simulation'),
       menuSection('Catalog'),
-      menuSection('About Us', {}, null, () => {
-        console.log('YOU SEE NOTHING');
-      }),
       menuSection('Log Out', {}, null, () => {
         if (Logout()) {
           this.props.onLogoutPressed();
@@ -75,7 +72,6 @@ class HeaderPart extends React.Component<Props> {
       ),
       menuSection('', {flex: 1}),
       menuSection('Catalog'),
-      menuSection('About Us'),
       menuSection('Login', {}, null, this.props.onLoginPressed),
       menuSection('Register', {}, null, this.props.onRegPressed),
     ],
