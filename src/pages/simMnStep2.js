@@ -6,6 +6,7 @@ import {
   Text,
   Picker,
   CheckBox,
+  ScrollView,
   StyleSheet,
   Image,
   Button,
@@ -15,13 +16,15 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
-import FragmentItemList from '../general/coreUI/fragmentitemlist';
+import FragmentItemList from '../general/coreUI/fragmentsimulist';
 import Auth from '../general/helper/authMiddleware';
 import getClientListItem from '../general/helper/catalog/getClientListItem';
 import getSimulation from '../general/helper/simulation/getSimulation';
 import addParts from '../general/helper/simulation/addParts';
 import clearAllParts from '../general/helper/simulation/clearAllParts';
 import {navigateTo} from 'gatsby-link';
+import Capital from '../general/helper/capitalize';
+import formatCurrency from '../general/helper/numberToCurrency';
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -29,7 +32,7 @@ const windowHeight = Dimensions.get('window').height;
 type Props = {};
 type State = {};
 
-class simChoice extends React.Component<Props, State> {
+class simulateNo2 extends React.Component<Props, State> {
   state = {
     simulationPartsData: [],
     dataFromAPI: [],
@@ -222,7 +225,10 @@ class simChoice extends React.Component<Props, State> {
   _clearAll = async () => {
     let [casing] = this.state.simulationPartsData;
     await clearAllParts();
-    let simulationPartsData = await addParts({itemId: casing.itemId, jumlah: 1});
+    let simulationPartsData = await addParts({
+      itemId: casing.itemId,
+      jumlah: 1,
+    });
 
     this.setState({simulationPartsData: simulationPartsData.parts});
   };
@@ -252,7 +258,7 @@ class simChoice extends React.Component<Props, State> {
               >
                 <Picker.Item label="Pilih Kategori" value={-1} />
                 {this.state.categoryList.map((category, index) => (
-                  <Picker.Item label={category} value={index} />
+                  <Picker.Item label={category} value={index} key={index} />
                 ))}
 
                 {/* <Picker.Item label="TIKI" value="TIKI" /> */}
@@ -265,7 +271,7 @@ class simChoice extends React.Component<Props, State> {
               >
                 <Picker.Item label="Pilih Brand" value={-1} />
                 {this.state.brandList.map((brand, index) => (
-                  <Picker.Item label={brand} value={index} />
+                  <Picker.Item label={brand} value={index} key={index} />
                 ))}
               </Picker>
               <Picker
@@ -281,7 +287,7 @@ class simChoice extends React.Component<Props, State> {
               >
                 <Picker.Item label="Pilih Nama Barang" value={-1} />
                 {this.state.nameList.map((name, index) => (
-                  <Picker.Item label={name} value={index} />
+                  <Picker.Item label={name} value={index} key={index} />
                 ))}
               </Picker>
               <Button
@@ -293,16 +299,14 @@ class simChoice extends React.Component<Props, State> {
             {/* picker atas ends here */}
             {/* box bawah untuk simulate */}
             <View style={styles.boxrowv4}>
-              <View style={styles.boxrow}>
+              <ScrollView style={styles.boxrow}>
                 {this.state.simulationPartsData.map((element, index, array) => {
                   console.log(array);
                   return (
                     <FragmentItemList item={{...element}} key={element._id} />
                   );
                 })}
-
-                <Text>To Be Filled With Boxes</Text>
-              </View>
+              </ScrollView>
               {/* kiri ends here */}
               <View style={styles.boxcolv3}>
                 <View
@@ -310,7 +314,9 @@ class simChoice extends React.Component<Props, State> {
                     width: '95%',
                     borderRadius: 3,
                     borderWidth: 1,
-                    marginVertical: 1,
+                    // marginVertical:10,
+                    marginTop: 10,
+                    marginBottom: 20,
                     backgroundColor: 'rgba(52, 52, 52, 0.2)',
                   }}
                 >
@@ -321,15 +327,30 @@ class simChoice extends React.Component<Props, State> {
                   />
                 </View>
                 {/* as you can see it's a button there */}
-                <Text> </Text>
                 {/* spacer */}
-                <View style={styles.boxcol}>
-                  <Text>To Be Filled with Item Info & price</Text>
-                  <Text>To Be Filled with Item Info & price</Text>
-                  <Text>To Be Filled with Item Info & price</Text>
-                  <Text>To Be Filled with Item Info & price</Text>
-                  <Button title={'Test Filling'} />
-                </View>
+                <ScrollView style={styles.boxcol}>
+                  {this.state.simulationPartsData.map(
+                    (element, index, array) => {
+                      console.log(element);
+                      return (
+                        <View style={styles.boxrowv3} key={index}>
+                          <Text
+                            style={{
+                              width: '70%',
+                              borderRightWidth: 1,
+                              borderColor: 'black',
+                            }}
+                          >
+                            - {Capital(element.category)}{' '}
+                            {Capital(element.brand)} {Capital(element.name)}
+                          </Text>
+                          <Text>{formatCurrency(element.price)}</Text>
+                        </View>
+                      );
+                    },
+                  )}
+                </ScrollView>
+
                 {/* mini cart end */}
                 <View
                   style={{
@@ -387,7 +408,7 @@ class simChoice extends React.Component<Props, State> {
   }
 }
 
-export default Auth(simChoice);
+export default Auth(simulateNo2);
 let styles = StyleSheet.create({
   container: {
     width: windowWidth - 100,
@@ -401,7 +422,8 @@ let styles = StyleSheet.create({
   boxrow: {
     flexDirection: 'column',
     borderRadius: 5,
-    padding: 5,
+    paddingHorizontal: 20,
+    paddingVertical: 10,
     width: '60%',
     height: windowHeight - 90 - 60 - 60,
     marginBottom: 10,
@@ -419,6 +441,7 @@ let styles = StyleSheet.create({
   },
   boxrowv3: {
     flexDirection: 'row',
+    paddingHorizontal: 10,
     justifyContent: 'space-between',
   },
   boxrowv4: {
