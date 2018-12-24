@@ -20,6 +20,7 @@ import Auth from '../general/helper/authMiddleware';
 import getClientListItem from '../general/helper/catalog/getClientListItem';
 import getSimulation from '../general/helper/simulation/getSimulation';
 import addParts from '../general/helper/simulation/addParts';
+import clearAllParts from '../general/helper/simulation/clearAllParts';
 import {navigateTo} from 'gatsby-link';
 
 const windowWidth = Dimensions.get('window').width;
@@ -43,6 +44,7 @@ class simChoice extends React.Component<Props, State> {
     selectedNameData: [],
     selectedBrandData: [],
     allPartsData: [],
+    selectedItemId: -1,
   };
 
   _arrayIncludeString = (arr, str) => {
@@ -144,6 +146,7 @@ class simChoice extends React.Component<Props, State> {
       categoryList,
       casingType,
       allPartsData: selectedData,
+      selectedItemId: -1,
     });
   }
 
@@ -173,6 +176,7 @@ class simChoice extends React.Component<Props, State> {
       brandList: brands || [],
       nameList: [],
       selectedBrandData,
+      selectedItemId: -1,
     });
   };
 
@@ -202,11 +206,25 @@ class simChoice extends React.Component<Props, State> {
       selectedName: -1,
       nameList,
       selectedNameData,
+      selectedItemId: -1,
     });
   };
 
-  _patchSimulationParts = async (itemId, jumlah = 1) => {
-    let simulationPartsData = await addParts({itemId, jumlah});
+  _patchSimulationParts = async () => {
+    let {selectedItemId: itemId} = this.state;
+    if (parseInt(itemId, 10) !== -1) {
+      let simulationPartsData = await addParts({itemId, jumlah: 1});
+
+      this.setState({simulationPartsData: simulationPartsData.parts});
+    }
+  };
+
+  _clearAll = async () => {
+    let [casing] = this.state.simulationPartsData;
+    await clearAllParts();
+    let simulationPartsData = await addParts({itemId: casing.itemId, jumlah: 1});
+
+    this.setState({simulationPartsData: simulationPartsData.parts});
   };
 
   render() {
@@ -254,21 +272,33 @@ class simChoice extends React.Component<Props, State> {
                 selectedValue={this.state.selectedName}
                 style={styles.dropdown}
                 enabled={this.state.nameList.length > 0}
-                onValueChange={(value) => this.setState({selectedName: value})}
+                onValueChange={(value) =>
+                  this.setState({
+                    selectedName: value,
+                    selectedItemId: this.state.selectedNameData[value].itemId,
+                  })
+                }
               >
                 <Picker.Item label="Pilih Nama Barang" value={-1} />
                 {this.state.nameList.map((name, index) => (
                   <Picker.Item label={name} value={index} />
                 ))}
               </Picker>
-              <Button style={{alignSelf: 'center'}} title={'sort'} />
+              <Button
+                style={{alignSelf: 'center'}}
+                title={'pilih'}
+                onPress={this._patchSimulationParts}
+              />
             </View>
             {/* picker atas ends here */}
             {/* box bawah untuk simulate */}
             <View style={styles.boxrowv4}>
               <View style={styles.boxrow}>
-                {this.state.simulationPartsData.map((element) => {
-                  return <FragmentItemList item={{...element}}/>;
+                {this.state.simulationPartsData.map((element, index, array) => {
+                  console.log(array);
+                  return (
+                    <FragmentItemList item={{...element}} key={element._id} />
+                  );
                 })}
 
                 <Text>To Be Filled With Boxes</Text>
@@ -287,7 +317,7 @@ class simChoice extends React.Component<Props, State> {
                   <Button
                     buttonStyle={{borderRadius: 10}}
                     title={'Clear All'}
-                    onPress={() => {}}
+                    onPress={this._clearAll}
                   />
                 </View>
                 {/* as you can see it's a button there */}
@@ -447,7 +477,7 @@ let styles = StyleSheet.create({
     margin: 5,
   },
   dropdown: {
-    flex: 1,
+    width: '30%',
     margin: 10,
   },
 });
