@@ -15,7 +15,13 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
+import FragmentItemList from '../general/coreUI/fragmentitemlist';
 import Auth from '../general/helper/authMiddleware';
+import getClientListItem from '../general/helper/catalog/getClientListItem';
+import getSimulation from '../general/helper/simulation/getSimulation';
+import addParts from '../general/helper/simulation/addParts';
+import {navigateTo} from 'gatsby-link';
+
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -24,12 +30,186 @@ type State = {};
 
 class simChoice extends React.Component<Props, State> {
   state = {
-    ItemName: 'AMD Ryzen 5 2600 ',
-    checkStd: true,
-    kurir: '',
+    simulationPartsData: [],
+    dataFromAPI: [],
+    casingType: '',
+    dataForCasing: {},
+    categoryList: [],
+    brandList: [],
+    nameList: [],
+    selectedCategory: -1,
+    selectedBrand: -1,
+    selectedName: -1,
+    selectedNameData: [],
+    selectedBrandData: [],
+    allPartsData: [],
   };
+
+  _arrayIncludeString = (arr, str) => {
+    for (let index = 0; index < arr.length; index++) {
+      const element = arr[index];
+      if (str.toLowerCase() === element.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  };
+
+  async componentDidMount() {
+    let Simulation = await getSimulation();
+    let APIData = await getClientListItem();
+    let includes = this._arrayIncludeString;
+    //APIData.sort(this._casingSort);
+    let casingType = Simulation.parts[0].casing;
+    if (!casingType) {
+      navigateTo('simManual');
+    }
+    let dataForCasing = {all: [], tower: [], none: []};
+    let categoryForCasing = {all: [], tower: [], none: []};
+    for (let index = 0; index < APIData.length; index++) {
+      const part = APIData[index];
+      if (part.casing.startsWith('all')) {
+        dataForCasing.all.push(part);
+        if (!includes(categoryForCasing.all, part.category)) {
+          categoryForCasing.all.push(part.category);
+        }
+      } else if (part.casing.startsWith('tower')) {
+        dataForCasing.tower.push(part);
+        if (!includes(categoryForCasing.tower, part.category)) {
+          categoryForCasing.tower.push(part.category);
+        }
+      } else {
+        dataForCasing.none.push(part);
+        if (!includes(categoryForCasing.none, part.category)) {
+          categoryForCasing.none.push(part.category);
+        }
+      }
+    }
+    dataForCasing.all.sort();
+    dataForCasing.tower.sort();
+    dataForCasing.none.sort();
+    categoryForCasing.all.sort();
+    categoryForCasing.tower.sort();
+    let categoryList = [];
+    let selectedData = [];
+
+    if (casingType.startsWith('tower')) {
+      let keys = ['all', 'tower', 'none'];
+      for (let index = 0; index < keys.length; index++) {
+        const arr = categoryForCasing[keys[index]];
+        selectedData.push(...dataForCasing[keys[index]]);
+        for (let i = 0; i < arr.length; i++) {
+          const element = arr[i];
+          if (!includes(categoryList, element)) {
+            categoryList.push(element);
+          }
+        }
+      }
+    } else if (casingType.startsWith('all')) {
+      let keys = ['all', 'none'];
+      for (let index = 0; index < keys.length; index++) {
+        const arr = categoryForCasing[keys[index]];
+        selectedData.push(...dataForCasing[keys[index]]);
+
+        for (let i = 0; i < arr.length; i++) {
+          const element = arr[i];
+          if (!includes(categoryList, element)) {
+            categoryList.push(element);
+          }
+        }
+      }
+    }
+    console.log(categoryList);
+    console.log(selectedData);
+
+    // if (casingType.startsWith('all')) {
+    //   for (let index = 0; index < APIData.length; index++) {
+    //     const part = APIData[index];
+    //     if (part.casing.startsWith('all') || part.casing.startsWith('-')) {
+    //       dataForCasing.push(part);
+    //       if (!categoryList.includes(part.category)) {
+    //         categoryList.push(part.category);
+    //       }
+    //     } else {
+    //       dataForCasing.push(part);
+    //       if (!categoryList.includes(part.category)) {
+    //         categoryList.push(part.category);
+    //       }
+    //     }
+    //   }
+    // }
+    this.setState({
+      simulationPartsData: Simulation.parts,
+      dataForCasing,
+      categoryList,
+      casingType,
+      allPartsData: selectedData,
+    });
+  }
+
+  _renderBrand = (value) => {
+    let includes = this._arrayIncludeString;
+    let brands = [];
+    let selectedBrandData = [];
+    if (parseInt(value, 10) !== -1) {
+      let {categoryList, allPartsData} = this.state;
+      let category = categoryList[value];
+
+      for (let j = 0; j < allPartsData.length; j++) {
+        const part = allPartsData[j];
+
+        if (part.category.toLowerCase() === category.toLowerCase()) {
+          if (!includes(brands, part.brand)) {
+            brands.push(part.brand);
+          }
+          selectedBrandData.push(part);
+        }
+      }
+    }
+    this.setState({
+      selectedCategory: value,
+      selectedBrand: -1,
+      selectedName: -1,
+      brandList: brands || [],
+      nameList: [],
+      selectedBrandData,
+    });
+  };
+
+  _renderName = (value) => {
+    let includes = this._arrayIncludeString;
+    let {selectedBrandData, brandList} = this.state;
+    let brand = brandList[value];
+    console.log(brand);
+    let nameList = [];
+    let selectedNameData = [];
+    if (parseInt(value, 10) !== -1) {
+      for (let index = 0; index < selectedBrandData.length; index++) {
+        const part = selectedBrandData[index];
+        if (part.brand.toLowerCase() === brand.toLowerCase()) {
+          if (!includes(nameList, part.name)) {
+            nameList.push(part.name);
+          }
+          selectedNameData.push(part);
+          console.log(selectedNameData);
+          console.log(nameList);
+          console.log(part);
+        }
+      }
+    }
+    this.setState({
+      selectedBrand: value,
+      selectedName: -1,
+      nameList,
+      selectedNameData,
+    });
+  };
+
+  _patchSimulationParts = async (itemId, jumlah = 1) => {
+    let simulationPartsData = await addParts({itemId, jumlah});
+  };
+
   render() {
-    console.log(this.state);
     return (
       <Layout title={'Simulasi'}>
         <View
@@ -43,40 +223,43 @@ class simChoice extends React.Component<Props, State> {
           <View style={styles.container}>
             <View style={styles.boxrowv2}>
               <Picker
-                selectedValue={this.state.kurir}
+                selectedValue={this.state.selectedCategory}
                 style={styles.dropdown}
-                enabled={this.state.checkStd}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({kurir: itemValue})
+                enabled={this.state.categoryList.length > 0}
+                onValueChange={
+                  this._renderBrand
+                  // (itemValue, itemIndex) =>
+                  // this.setState({kurir: itemValue})
                 }
               >
-                <Picker.Item label="Pilih Kategori" value="Bd0" />
-                <Picker.Item label="JNE" value="JNE" />
-                <Picker.Item label="TIKI" value="TIKI" />
+                <Picker.Item label="Pilih Kategori" value={-1} />
+                {this.state.categoryList.map((category, index) => (
+                  <Picker.Item label={category} value={index} />
+                ))}
+
+                {/* <Picker.Item label="TIKI" value="TIKI" /> */}
               </Picker>
               <Picker
-                selectedValue={this.state.kurir}
+                selectedValue={this.state.selectedBrand}
                 style={styles.dropdown}
-                enabled={this.state.checkStd}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({kurir: itemValue})
-                }
+                enabled={this.state.brandList.length > 0}
+                onValueChange={this._renderName}
               >
-                <Picker.Item label="Pilih Brand" value="Bd0" />
-                <Picker.Item label="JNE" value="JNE" />
-                <Picker.Item label="TIKI" value="TIKI" />
+                <Picker.Item label="Pilih Brand" value={-1} />
+                {this.state.brandList.map((brand, index) => (
+                  <Picker.Item label={brand} value={index} />
+                ))}
               </Picker>
               <Picker
-                selectedValue={this.state.kurir}
+                selectedValue={this.state.selectedName}
                 style={styles.dropdown}
-                enabled={this.state.checkStd}
-                onValueChange={(itemValue, itemIndex) =>
-                  this.setState({kurir: itemValue})
-                }
+                enabled={this.state.nameList.length > 0}
+                onValueChange={(value) => this.setState({selectedName: value})}
               >
-                <Picker.Item label="Pilih Nama Barang" value="Bd0" />
-                <Picker.Item label="JNE" value="JNE" />
-                <Picker.Item label="TIKI" value="TIKI" />
+                <Picker.Item label="Pilih Nama Barang" value={-1} />
+                {this.state.nameList.map((name, index) => (
+                  <Picker.Item label={name} value={index} />
+                ))}
               </Picker>
               <Button style={{alignSelf: 'center'}} title={'sort'} />
             </View>
@@ -84,6 +267,10 @@ class simChoice extends React.Component<Props, State> {
             {/* box bawah untuk simulate */}
             <View style={styles.boxrowv4}>
               <View style={styles.boxrow}>
+                {this.state.simulationPartsData.map((element) => {
+                  return <FragmentItemList item={{...element}}/>;
+                })}
+
                 <Text>To Be Filled With Boxes</Text>
               </View>
               {/* kiri ends here */}
@@ -182,7 +369,7 @@ let styles = StyleSheet.create({
     flexDirection: 'column',
   },
   boxrow: {
-    flexDirection: 'row',
+    flexDirection: 'column',
     borderRadius: 5,
     padding: 5,
     width: '60%',

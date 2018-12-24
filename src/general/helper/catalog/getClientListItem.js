@@ -19,7 +19,6 @@ let getClientListItem = async (props: Props = {}) => {
       url += '&' + key + '=' + String(value);
     }
   }
-  console.log(url);
   return await fetch(url);
 };
 export default getClientListItem;

@@ -93,7 +93,6 @@ class LoginPage extends React.Component {
                 let {email, password} = this.state;
                 let result = await loginFunction(email, password);
                 if (result === true) {
-                  console.log('Login Success');
                   this.props.success();
                 }
               }}

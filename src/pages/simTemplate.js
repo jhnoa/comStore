@@ -33,7 +33,6 @@ class simTemp extends React.Component<Props, State> {
   }
 
   render() {
-    console.log(this.state);
 
     return (
       <Layout title={'Pilih Range Budget'}>

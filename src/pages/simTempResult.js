@@ -156,7 +156,6 @@ class simchoiceresult extends React.Component<Props, State> {
     if (data === undefined) {
       navigateTo('simTemplate');
     }
-    console.log(this.props);
     return (
       <Layout title={'Hasil Rekomendasi'}>
         <View
@@ -269,7 +268,7 @@ class simchoiceresult extends React.Component<Props, State> {
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Menuju Simulasi Manual"
-                onPress={() => {}}
+                onPress={() => {navigateTo('simManual')}}
               />
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}

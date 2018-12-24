@@ -20,7 +20,6 @@ class IndexPage extends React.Component<Props, State> {
     isLoggedIn: false,
   };
   render() {
-    console.log(this.state);
     return (
       <Layout
         title={'Home'}

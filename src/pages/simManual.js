@@ -19,6 +19,8 @@ import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
 import {navigateTo} from 'gatsby-link';
 import getClientListItem from '../general/helper/catalog/getClientListItem';
+import addParts from '../general/helper/simulation/addParts';
+import clearAllParts from '../general/helper/simulation/clearAllParts';
 const windowSize = Dimensions.get('window').width;
 
 type Item = {
@@ -63,7 +65,6 @@ class simulateManual extends React.Component<Props, State> {
   }
   render() {
     let {casingData} = this.state;
-    console.log(this.state);
     return (
       <Layout title={'Pilih Casing'}>
         <View
@@ -209,17 +210,16 @@ class simulateManual extends React.Component<Props, State> {
                       ? false
                       : true
                 }
-                onPress={() => {
-                  navigateTo({
-                    pathname: 'simMnStep2',
-                    state: {
-                      checkStd: this.state.checkStd,
-                      case:
-                        this.state.checkStd === true
-                          ? this.state.caseStd
-                          : this.state.caseTwr,
-                    },
+                onPress={async () => {
+                  await clearAllParts();
+                  await addParts({
+                    jumlah: 1,
+                    itemId:
+                      this.state.checkStd === true
+                        ? this.state.caseStd
+                        : this.state.caseTwr,
                   });
+                  navigateTo('simMnStep2');
                 }}
               />
             </View>

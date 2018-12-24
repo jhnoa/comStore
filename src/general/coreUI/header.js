@@ -4,11 +4,8 @@ import Logout from '../helper/auth/logout';
 import {navigateTo} from 'gatsby-link';
 let menuSection = (name, styles, children, onPress) => {
   let defaultFunction = () => {
-    console.log('name');
   };
-  console.log(name);
-  console.log(typeof onPress);
-  let func = onPress || defaultFunction;
+   let func = onPress || defaultFunction;
   return (
     <TouchableOpacity
       key={Math.random()}
@@ -93,11 +90,9 @@ class HeaderPart extends React.Component<Props> {
     ],
   };
   componentWillReceiveProps(nextProps) {
-    console.log(nextProps);
     this.setState((state) => ({...nextProps}));
   }
   render() {
-    console.log(this.state);
     return (
       <View
         style={{

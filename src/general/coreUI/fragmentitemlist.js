@@ -16,13 +16,14 @@ const windowSize = Dimensions.get('window').width;
 
 class ItemFrag extends React.Component {
   state = {
-    itemName: this.props.item.name || '',
-    itemBrand: this.props.item.brand || '',
-    itemPrice: this.props.item.price || '',
-    itemCat: this.props.item.category || '',
+    itemName: (this.props.item && this.props.item.name) || '',
+    itemBrand: (this.props.item && this.props.item.brand) || '',
+    itemPrice: (this.props.item && this.props.item.price) || '',
+    itemCat: (this.props.item && this.props.item.category) || '',
+    itemPic: (this.props.item && this.props.item.picture) || 'google.png',
   };
   render() {
-    let {itemName, itemBrand, itemPrice} = this.state;
+    let {itemName, itemBrand, itemPrice, itemPic} = this.state;
     return (
       <View
         style={{
@@ -46,7 +47,7 @@ class ItemFrag extends React.Component {
           <Image
             resizeMode="contain"
             style={{flex: 1}}
-            source={require('../../assets/picture/google.png')}
+            source={require(`../../assets/picture/catalog/${itemPic}`)}
           />
         </View>
         {/* dropdown kiri end */}

@@ -93,7 +93,6 @@ class Layout extends React.Component<Props, State> {
         <Modal
           isVisible={this.state.loginModal}
           onBackdropPress={() => {
-            console.log('backdrop pressed');
             this.setState({loginModal: false});
           }}
         >

@@ -22,7 +22,6 @@ type State = {};
 
 class simChoice extends React.Component<Props, State> {
   render() {
-    console.log(this.state);
     return (
       <Layout title={'Simulasi'}>
         <View
