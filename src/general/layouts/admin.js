@@ -47,13 +47,16 @@ class Layout extends React.Component<Props, State> {
   };
   async componentDidMount() {
     Dimensions.addEventListener('change', this.handler);
-    let isLoggedIn: boolean = await isAuthenticated();
-    if (isLoggedIn.status === true) {
+    let isLoggedIn = await isAuthenticated();
+    if (isLoggedIn.status === true && isLoggedIn.type === 'admin') {
       this.props.isLoggedIn && this.props.isLoggedIn();
+      this.setState((state) => {
+        return {...state, isLoggedIn};
+      });
     }
-    this.setState((state) => {
-      return {...state, isLoggedIn};
-    });
+    else {
+navigateTo('/');
+    }
   }
 
   componentWillUnmount() {

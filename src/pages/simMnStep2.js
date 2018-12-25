@@ -22,6 +22,7 @@ import getClientListItem from '../general/helper/catalog/getClientListItem';
 import getSimulation from '../general/helper/simulation/getSimulation';
 import addParts from '../general/helper/simulation/addParts';
 import clearAllParts from '../general/helper/simulation/clearAllParts';
+import removeParts from '../general/helper/simulation/removeParts';
 import {navigateTo} from 'gatsby-link';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
@@ -63,6 +64,7 @@ class simulateNo2 extends React.Component<Props, State> {
   async componentDidMount() {
     let Simulation = await getSimulation();
     let APIData = await getClientListItem();
+    APIData = this._removeCategory(APIData, 'casing')
     let includes = this._arrayIncludeString;
     //APIData.sort(this._casingSort);
     let casingType = Simulation.parts[0].casing;
@@ -152,6 +154,16 @@ class simulateNo2 extends React.Component<Props, State> {
       selectedItemId: -1,
     });
   }
+  _removeCategory = (array, category) => {
+    let result = [];
+    for (let index = 0; index < array.length; index++) {
+      const element = array[index];
+      if(element.category.toLowerCase() !== category.toLowerCase()){
+        result.push(element)
+      }
+    }
+    return result
+  }
 
   _renderBrand = (value) => {
     let includes = this._arrayIncludeString;
@@ -233,7 +245,33 @@ class simulateNo2 extends React.Component<Props, State> {
     this.setState({simulationPartsData: simulationPartsData.parts});
   };
 
+  _plusItem = async (itemId, jumlah) => {
+    let result = await addParts({
+      itemId: parseInt(itemId, 10),
+      jumlah: parseInt(jumlah, 10) + 1,
+    });
+    this.setState((state) => {
+      console.log('state', state);
+      return {...state, simulationPartsData: result.parts};
+    });
+  };
+
+  _minusItem = async (itemId, jumlah) => {
+    if (parseInt(jumlah) !== 1) {
+      let result = await addParts({
+        itemId: parseInt(itemId, 10),
+        jumlah: parseInt(jumlah, 10) - 1,
+      });
+      this.setState((state) => ({...state, simulationPartsData: result.parts}));
+    } else {
+      let result = await removeParts(itemId);
+      this.setState((state) => ({...state, simulationPartsData: result.parts}));
+    }
+  };
+
   render() {
+    console.log(this.state);
+    let {simulationPartsData} = this.state;
     return (
       <Layout title={'Simulasi'}>
         <View
@@ -300,12 +338,15 @@ class simulateNo2 extends React.Component<Props, State> {
             {/* box bawah untuk simulate */}
             <View style={styles.boxrowv4}>
               <ScrollView style={styles.boxrow}>
-                {this.state.simulationPartsData.map((element, index, array) => {
-                  console.log(array);
-                  return (
-                    <FragmentItemList item={{...element}} key={element._id} />
-                  );
-                })}
+                {simulationPartsData.map((element, index, array) => (
+                  <FragmentItemList
+                    item={element}
+                    key={index}
+                    plus={this._plusItem}
+                    minus={this._minusItem}
+                    disable={index===0? true: false}
+                  />
+                ))}
               </ScrollView>
               {/* kiri ends here */}
               <View style={styles.boxcolv3}>

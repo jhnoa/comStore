@@ -16,17 +16,34 @@ import formatCurrency from '../helper/numberToCurrency';
 
 const windowSize = Dimensions.get('window').width;
 
-class ItemFrag extends React.Component {
-  state = {
-    itemName: (this.props.item && this.props.item.name) || '',
-    itemBrand: (this.props.item && this.props.item.brand) || '',
-    itemCount: (this.props.item && this.props.item.jumlah) || 0,
-    itemPrice: (this.props.item && this.props.item.price) || 0,
-    itemCat: (this.props.item && this.props.item.category) || '',
-    itemPic: (this.props.item && this.props.item.picture) || 'google.png',
-  };
+type Props = {
+  item: {
+    itemId: number,
+    name: string,
+    brand: string,
+    jumlah: number,
+    price: number,
+    category: string,
+    picture: string,
+  },
+  plus: (number, number) => Promise<any>,
+  minus: (number, number) => Promise<any>,
+  disable: boolean,
+};
+
+class ItemFrag extends React.Component<Props> {
   render() {
-    let {itemName, itemBrand, itemPrice, itemPic, itemCount} = this.state;
+    let {
+      itemId,
+      name,
+      brand,
+      jumlah,
+      price,
+      category,
+      picture,
+    } = this.props.item;
+    let {minus, plus, disable} = this.props;
+    console.log('simulist');
     return (
       <View
         style={{
@@ -51,7 +68,7 @@ class ItemFrag extends React.Component {
           <Image
             resizeMode="contain"
             style={{flex: 1}}
-            source={require(`../../assets/picture/catalog/${itemPic}`)}
+            source={require(`../../assets/picture/catalog/${picture}`)}
           />
         </View>
         {/* dropdown kiri end */}
@@ -68,27 +85,43 @@ class ItemFrag extends React.Component {
           <View style={{flexDirection: 'row'}}>
             <Text>Nama Barang : </Text>
             <Text>
-              {itemName.slice(0, 40)}
-              {itemName.length > 40 && '...'}
+              {name.slice(0, 40)}
+              {name.length > 40 && '...'}
             </Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text>Brand Barang : </Text>
-            <Text>{Capital(itemBrand)}</Text>
+            <Text>{Capital(brand)}</Text>
           </View>
           <View style={{flexDirection: 'row'}}>
             <Text>Price : </Text>
-            <Text>{formatCurrency(itemPrice)}</Text>
+            <Text>{formatCurrency(price)}</Text>
           </View>
         </View>
         {/* itemlist kanan end */}
         <View style={{flexDirection: 'column', justifyContent: 'center'}}>
           <Text style={{fontSize: 20, height: '50%', alignSelf: 'center'}}>
-            {itemCount}
+            {jumlah}
           </Text>
           <View style={{flexDirection: 'row'}}>
-            <Button color={'red'} title={'-'} />
-            <Button color={'green'} title={'+'} onPress={() => {}} />
+            <Button
+              disabled={disable}
+              color={'red'}
+              title={'-'}
+              onPress={() => {
+                console.log('onMinus');
+                this.props.minus(itemId, jumlah);
+              }}
+            />
+            <Button
+              disabled={disable}
+              color={'green'}
+              title={'+'}
+              onPress={() => {
+                console.log('onPlus');
+                this.props.plus(itemId, jumlah);
+              }}
+            />
           </View>
         </View>
       </View>
