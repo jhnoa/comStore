@@ -64,7 +64,7 @@ class simulateNo2 extends React.Component<Props, State> {
   async componentDidMount() {
     let Simulation = await getSimulation();
     let APIData = await getClientListItem();
-    APIData = this._removeCategory(APIData, 'casing')
+    APIData = this._removeCategory(APIData, 'casing');
     let includes = this._arrayIncludeString;
     //APIData.sort(this._casingSort);
     let casingType = Simulation.parts[0].casing;
@@ -158,12 +158,12 @@ class simulateNo2 extends React.Component<Props, State> {
     let result = [];
     for (let index = 0; index < array.length; index++) {
       const element = array[index];
-      if(element.category.toLowerCase() !== category.toLowerCase()){
-        result.push(element)
+      if (element.category.toLowerCase() !== category.toLowerCase()) {
+        result.push(element);
       }
     }
-    return result
-  }
+    return result;
+  };
 
   _renderBrand = (value) => {
     let includes = this._arrayIncludeString;
@@ -272,6 +272,13 @@ class simulateNo2 extends React.Component<Props, State> {
   render() {
     console.log(this.state);
     let {simulationPartsData} = this.state;
+    let totalItem = 0;
+    let totalPrice = 0;
+    for (let index = 0; index < simulationPartsData.length; index++) {
+      const element = simulationPartsData[index];
+      totalItem += element.jumlah;
+      totalPrice += element.jumlah * element.price;
+    }
     return (
       <Layout title={'Simulasi'}>
         <View
@@ -344,7 +351,7 @@ class simulateNo2 extends React.Component<Props, State> {
                     key={index}
                     plus={this._plusItem}
                     minus={this._minusItem}
-                    disable={index===0? true: false}
+                    disable={index === 0 ? true : false}
                   />
                 ))}
               </ScrollView>
@@ -385,7 +392,9 @@ class simulateNo2 extends React.Component<Props, State> {
                             - {Capital(element.category)}{' '}
                             {Capital(element.brand)} {Capital(element.name)}
                           </Text>
-                          <Text>{formatCurrency(element.price)}</Text>
+                          <Text>
+                            {formatCurrency(element.price * element.jumlah)}
+                          </Text>
                         </View>
                       );
                     },
@@ -402,8 +411,8 @@ class simulateNo2 extends React.Component<Props, State> {
                     backgroundColor: 'rgba(52, 52, 52, 0.2)',
                   }}
                 >
-                  <Text>Total Item: XYZ</Text>
-                  <Text>Total Harga: Rp xx.xxx.xxx</Text>
+                  <Text>Total Item: {totalItem}</Text>
+                  <Text>Total Harga: {formatCurrency(totalPrice)}</Text>
                 </View>
                 {/* totaltotalan end */}
                 <View
@@ -419,7 +428,9 @@ class simulateNo2 extends React.Component<Props, State> {
                     color={'lawngreen'}
                     buttonStyle={{borderRadius: 10}}
                     title={'Check Out'}
-                    onPress={() => {}}
+                    onPress={() => {
+                      navigateTo('shoppingCart');
+                    }}
                   />
                 </View>
                 <View
@@ -435,7 +446,9 @@ class simulateNo2 extends React.Component<Props, State> {
                     color={'red'}
                     buttonStyle={{borderRadius: 10}}
                     title={'Batal'}
-                    onPress={() => {}}
+                    onPress={() => {
+                      window.history.back();
+                    }}
                   />
                 </View>
               </View>

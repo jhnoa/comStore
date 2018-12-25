@@ -16,7 +16,8 @@ import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
-
+import {navigateTo} from 'gatsby-link';
+import getSimulation from '../general/helper/simulation/getSimulation';
 const windowSize = Dimensions.get('window').width;
 
 type Item = {
@@ -138,8 +139,10 @@ class shoppingcart extends React.Component<Props, State> {
     totalItem: {},
     totalPrice: 0,
   };
-  componentDidMount() {
-    let {data} = this.state;
+  async componentDidMount() {
+    let dataFromAPI = await getSimulation();
+    let data = dataFromAPI.parts;
+    // let {data} = this.state;
     let total = 0;
     let item = {};
     for (let i = 0; i < data.length; i++) {
@@ -147,7 +150,7 @@ class shoppingcart extends React.Component<Props, State> {
       total += part.price;
       item[part.category] = (item[part.category] || 0) + 1;
     }
-    this.setState({totalPrice: total, totalItem: item});
+    this.setState({data, totalPrice: total, totalItem: item});
   }
   render() {
     let {data} = this.state;
@@ -244,13 +247,17 @@ class shoppingcart extends React.Component<Props, State> {
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Kembali"
-                onPress={() => {}}
+                onPress={() => {
+                  window.history.back();
+                }}
               />
 
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Checkout"
-                onPress={() => {}}
+                onPress={() => {
+                  navigateTo('jasakirim');
+                }}
               />
             </View>
           </View>

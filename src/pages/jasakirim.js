@@ -15,6 +15,8 @@ import Layout from '../general/layouts/index';
 import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
+import nextToPayment from '../general/helper/simulation/nextToPayment';
+import {navigateTo} from 'gatsby-link'
 
 const windowSize = Dimensions.get('window').width;
 type Props = {};
@@ -22,8 +24,7 @@ type State = {};
 
 class jaskir extends React.Component<Props, State> {
   state = {
-    ItemName: 'AMD Ryzen 5 2600 ',
-    checkStd: true,
+    denganKurir: true,
     kurir: '',
   };
   render() {
@@ -62,9 +63,9 @@ class jaskir extends React.Component<Props, State> {
                 >
                   <CheckBox
                     style={{marginHorizontal: 10, marginTop: 5}}
-                    value={this.state.checkStd}
+                    value={this.state.denganKurir}
                     onValueChange={(props) => {
-                      this.setState({checkStd: props});
+                      this.setState({denganKurir: props});
                     }}
                   />
                   <Text>pilih disini untuk memilih jasa angkut</Text>
@@ -73,14 +74,14 @@ class jaskir extends React.Component<Props, State> {
                   <Picker
                     selectedValue={this.state.kurir}
                     style={styles.dropdown}
-                    enabled={this.state.checkStd}
+                    enabled={this.state.denganKurir}
                     onValueChange={(itemValue, itemIndex) =>
                       this.setState({kurir: itemValue})
                     }
                   >
-                    <Picker.Item label="Pilih Jasa Angkut" value="Bd0" />
+                    <Picker.Item label="Pilih Jasa Angkut" value="" />
                     <Picker.Item label="JNE" value="JNE" />
-                    <Picker.Item label="TIKI" value="TIKI" />
+                    {/* <Picker.Item label="TIKI" value="TIKI" /> */}
                   </Picker>
                 </View>
               </View>
@@ -95,9 +96,9 @@ class jaskir extends React.Component<Props, State> {
                 >
                   <CheckBox
                     style={{marginHorizontal: 10, marginTop: 5}}
-                    value={!this.state.checkStd}
+                    value={!this.state.denganKurir}
                     onValueChange={(props) => {
-                      this.setState({checkStd: !props});
+                      this.setState({denganKurir: !props});
                     }}
                   />
                   <Text>pilih disini untuk mengambil sendiri</Text>
@@ -112,8 +113,33 @@ class jaskir extends React.Component<Props, State> {
                 width: 200,
               }}
             >
-              <Button title="Batal" onPress={() => {}} />
-              <Button title="Konfirmasi" onPress={() => {}} />
+              <Button
+                title="Batal"
+                onPress={() => {
+                  window.history.back();
+                }}
+              />
+              <Button
+                title="Konfirmasi"
+                onPress={() => {
+                  nextToPayment({
+                    pengiriman:
+                      this.state.denganKurir === true
+                        ? this.state.kurir
+                        : 'ambil',
+                  });
+                  navigateTo('/');
+                }}
+                disabled={
+                  this.state.denganKurir === true
+                    ? this.state.kurir !== ''
+                      ? false
+                      : true
+                    : this.state.denganKurir === false
+                      ? true
+                      : false
+                }
+              />
             </View>
           </View>
         </View>
