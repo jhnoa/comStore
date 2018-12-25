@@ -1,7 +1,10 @@
 import fetch from '../fetch';
 import config from '../../../constant/config';
 
-type IsAuthenticated = () => Promise<boolean>;
+type IsAuthenticated = () => Promise<{
+  status: boolean,
+  type?: 'admin' | 'customer',
+}>;
 
 let isAuthenticated: IsAuthenticated = async (): boolean => {
   let validation: FeathersAuthenticationType = await fetch(
@@ -9,9 +12,9 @@ let isAuthenticated: IsAuthenticated = async (): boolean => {
     'DELETE',
   );
   if (validation.isAuthenticated) {
-    return true;
+    return {status: true, type: validation.type};
   } else {
-    return false;
+    return {status: false};
   }
 };
 export default isAuthenticated;

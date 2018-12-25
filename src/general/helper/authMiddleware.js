@@ -11,7 +11,8 @@ function connect(BaseComponent: *, passThrough: boolean = false) {
   > {
     state = {visible: false, isLoggedIn: false};
     async componentDidMount() {
-      let isLoggedIn = await isAuthenticated();
+      let {status} = await isAuthenticated();
+      let isLoggedIn = status;
 
       if (!isLoggedIn && !passThrough) {
         navigateTo('/');

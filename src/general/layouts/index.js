@@ -12,6 +12,7 @@ import Login from '../coreUI/login';
 import Modal from 'modal-enhanced-react-native-web';
 import isAuthenticated from '../helper/auth/auth';
 import {navigateTo} from 'gatsby-link';
+import getStorage from '../helper/getStorage';
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -47,12 +48,13 @@ class Layout extends React.Component<Props, State> {
   };
   async componentDidMount() {
     Dimensions.addEventListener('change', this.handler);
-    let isLoggedIn: boolean = await isAuthenticated();
-    if (isLoggedIn === true) {
+    let isLoggedIn = await isAuthenticated();
+    console.log(isLoggedIn);
+    if (isLoggedIn.status === true) {
       this.props.isLoggedIn && this.props.isLoggedIn();
     }
     this.setState((state) => {
-      return {...state, isLoggedIn};
+      return {...state, isLoggedIn: isLoggedIn.status};
     });
   }
 
@@ -67,7 +69,7 @@ class Layout extends React.Component<Props, State> {
       : config.companyName;
     let {width, paddingTop, paddingBottom} = this.state;
     let {isLoggedIn} = this.state;
-
+    console.log(isLoggedIn);
     return (
       <View style={[styles.container, {width, paddingTop, paddingBottom}]}>
         <Helmet

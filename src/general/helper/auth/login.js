@@ -16,6 +16,13 @@ let login = async (email: string, password: string) => {
   if (accessToken) {
     await setStorage('Authorization', accessToken);
     await setStorage('AuthorizationTime', Date.now().toString());
+    let validation: FeathersAuthenticationType = await fetch(
+      config.userProfileURL,
+      'DELETE',
+    );
+    if (validation.isAuthenticated) {
+      await setStorage('userType', validation.type);
+    }
     return true;
   } else {
     return false;
