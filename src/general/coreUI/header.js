@@ -3,9 +3,8 @@ import {View, Text, TouchableOpacity, Image, StyleSheet} from 'react-native';
 import Logout from '../helper/auth/logout';
 import {navigateTo} from 'gatsby-link';
 let menuSection = (name, styles, children, onPress) => {
-  let defaultFunction = () => {
-  };
-   let func = onPress || defaultFunction;
+  let defaultFunction = () => {};
+  let func = onPress || defaultFunction;
   return (
     <TouchableOpacity
       key={Math.random()}
@@ -23,7 +22,7 @@ let menuSection = (name, styles, children, onPress) => {
       onPress={() => func()}
     >
       {children}
-      <Text style={{fontSize: 20}}>{name}</Text>
+      <Text style={{fontSize: 25, fontWeight: 'bold'}}>{name}</Text>
     </TouchableOpacity>
   );
 };
@@ -44,7 +43,7 @@ class HeaderPart extends React.Component<Props> {
   headerMenu = {
     authenticated: [
       menuSection(
-        '',
+        ' Vinando',
         {},
         <Image
           resizeMode="contain"
@@ -56,6 +55,9 @@ class HeaderPart extends React.Component<Props> {
         },
       ),
       menuSection('', {flex: 1}),
+      menuSection('Profile', {}, null, () => {
+        navigateTo('profile');
+      }),
       menuSection('Simulation', {}, null, () => {
         navigateTo('simulateOptions');
       }),
@@ -107,7 +109,7 @@ class HeaderPart extends React.Component<Props> {
           alignItems: 'center',
           justifyContent: 'center',
           // height: '100%',
-          backgroundColor: 'blue',
+          backgroundColor: 'paleturquoise',
         }}
       >
         {

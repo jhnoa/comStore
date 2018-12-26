@@ -7,10 +7,8 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  Image,
-  Picker,
-  Button,
   Dimensions,
+  Button,
 } from 'react-native';
 import Layout from '../../general/layouts/admin';
 import isAuthenticated from '../../general/helper/auth/auth';
@@ -37,43 +35,42 @@ type State = {
 };
 
 let defaultData = [
-  {
-    _id: '5c1c6c55f95fe531b86eaa2c',
-    removed: false,
-    itemId: 140,
-    name: 'Cougar QBX Gaming Mini ITX Case',
-    casing: 'all (mid-tower & tower)',
-    category: 'casing',
-    brand: 'cougar',
-    price: 671000,
-    picture: 'Cougar QBX Gaming Mini ITX Case.png',
-    createdAt: '2018-12-21T04:30:13.820Z',
-    updatedAt: '2018-12-21T04:30:13.820Z',
-    __v: 0,
-  },
-  {
-    _id: '5c1c6c55f95fe531b86eaa2d',
-    removed: false,
-    itemId: 141,
-    name: 'AMD Ryzen 5 1400',
-    casing: 'all (mid-tower & tower)',
-    category: 'proccesor',
-    brand: 'amd',
-    price: 2050000,
-    picture: 'AMD Ryzen 5 1400.png',
-    createdAt: '2018-12-21T04:30:13.826Z',
-    updatedAt: '2018-12-21T04:30:13.826Z',
-    __v: 0,
-  },
+  // {
+  //   _id: '5c1c6c55f95fe531b86eaa2c',
+  //   removed: false,
+  //   itemId: 140,
+  //   name: 'Cougar QBX Gaming Mini ITX Case',
+  //   casing: 'all (mid-tower & tower)',
+  //   category: 'casing',
+  //   brand: 'cougar',
+  //   price: 671000,
+  //   picture: 'Cougar QBX Gaming Mini ITX Case.png',
+  //   createdAt: '2018-12-21T04:30:13.820Z',
+  //   updatedAt: '2018-12-21T04:30:13.820Z',
+  //   __v: 0,
+  // },
+  // {
+  //   _id: '5c1c6c55f95fe531b86eaa2d',
+  //   removed: false,
+  //   itemId: 141,
+  //   name: 'AMD Ryzen 5 1400',
+  //   casing: 'all (mid-tower & tower)',
+  //   category: 'proccesor',
+  //   brand: 'amd',
+  //   price: 2050000,
+  //   picture: 'AMD Ryzen 5 1400.png',
+  //   createdAt: '2018-12-21T04:30:13.826Z',
+  //   updatedAt: '2018-12-21T04:30:13.826Z',
+  //   __v: 0,
+  // },
 ];
 
-class IndexPage extends React.Component<Props, State> {
+class Transactionlistpage extends React.Component<Props, State> {
   state = {
     isLoggedIn: false,
     data: this.props.data || defaultData,
     totalItem: {},
     totalPrice: 0,
-    searchValue: '',
   };
   async componentDidMount() {
     let dataFromAPI = await getClientListItem();
@@ -90,7 +87,6 @@ class IndexPage extends React.Component<Props, State> {
   }
   render() {
     console.log(this.state);
-    console.log('searchValue= ', this.state.searchValue);
     let {data} = this.state;
     return (
       <Layout
@@ -112,47 +108,62 @@ class IndexPage extends React.Component<Props, State> {
                 alignItems: 'flex-start',
                 paddingTop: 5,
                 flexDirection: 'row',
+                borderBottomWidth: 1,
                 justifyContent: 'space-between',
                 paddingHorizontal: 20,
               }}
             >
               <View
-                style={{flexDirection: 'row', width: '85%', paddingLeft: 10}}
+                style={{flexDirection: 'row', width: '80%', paddingLeft: 10}}
               >
-                <View style={{flex: 2}}>
-                  <Text style={{fontSize: 20}}>{Capital('category')}</Text>
+                <View style={{flex: 1}}>
+                  <Text style={{fontSize: 20}}>Status Pemesanan</Text>
                 </View>
                 <View
                   style={{
-                    flex: 2,
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text style={{fontSize: 20}}>{Capital('brand')}</Text>
-                </View>
-                <View
-                  style={{
-                    flex: 7,
+                    flex: 5,
                     alignItems: 'center',
                     paddingHorizontal: 10,
                   }}
                 >
                   <Text style={{fontSize: 20, alignSelf: 'center'}}>
-                    Nama Barang
+                    Nama Pelanggan
                   </Text>
                 </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <Text style={{fontSize: 20, alignSelf: 'center'}}>
+                    Jumlah Transaksi
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    flex: 1,
+                    alignItems: 'center',
+                    paddingHorizontal: 10,
+                  }}
+                >
+                  <Text style={{fontSize: 20, alignSelf: 'center'}}>
+                    Waktu Transaksi
+                  </Text>
+                </View>
+                {/* end of label kiri */}
               </View>
               <View
                 style={{
+                  width: '20%',
                   flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingRight: 20,
+                  paddingLeft: 10,
                 }}
               >
-                <Text style={{fontSize: 20, alignSelf: 'center'}}>
-                  Harga Barang
-                </Text>
+                <Text style={{fontSize: 20, alignSelf: 'center'}}>Detail</Text>
               </View>
+              {/* end label kanan */}
             </View>
             {/* ilist */}
             <ScrollView
@@ -171,24 +182,17 @@ class IndexPage extends React.Component<Props, State> {
                       // borderWidth: 1,
                       // borderRadius: 5,
                       paddingHorizontal: 10,
+                      borderBottomWidth: 1,
                     }}
                   >
-                    <View style={{flexDirection: 'row', width: '85%'}}>
-                      <View style={{flex: 2}}>
+                    <View style={{flexDirection: 'row', width: '80%'}}>
+                      <View style={{flex: 1}}>
                         <Text>{Capital(category)}</Text>
                       </View>
+                      {/* ^- status pemesanan*/}
                       <View
                         style={{
-                          flex: 2,
-                          borderLeftWidth: 1,
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Text>{Capital(brand)}</Text>
-                      </View>
-                      <View
-                        style={{
-                          flex: 7,
+                          flex: 5,
                           borderLeftWidth: 1,
                           borderRightWidth: 1,
                           paddingHorizontal: 10,
@@ -197,21 +201,40 @@ class IndexPage extends React.Component<Props, State> {
                         <Text>
                           {name.slice(0, 60)}
                           {name.length > 60 && '...'}
+                          Username
                         </Text>
                       </View>
+                      {/* ^- user name */}
+                      <View
+                        style={{flex: 1, borderRightWidth: 1, paddingLeft: 5}}
+                      >
+                        <Text style={{alignSelf: 'flex-start'}}>
+                          {formatCurrency(price)}
+                        </Text>
+                      </View>
+                      {/* ^- jumlah transaksi*/}
+                      <View
+                        style={{flex: 1, borderRightWidth: 1, paddingLeft: 5}}
+                      >
+                        <Text style={{alignSelf: 'flex-start'}}>
+                          {formatCurrency(price)}
+                        </Text>
+                      </View>
+                      {/* ^- waktu transaksi*/}
                     </View>
+                    {/* for border */}
                     <View
                       style={{
+                        width: '20%',
                         flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        alignSelf: 'flex-start',
+                        paddingLeft: 10,
                       }}
                     >
                       <Text style={{alignSelf: 'flex-start'}}>
-                        {formatCurrency(price)}
+                        <Text>{Capital(category)}</Text>
                       </Text>
                     </View>
+                    {/* ^- userphonenumber */}
                   </View>
                 );
               })}
@@ -224,65 +247,34 @@ class IndexPage extends React.Component<Props, State> {
               flexDirection: 'row',
               justifyContent: 'center',
               backgroundColor: 'rgba(255,255,255,0.2)',
-              // width: '90%',
+              width: '30%',
               marginBottom: 10,
             }}
           >
             <View style={styles.dropdownbody}>
-              <Text>Pilih Kategori Barang :</Text>
-              <Picker
-                // selectedValue={this.state.selectedCategory}
-                style={styles.dropdown}
-                // onValueChange={this._categoryFilter}
-              >
-                <Picker.Item label={'All Category'} value={-1} />
-                {/* {this.state.listCategory.map((element, index) => (
-                  <Picker.Item label={element} value={index} key={index} />
-                ))} */}
-              </Picker>
-            </View>
-            <View style={styles.dropdownbody}>
-              <Text>Pilih Brand yang diinginkan :</Text>
-              <Picker
-                // selectedValue={this.state.selectedBrand}
-                style={styles.dropdown}
-                // onValueChange={this._brandFilter}
-              >
-                <Picker.Item label="All Brand" value={-1} />
-                {/* {this.state.listBrand.map((element, index) => (
-                  <Picker.Item label={element} value={index} key={index} />
-                ))} */}
-              </Picker>
-            </View>
-            <View style={styles.dropdownbody}>
-              <Text>Sortir Berdasarkan :</Text>
-              <Picker
-                selectedValue={this.state.sortBy}
-                style={styles.dropdown}
-                onValueChange={this._sortBy}
-              >
-                <Picker.Item label="No Sort" value={0} />
-                <Picker.Item label="Lowest Price" value={-1} />
-                <Picker.Item label="Highest Price" value={1} />
-              </Picker>
-            </View>
-            <View style={styles.dropdownbody}>
               <Text>Cari Produk</Text>
-              <TextInput
-                style={{
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  height: 40,
-                  width: '100%',
-                  borderColor: 'black',
-                  borderWidth: 2,
-                }}
-                placeholder="Apa yang ingin anda Cari?"
-                placeholderTextColor="white"
-                onChangeText={(text) => this.setState({searchValue: text})}
-              />
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}
+              >
+                <TextInput
+                  style={{
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    height: 40,
+                    width: '100%',
+                    borderColor: 'black',
+                    borderWidth: 2,
+                  }}
+                  placeholder="Apa yang ingin anda Cari?"
+                  placeholderTextColor="white"
+                  onChangeText={(text) => this.setState({searchValue: text})}
+                />
+                <Button title={'Cari'} onPress={() => {}} />
+              </View>
+              {/* cari */}
             </View>
+            {/* end of search bar */}
           </View>
         </View>
       </Layout>
@@ -299,7 +291,7 @@ class IndexPage extends React.Component<Props, State> {
   };
 }
 
-export default IndexPage;
+export default Transactionlistpage;
 let styles = StyleSheet.create({
   container: {
     height: windowHeight - 140,
@@ -327,7 +319,7 @@ let styles = StyleSheet.create({
     padding: 10,
   },
   boxcol: {
-    height: windowHeight - 300,
+    height: windowHeight - 320,
     flexDirection: 'column',
     alignItems: 'baseline',
     borderRadius: 5,
@@ -341,6 +333,7 @@ let styles = StyleSheet.create({
     flex: 1,
   },
   dropdownbody: {
+    width: '100%',
     paddingVertical: 10,
     paddingHorizontal: 20,
   },

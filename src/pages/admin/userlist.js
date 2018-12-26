@@ -7,10 +7,8 @@ import {
   TextInput,
   ScrollView,
   StyleSheet,
-  Image,
-  Picker,
-  Button,
   Dimensions,
+  Button,
 } from 'react-native';
 import Layout from '../../general/layouts/admin';
 import isAuthenticated from '../../general/helper/auth/auth';
@@ -37,43 +35,42 @@ type State = {
 };
 
 let defaultData = [
-  {
-    _id: '5c1c6c55f95fe531b86eaa2c',
-    removed: false,
-    itemId: 140,
-    name: 'Cougar QBX Gaming Mini ITX Case',
-    casing: 'all (mid-tower & tower)',
-    category: 'casing',
-    brand: 'cougar',
-    price: 671000,
-    picture: 'Cougar QBX Gaming Mini ITX Case.png',
-    createdAt: '2018-12-21T04:30:13.820Z',
-    updatedAt: '2018-12-21T04:30:13.820Z',
-    __v: 0,
-  },
-  {
-    _id: '5c1c6c55f95fe531b86eaa2d',
-    removed: false,
-    itemId: 141,
-    name: 'AMD Ryzen 5 1400',
-    casing: 'all (mid-tower & tower)',
-    category: 'proccesor',
-    brand: 'amd',
-    price: 2050000,
-    picture: 'AMD Ryzen 5 1400.png',
-    createdAt: '2018-12-21T04:30:13.826Z',
-    updatedAt: '2018-12-21T04:30:13.826Z',
-    __v: 0,
-  },
+  // {
+  //   _id: '5c1c6c55f95fe531b86eaa2c',
+  //   removed: false,
+  //   itemId: 140,
+  //   name: 'Cougar QBX Gaming Mini ITX Case',
+  //   casing: 'all (mid-tower & tower)',
+  //   category: 'casing',
+  //   brand: 'cougar',
+  //   price: 671000,
+  //   picture: 'Cougar QBX Gaming Mini ITX Case.png',
+  //   createdAt: '2018-12-21T04:30:13.820Z',
+  //   updatedAt: '2018-12-21T04:30:13.820Z',
+  //   __v: 0,
+  // },
+  // {
+  //   _id: '5c1c6c55f95fe531b86eaa2d',
+  //   removed: false,
+  //   itemId: 141,
+  //   name: 'AMD Ryzen 5 1400',
+  //   casing: 'all (mid-tower & tower)',
+  //   category: 'proccesor',
+  //   brand: 'amd',
+  //   price: 2050000,
+  //   picture: 'AMD Ryzen 5 1400.png',
+  //   createdAt: '2018-12-21T04:30:13.826Z',
+  //   updatedAt: '2018-12-21T04:30:13.826Z',
+  //   __v: 0,
+  // },
 ];
 
-class IndexPage extends React.Component<Props, State> {
+class Userlistpage extends React.Component<Props, State> {
   state = {
     isLoggedIn: false,
     data: this.props.data || defaultData,
     totalItem: {},
     totalPrice: 0,
-    searchValue: '',
   };
   async componentDidMount() {
     let dataFromAPI = await getClientListItem();
@@ -90,7 +87,6 @@ class IndexPage extends React.Component<Props, State> {
   }
   render() {
     console.log(this.state);
-    console.log('searchValue= ', this.state.searchValue);
     let {data} = this.state;
     return (
       <Layout
@@ -120,15 +116,7 @@ class IndexPage extends React.Component<Props, State> {
                 style={{flexDirection: 'row', width: '85%', paddingLeft: 10}}
               >
                 <View style={{flex: 2}}>
-                  <Text style={{fontSize: 20}}>{Capital('category')}</Text>
-                </View>
-                <View
-                  style={{
-                    flex: 2,
-                    alignItems: 'center',
-                  }}
-                >
-                  <Text style={{fontSize: 20}}>{Capital('brand')}</Text>
+                  <Text style={{fontSize: 20}}>Unique User ID</Text>
                 </View>
                 <View
                   style={{
@@ -138,7 +126,7 @@ class IndexPage extends React.Component<Props, State> {
                   }}
                 >
                   <Text style={{fontSize: 20, alignSelf: 'center'}}>
-                    Nama Barang
+                    Nama Pelanggan
                   </Text>
                 </View>
               </View>
@@ -150,7 +138,7 @@ class IndexPage extends React.Component<Props, State> {
                 }}
               >
                 <Text style={{fontSize: 20, alignSelf: 'center'}}>
-                  Harga Barang
+                  No. Telfon
                 </Text>
               </View>
             </View>
@@ -175,17 +163,9 @@ class IndexPage extends React.Component<Props, State> {
                   >
                     <View style={{flexDirection: 'row', width: '85%'}}>
                       <View style={{flex: 2}}>
-                        <Text>{Capital(category)}</Text>
+                        <Text>{Capital(category)} UID</Text>
                       </View>
-                      <View
-                        style={{
-                          flex: 2,
-                          borderLeftWidth: 1,
-                          alignItems: 'center',
-                        }}
-                      >
-                        <Text>{Capital(brand)}</Text>
-                      </View>
+                      {/* ^- user unique id */}
                       <View
                         style={{
                           flex: 7,
@@ -197,8 +177,10 @@ class IndexPage extends React.Component<Props, State> {
                         <Text>
                           {name.slice(0, 60)}
                           {name.length > 60 && '...'}
+                          Username
                         </Text>
                       </View>
+                      {/* ^- user name */}
                     </View>
                     <View
                       style={{
@@ -212,6 +194,7 @@ class IndexPage extends React.Component<Props, State> {
                         {formatCurrency(price)}
                       </Text>
                     </View>
+                    {/* ^- userphonenumber */}
                   </View>
                 );
               })}
@@ -224,65 +207,34 @@ class IndexPage extends React.Component<Props, State> {
               flexDirection: 'row',
               justifyContent: 'center',
               backgroundColor: 'rgba(255,255,255,0.2)',
-              // width: '90%',
+              width: '30%',
               marginBottom: 10,
             }}
           >
             <View style={styles.dropdownbody}>
-              <Text>Pilih Kategori Barang :</Text>
-              <Picker
-                // selectedValue={this.state.selectedCategory}
-                style={styles.dropdown}
-                // onValueChange={this._categoryFilter}
-              >
-                <Picker.Item label={'All Category'} value={-1} />
-                {/* {this.state.listCategory.map((element, index) => (
-                  <Picker.Item label={element} value={index} key={index} />
-                ))} */}
-              </Picker>
-            </View>
-            <View style={styles.dropdownbody}>
-              <Text>Pilih Brand yang diinginkan :</Text>
-              <Picker
-                // selectedValue={this.state.selectedBrand}
-                style={styles.dropdown}
-                // onValueChange={this._brandFilter}
-              >
-                <Picker.Item label="All Brand" value={-1} />
-                {/* {this.state.listBrand.map((element, index) => (
-                  <Picker.Item label={element} value={index} key={index} />
-                ))} */}
-              </Picker>
-            </View>
-            <View style={styles.dropdownbody}>
-              <Text>Sortir Berdasarkan :</Text>
-              <Picker
-                selectedValue={this.state.sortBy}
-                style={styles.dropdown}
-                onValueChange={this._sortBy}
-              >
-                <Picker.Item label="No Sort" value={0} />
-                <Picker.Item label="Lowest Price" value={-1} />
-                <Picker.Item label="Highest Price" value={1} />
-              </Picker>
-            </View>
-            <View style={styles.dropdownbody}>
               <Text>Cari Produk</Text>
-              <TextInput
-                style={{
-                  justifyContent: 'flex-start',
-                  alignItems: 'center',
-                  textAlign: 'center',
-                  height: 40,
-                  width: '100%',
-                  borderColor: 'black',
-                  borderWidth: 2,
-                }}
-                placeholder="Apa yang ingin anda Cari?"
-                placeholderTextColor="white"
-                onChangeText={(text) => this.setState({searchValue: text})}
-              />
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}
+              >
+                <TextInput
+                  style={{
+                    justifyContent: 'flex-start',
+                    alignItems: 'center',
+                    textAlign: 'center',
+                    height: 40,
+                    width: '100%',
+                    borderColor: 'black',
+                    borderWidth: 2,
+                  }}
+                  placeholder="Apa yang ingin anda Cari?"
+                  placeholderTextColor="white"
+                  onChangeText={(text) => this.setState({searchValue: text})}
+                />
+                <Button title={'Cari'} onPress={() => {}} />
+              </View>
+              {/* cari */}
             </View>
+            {/* end of search bar */}
           </View>
         </View>
       </Layout>
@@ -299,7 +251,7 @@ class IndexPage extends React.Component<Props, State> {
   };
 }
 
-export default IndexPage;
+export default Userlistpage;
 let styles = StyleSheet.create({
   container: {
     height: windowHeight - 140,
@@ -315,7 +267,6 @@ let styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 20,
-    paddingTop: 0,
     alignItems: 'flex-start',
     justifyContent: 'space-between',
   },
@@ -327,7 +278,7 @@ let styles = StyleSheet.create({
     padding: 10,
   },
   boxcol: {
-    height: windowHeight - 300,
+    height: windowHeight - 320,
     flexDirection: 'column',
     alignItems: 'baseline',
     borderRadius: 5,
@@ -341,6 +292,7 @@ let styles = StyleSheet.create({
     flex: 1,
   },
   dropdownbody: {
+    width: '100%',
     paddingVertical: 10,
     paddingHorizontal: 20,
   },

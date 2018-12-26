@@ -103,8 +103,13 @@ class HeaderPart extends React.Component<Props> {
           menuSection('Tambah Barang', styles.customButton2)}
         {this.state.show === true &&
           menuSection('Hapus Barang', styles.customButton2)}
-        {menuSection('User List', styles.customButton)}
-        {menuSection('Transaction List', styles.customButton)}
+        {menuSection('User List', styles.customButton, null, () => {
+          navigateTo('userlist');
+        })}
+        {menuSection('User Chat', styles.customButton)}
+        {menuSection('Transaction List', styles.customButton, null, () => {
+          navigateTo('transactionlist');
+        })}
       </View>
     );
   }
@@ -116,7 +121,6 @@ let styles = StyleSheet.create({
   customButton: {
     alignSelf: 'stretch',
     marginVertical: 5,
-    color: 'black',
     borderRadius: 5,
     borderWidth: 2,
     borderColor: 'black',
@@ -127,7 +131,6 @@ let styles = StyleSheet.create({
     width: '90%',
     marginVertical: 5,
     marginLeft: 25,
-    color: 'black',
     borderRadius: 5,
     borderWidth: 2,
     borderColor: 'black',
