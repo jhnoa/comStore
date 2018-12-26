@@ -31,7 +31,7 @@ type Props = {
   disable: boolean,
 };
 
-class ItemFrag extends React.Component<Props> {
+class ItemFragSimulate extends React.Component<Props> {
   render() {
     let {
       itemId,
@@ -77,6 +77,7 @@ class ItemFrag extends React.Component<Props> {
           style={{
             flex: 0.8,
             padding: 20,
+            borderLeftWidth: 1,
             justifyContent: 'center',
             backgroundColor: 'beige',
             height: 98,
@@ -129,4 +130,4 @@ class ItemFrag extends React.Component<Props> {
   }
 }
 
-export default ItemFrag;
+export default ItemFragSimulate;

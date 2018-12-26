@@ -11,9 +11,6 @@ import {
   Dimensions,
 } from 'react-native';
 import Layout from '../general/layouts/index';
-import fontSize from '../constant/fontsize';
-import Footer from '../general/coreUI/footer';
-import Header from '../general/coreUI/header';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
 import {navigateTo} from 'gatsby-link';

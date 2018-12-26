@@ -59,6 +59,9 @@ class HeaderPart extends React.Component<Props> {
         },
       ),
       menuSection('', {flex: 1}),
+      menuSection('Go To Customer Side', {}, null, () => {
+        navigateTo('/');
+      }),
       menuSection('Log Out', {}, null, () => {
         if (Logout()) {
           this.props.onLogoutPressed();
