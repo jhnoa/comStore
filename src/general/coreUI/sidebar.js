@@ -106,7 +106,9 @@ class HeaderPart extends React.Component<Props> {
         {menuSection('User List', styles.customButton, null, () => {
           navigateTo('userlist');
         })}
-        {menuSection('User Chat', styles.customButton)}
+        {menuSection('User Chat', styles.customButton, null, () => {
+          navigateTo('chat');
+        })}
         {menuSection('Transaction List', styles.customButton, null, () => {
           navigateTo('transactionlist');
         })}

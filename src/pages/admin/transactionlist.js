@@ -132,7 +132,7 @@ class Transactionlistpage extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainer}
             >
               {data.map((element) => {
-                let {category, brand, name, totalPrice} = element;
+                let {status, userData, totalPrice, simulasiData} = element;
                 return (
                   <View
                     style={{
@@ -148,7 +148,7 @@ class Transactionlistpage extends React.Component<Props, State> {
                   >
                     <View style={{flexDirection: 'row', width: '80%'}}>
                       <View style={{flex: 1}}>
-                        <Text>{category}</Text>
+                        <Text>{status}</Text>
                       </View>
                       {/* ^- status pemesanan*/}
                       <View
@@ -160,8 +160,8 @@ class Transactionlistpage extends React.Component<Props, State> {
                         }}
                       >
                         <Text>
-                          {name.slice(0, 60)}
-                          {name.length > 60 && '...'}
+                          {userData.name.slice(0, 60)}
+                          {userData.name.length > 60 && '...'}
                           Username
                         </Text>
                       </View>
@@ -192,7 +192,13 @@ class Transactionlistpage extends React.Component<Props, State> {
                       }}
                     >
                       <Text style={{alignSelf: 'flex-start'}}>
-                        <Text>{Capital(category)}</Text>
+                        {simulasiData.parts.map((part) => (
+                          <Text>
+                            {Capital(part.category)}: ({part.jumlah}x){' '}
+                            {part.name}
+                            {'\n'}
+                          </Text>
+                        ))}
                       </Text>
                     </View>
                     {/* ^- userphonenumber */}
@@ -202,41 +208,6 @@ class Transactionlistpage extends React.Component<Props, State> {
             </ScrollView>
           </View>
           {/* huehuehue */}
-          <View
-            style={{
-              padding: 5,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              width: '30%',
-              marginBottom: 10,
-            }}
-          >
-            <View style={styles.dropdownbody}>
-              <Text>Cari Produk</Text>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}
-              >
-                <TextInput
-                  style={{
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    height: 40,
-                    width: '100%',
-                    borderColor: 'black',
-                    borderWidth: 2,
-                  }}
-                  placeholder="Apa yang ingin anda Cari?"
-                  placeholderTextColor="white"
-                  onChangeText={(text) => this.setState({searchValue: text})}
-                />
-                <Button title={'Cari'} onPress={() => {}} />
-              </View>
-              {/* cari */}
-            </View>
-            {/* end of search bar */}
-          </View>
         </View>
       </Layout>
     );

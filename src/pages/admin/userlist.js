@@ -187,42 +187,6 @@ class Userlistpage extends React.Component<Props, State> {
               })}
             </ScrollView>
           </View>
-          {/* huehuehue */}
-          <View
-            style={{
-              padding: 5,
-              flexDirection: 'row',
-              justifyContent: 'center',
-              backgroundColor: 'rgba(255,255,255,0.2)',
-              width: '30%',
-              marginBottom: 10,
-            }}
-          >
-            <View style={styles.dropdownbody}>
-              <Text>Cari Produk</Text>
-              <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}
-              >
-                <TextInput
-                  style={{
-                    justifyContent: 'flex-start',
-                    alignItems: 'center',
-                    textAlign: 'center',
-                    height: 40,
-                    width: '100%',
-                    borderColor: 'black',
-                    borderWidth: 2,
-                  }}
-                  placeholder="Apa yang ingin anda Cari?"
-                  placeholderTextColor="white"
-                  onChangeText={(text) => this.setState({searchValue: text})}
-                />
-                <Button title={'Cari'} onPress={() => {}} />
-              </View>
-              {/* cari */}
-            </View>
-            {/* end of search bar */}
-          </View>
         </View>
       </Layout>
     );
