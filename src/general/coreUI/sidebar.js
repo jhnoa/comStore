@@ -55,28 +55,6 @@ class HeaderPart extends React.Component<Props> {
     isLogin: this.props.isLogin,
     show: false,
   };
-  headerMenu = {
-    unauthenticated: [
-      menuSection(
-        '',
-        {},
-        <Image
-          resizeMode="contain"
-          style={{height: 20, width: 40}}
-          source={require('../../assets/picture/google.png')}
-        />,
-        () => {
-          navigateTo('/admin/');
-        },
-      ),
-      menuSection('', {flex: 1}),
-      menuSection('Log Out', {}, null, () => {
-        if (Logout()) {
-          this.props.onLogoutPressed();
-        }
-      }),
-    ],
-  };
   componentWillReceiveProps(nextProps) {
     console.log(nextProps);
     this.setState((state) => ({...nextProps}));
@@ -100,7 +78,9 @@ class HeaderPart extends React.Component<Props> {
           navigateTo('/admin/');
         })}
         {this.state.show === true &&
-          menuSection('Tambah Barang', styles.customButton2)}
+          menuSection('Tambah Barang', styles.customButton2, null, () => {
+            navigateTo('tambahitem');
+          })}
         {this.state.show === true &&
           menuSection('Hapus Barang', styles.customButton2)}
         {menuSection('User List', styles.customButton, null, () => {
