@@ -14,6 +14,7 @@ let config: Config = {
   templateSimulationURL: mainURL + 'preferensi',
   adminUserListURL: mainURL + 'admin-user-list',
   adminTransactionURL: mainURL + 'transaction',
+  adminChatURL: mainURL + 'chat-system',
 };
 
 export default config;

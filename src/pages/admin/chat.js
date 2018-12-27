@@ -9,13 +9,14 @@ import {
   StyleSheet,
   Dimensions,
   Button,
+  TouchableOpacity,
 } from 'react-native';
 import Layout from '../../general/layouts/admin';
 import isAuthenticated from '../../general/helper/auth/auth';
 import {navigateTo} from 'gatsby-link';
 import Capital from '../../general/helper/capitalize';
 import formatCurrency from '../../general/helper/numberToCurrency';
-import getAllUser from '../../general/helper/adminUser/getAllUser';
+import getAllChat from '../../general/helper/adminUser/getAllChat';
 const windowSize = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -67,7 +68,7 @@ class Userlistpage extends React.Component<Props, State> {
     data: [],
   };
   async componentDidMount() {
-    let data = await getAllUser();
+    let data = await getAllChat();
     this.setState({data});
   }
   render() {
@@ -131,53 +132,62 @@ class Userlistpage extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainer}
             >
               {data.map((element) => {
-                let {_id, name, contactNumber} = element;
+                let {name, lastChat, userId} = element;
                 return (
-                  <View
-                    style={{
-                      flexDirection: 'row',
-                      alignItems: 'flex-start',
-                      justifyContent: 'space-between',
-                      width: '100%',
-                      borderTopWidth: 0.5,
-                      borderBottomWidth: 0.5,
-                      // borderRadius: 5,
-                      //   paddingHorizontal: 10,
+                  <TouchableOpacity
+                    onPress={() => {
+                      navigateTo({
+                        pathname: 'chatpersonal',
+                        state: element.userId,
+                      });
                     }}
                   >
-                    <View style={{flexDirection: 'row', width: '50%'}}>
-                      <View
-                        style={{
-                          flex: 1,
-                          borderLeftWidth: 1,
-                          borderRightWidth: 1,
-                          paddingHorizontal: 10,
-                        }}
-                      >
-                        <Text>
-                          {name.slice(0, 60)}
-                          {name.length > 60 && '...'}
-                        </Text>
-                      </View>
-                      {/* ^- user name */}
-                    </View>
                     <View
                       style={{
                         flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'center',
-                        width: '50%',
-                        paddingHorizontal: 10,
-                        borderRightWidth: 1,
-                        alignSelf: 'center',
+                        alignItems: 'flex-start',
+                        justifyContent: 'space-between',
+                        width: '100%',
+                        borderTopWidth: 0.5,
+                        borderBottomWidth: 0.5,
+                        // borderRadius: 5,
+                        //   paddingHorizontal: 10,
                       }}
                     >
-                      <Text style={{alignSelf: 'flex-start'}}>
-                        {contactNumber}Chat Content here 
-                      </Text>
+                      <View style={{flexDirection: 'row', width: '50%'}}>
+                        <View
+                          style={{
+                            flex: 1,
+                            borderLeftWidth: 1,
+                            borderRightWidth: 1,
+                            paddingHorizontal: 10,
+                          }}
+                        >
+                          <Text>
+                            {name.slice(0, 60)}
+                            {name.length > 60 && '...'}
+                          </Text>
+                        </View>
+                        {/* ^- user name */}
+                      </View>
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'center',
+                          width: '50%',
+                          paddingHorizontal: 10,
+                          borderRightWidth: 1,
+                          alignSelf: 'center',
+                        }}
+                      >
+                        <Text style={{alignSelf: 'flex-start'}}>
+                          {lastChat.message}
+                        </Text>
+                      </View>
+                      {/* ^- last chat content*/}
                     </View>
-                    {/* ^- last chat content*/}
-                  </View>
+                  </TouchableOpacity>
                 );
               })}
             </ScrollView>

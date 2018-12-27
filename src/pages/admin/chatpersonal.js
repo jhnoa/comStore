@@ -16,7 +16,11 @@ import {navigateTo} from 'gatsby-link';
 import Capital from '../../general/helper/capitalize';
 import formatCurrency from '../../general/helper/numberToCurrency';
 import getAllUser from '../../general/helper/adminUser/getAllUser';
+import io from 'socket.io-client';
+import getStorage from '../../general/helper/getStorage';
+
 const windowSize = Dimensions.get('window').width;
+
 const windowHeight = Dimensions.get('window').height;
 
 type Item = {
@@ -64,15 +68,75 @@ let defaultData = [
 
 class Userlistpage extends React.Component<Props, State> {
   state = {
-    data: [],
+    socket: {},
+    userId: '',
+    userType: '',
+    chatHistory: [],
+    chatValue: '',
   };
   async componentDidMount() {
-    let data = await getAllUser();
-    this.setState({data});
+    let userId = this.props.location.state;
+    let userType: string = await getStorage('userType');
+    const socket = io('http://localhost:3030/');
+    socket.on('connect', () => {
+      socket.emit('auth', userId);
+    });
+    socket.on('debug', console.log);
+    socket.on('disconnect', (reason) => {
+      // console.log('IO Disconected, Reason: ', reason);
+      // if (reason === 'io server disconnect') {
+      //   // the disconnection was initiated by the server, you need to reconnect manually
+      //   socket.connect();
+      // }
+      // // else the socket will automatically try to reconnect
+    });
+    socket.on('history', (chatHistory) => {
+      // console.log(chatHistory);
+      this.setState({chatHistory});
+    });
+    socket.on(
+      'toClientChat',
+      (props: {
+        userId: string,
+        data: {sender: 'admin' | 'customer', message: string},
+      }) => {
+        console.log('toClientChat', props);
+        let newHistory = [...this.state.chatHistory, props.data];
+        console.log('new History', newHistory);
+        this.setState({chatHistory: newHistory});
+      },
+    );
+    this.setState({socket, userId, userType});
   }
+  pushChat = (message: string) => {
+    let {userId, userType, socket} = this.state;
+    let chat = {userId, data: {sender: userType, message}};
+    socket.emit('toServerChat', chat);
+    this.setState({chatValue: ''});
+  };
+  renderText = (sender, message) => {
+    let styles = {
+      borderWidth: 1,
+      borderRadius: 10,
+      flexDirection: 'column',
+      padding: 5,
+      flexWrap: 'wrap',
+      maxWidth: '70%',
+      width: '70%',
+      marginVertical: 5,
+      alignItems: sender === 'admin' ? 'flex-start' : 'flex-end',
+      alignSelf: sender === 'admin' ? 'flex-start' : 'flex-end',
+    };
+    return (
+      <View style={styles}>
+        <Text style={{fontSize: 10, fontWeight: 'bold'}}>{sender}:</Text>
+        <Text>{message}</Text>
+      </View>
+    );
+  };
   render() {
     console.log(this.state);
-    let {data} = this.state;
+    let {chatHistory} = this.state;
     return (
       <Layout
         title={'Home'}
@@ -92,8 +156,8 @@ class Userlistpage extends React.Component<Props, State> {
               style={{width: '100%'}}
               contentContainerStyle={styles.contentContainer}
             >
-              {data.map((element) => {
-                let {_id, name, contactNumber} = element;
+              {chatHistory.map((element) => {
+                let {sender, message} = element;
                 return (
                   <View
                     style={{
@@ -104,46 +168,7 @@ class Userlistpage extends React.Component<Props, State> {
                       //   paddingHorizontal: 10,
                     }}
                   >
-                    <View
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        flexDirection: 'column',
-                        padding: 5,
-                        flexWrap: 'wrap',
-                        maxWidth: '70%',
-                        width: '70%',
-                        marginVertical: 5,
-                        alignItems: 'flex-start',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Text style={{fontSize: 10, fontWeight: 'bold'}}>
-                        admin:
-                      </Text>
-                      <Text>Here's Chat from admin</Text>
-                    </View>
-                    {/* ^- chat dari admin */}
-                    <View
-                      style={{
-                        borderWidth: 1,
-                        borderRadius: 10,
-                        flexDirection: 'column',
-                        padding: 5,
-                        flexWrap: 'wrap',
-                        maxWidth: '70%',
-                        width: '70%',
-                        marginVertical: 5,
-                        alignItems: 'flex-end',
-                        alignSelf: 'flex-end',
-                      }}
-                    >
-                      <Text style={{fontSize: 10, fontWeight: 'bold'}}>
-                        user:
-                      </Text>
-                      <Text>Here's Chat from user</Text>
-                    </View>
-                    {/* ^- chat dari user */}
+                    {this.renderText(sender, message)}
                   </View>
                 );
               })}
@@ -159,7 +184,9 @@ class Userlistpage extends React.Component<Props, State> {
                 borderWidth: 2,
               }}
               placeholder={'Masukan Chat Anda Disini'}
-              
+              value={this.state.chatValue}
+              onChangeText={(text) => this.setState({chatValue: text})}
+              onSubmitEditing={() => this.pushChat(this.state.chatValue)}
             />
           </View>
         </View>
