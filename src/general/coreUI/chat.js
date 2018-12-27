@@ -25,8 +25,8 @@ type OnLayoutEvent = {
 };
 export default class Chat extends React.Component<{}, State> {
   state = {
-    chatText: 'aswdfserdfgae',
-    chatShow: true,
+    chatText: '',
+    chatShow: false,
     socket: {},
     userId: '',
     userType: '',
@@ -68,10 +68,10 @@ export default class Chat extends React.Component<{}, State> {
     this.setState({socket, userId, userType});
   }
   pushChat = (message: string) => {
-    console.log('push', message);
     let {userId, userType, socket} = this.state;
     let chat = {userId, data: {sender: userType, message}};
     socket.emit('toServerChat', chat);
+    this.setState({chatText: ''});
   };
 
   renderText = (
@@ -91,7 +91,8 @@ export default class Chat extends React.Component<{}, State> {
           padding: 5,
           alignSelf:
             props && props.sender === 'customer' ? 'flex-end' : 'flex-start',
-          backgroundColor: props && props.sender === 'customer' ? 'deepskyblue' : 'silver',
+          backgroundColor:
+            props && props.sender === 'customer' ? 'deepskyblue' : 'silver',
           marginVertical: 5,
           borderRadius: 5,
         }}
@@ -102,8 +103,6 @@ export default class Chat extends React.Component<{}, State> {
   };
 
   render() {
-    console.log('render');
-    console.log(this.state);
     let {chatHistory} = this.state;
     return (
       <View
@@ -147,6 +146,7 @@ export default class Chat extends React.Component<{}, State> {
             <TextInput
               // value={this.state.chatText}
               placeholder={'masukan chat anda'}
+              value={this.state.chatText}
               onChangeText={(chatText) => this.setState({chatText})}
               onSubmitEditing={() => this.pushChat(this.state.chatText)}
               style={{
