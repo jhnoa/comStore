@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Button} from 'react-native';
+import formatCurrency from '../general/helper/numberToCurrency';
 
 type Props = {
   name: string,
@@ -68,10 +69,19 @@ class itemdescfrag extends React.Component<Props, State> {
             </View>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemLabel}>Harga Product:</Text>
-              <Text style={styles.itemDesc}>{price}</Text>
+              <Text style={styles.itemDesc}>{formatCurrency(price)}</Text>
             </View>
           </View>
           {/* EoBar */}
+        </View>
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button title={'Hapus'} onPress={() => {}} />
         </View>
       </View>
     );

@@ -1,7 +1,8 @@
 // @flow
 
 import React from 'react';
-import {View, Text, StyleSheet, Image} from 'react-native';
+import {View, Text, StyleSheet, Image, Button} from 'react-native';
+import formatCurrency from '../helper/numberToCurrency';
 
 type Props = {
   name: string,
@@ -12,7 +13,7 @@ type Props = {
 };
 type State = {};
 
-class itemdescfrag extends React.Component<Props, State> {
+class admindescfrag extends React.Component<Props, State> {
   state = {
     name: this.props.name || 'AMD Ryzen 5 2600',
     picture: this.props.picture || 'AMD Ryzen 5 2600.png',
@@ -68,17 +69,26 @@ class itemdescfrag extends React.Component<Props, State> {
             </View>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemLabel}>Harga Product:</Text>
-              <Text style={styles.itemDesc}>{price}</Text>
+              <Text style={styles.itemDesc}>{formatCurrency(price)}</Text>
             </View>
           </View>
           {/* EoBar */}
+        </View>
+        <View
+          style={{
+            width: '100%',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}
+        >
+          <Button title={'Hapus'} onPress={() => {}} />
         </View>
       </View>
     );
   }
 }
 
-export default itemdescfrag;
+export default admindescfrag;
 let styles = StyleSheet.create({
   container: {
     width: 600,
