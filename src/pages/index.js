@@ -43,30 +43,10 @@ class IndexPage extends React.Component<Props, State> {
           wrapAround={true}
           //renderCenterLeftControls={({previousSlide}) =>(<)}
         >
-          <img
-            alt="1"
-            src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide1"
-          />
-          <img
-            alt="2"
-            src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide2"
-          />
-          <img
-            alt="3"
-            src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide3"
-          />
-          <img
-            alt="4"
-            src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide4"
-          />
-          <img
-            alt="5"
-            src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide5"
-          />
-          <img
-            alt="6"
-            src="http://placehold.it/1000x400/ffffff/c0392b/&text=slide6"
-          />
+          <img alt="1" src={require('../assets/picture/slide1.png')} />
+          <img alt="2" src={require('../assets/picture/slide2.png')} />
+          <img alt="3" src={require('../assets/picture/slide3.png')} />
+          <img alt="4" src={require('../assets/picture/slide4.png')} />
         </Carousel>
         <View
           style={{

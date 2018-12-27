@@ -30,7 +30,13 @@ type Props = {
 };
 class ItemFragCatalog extends React.Component {
   render() {
-    let {name, brand, price, category, picture} = this.props.item;
+    let {
+      name,
+      brand,
+      price,
+      category,
+      picture = 'Acer Aspire E5-475G Notebook [14 inchi3-6100UnVidia GT940MX2 GB500 GB].png',
+    } = this.props.item;
     return (
       <View
         style={{

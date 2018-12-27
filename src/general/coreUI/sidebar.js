@@ -81,8 +81,6 @@ class HeaderPart extends React.Component<Props> {
           menuSection('Tambah Barang', styles.customButton2, null, () => {
             navigateTo('tambahitem');
           })}
-        {this.state.show === true &&
-          menuSection('Hapus Barang', styles.customButton2)}
         {menuSection('User List', styles.customButton, null, () => {
           navigateTo('userlist');
         })}

@@ -170,7 +170,8 @@ class shoppingcart extends React.Component<Props, State> {
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: 550,
+                width: '95%',
+                height: '90%',
                 flexDirection: 'row',
                 padding: 10,
               }}
@@ -182,7 +183,7 @@ class shoppingcart extends React.Component<Props, State> {
                   <Text style={styles.textin}>Informasi Barang</Text>
                   {/* ilist */}
                   <ScrollView
-                    style={{width: 535}}
+                    style={{width: 535, height: '100%'}}
                     contentContainerStyle={styles.contentContainer}
                   >
                     {data.map((element, index) => {
@@ -197,7 +198,13 @@ class shoppingcart extends React.Component<Props, State> {
                             width: '100%',
                           }}
                         >
-                          <View style={{flexDirection: 'row', width: '70%'}}>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              width: '80%',
+                              height: '100%',
+                            }}
+                          >
                             <Text>
                               {Capital(category)}: ({Capital(brand)}){' '}
                               {Capital(name)}
@@ -269,7 +276,7 @@ export default shoppingcart;
 let styles = StyleSheet.create({
   container: {
     width: Dimensions.get('screen').width - 100,
-    height: 750,
+    height: Dimensions.get('window').height - 100,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',
@@ -306,13 +313,13 @@ let styles = StyleSheet.create({
     flexWrap: 'nowrap',
     justifyContent: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.7)',
-    width: 1000,
-    height: Dimensions.get('window').height - 420,
+    width: '95%',
+    height: '100%',
     alignItems: 'center',
     marginHorizontal: 20,
   },
   boxcol: {
-    height: 400,
+    height: '80%',
     flexDirection: 'column',
     alignItems: 'baseline',
     padding: 5,

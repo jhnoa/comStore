@@ -3,31 +3,33 @@
 import React from 'react';
 import {View, Text, StyleSheet, Image, Button} from 'react-native';
 import formatCurrency from '../helper/numberToCurrency';
+import deleteItem from '../helper/catalog/deleteItem';
 
 type Props = {
   name: string,
   category: string,
   brand: string,
   price: number,
-  picture: string,
+  itemId: string,
+  closeFunction: Function,
 };
 type State = {};
 
 class admindescfrag extends React.Component<Props, State> {
-  state = {
-    name: this.props.name || 'AMD Ryzen 5 2600',
-    picture: this.props.picture || 'AMD Ryzen 5 2600.png',
-    category: this.props.category || 'This is Category',
-    brand: this.props.brand || 'This is Brand',
-    price: this.props.price || 0,
-  };
   render() {
-    let {name, brand, category, price, picture} = this.state;
-    console.log(this.state);
+    let {
+      name,
+      brand,
+      category,
+      price,
+      itemId,
+      closeFunction,
+      // picture = 'AMD Ryzen 5 2600.png',
+    } = this.props;
     return (
       <View style={styles.container}>
         {/* atas */}
-        <Text style={{fontSize: 40}}>{name}</Text>
+        <Text style={{fontSize: 25}}>{name}</Text>
         {/* bawah */}
         <View
           style={{
@@ -39,13 +41,13 @@ class admindescfrag extends React.Component<Props, State> {
           }}
         >
           {/* image */}
-          <View style={styles.boxrow}>
+          {/* <View style={styles.boxrow}>
             <Image
               resizeMode="contain"
               style={{height: 150, width: 150, alignSelf: 'center'}}
               source={require(`../../assets/picture/catalog/${picture}`)}
-            />
-          </View>
+            /> */}
+          {/* </View> */}
           {/* descbar */}
           <View style={styles.boxcol}>
             <View style={styles.boxrowv2}>
@@ -81,7 +83,13 @@ class admindescfrag extends React.Component<Props, State> {
             alignItems: 'center',
           }}
         >
-          <Button title={'Hapus'} onPress={() => {}} />
+          <Button
+            title={'Hapus'}
+            onPress={async () => {
+              await deleteItem({itemId});
+              closeFunction();
+            }}
+          />
         </View>
       </View>
     );
@@ -93,9 +101,10 @@ let styles = StyleSheet.create({
   container: {
     width: 600,
     padding: 20,
-    backgroundColor: 'rgba(52, 52, 52, 0.4)',
-    justifyContent: 'flex-start',
-    alignItems: 'baseline',
+    backgroundColor: 'silver',
+    justifyContent: 'center',
+    alignItems: 'center',
+    alignSelf: 'center',
     flexDirection: 'column',
   },
   boxrow: {

@@ -71,45 +71,45 @@ class Transactionlistpage extends React.Component<Props, State> {
                 flexDirection: 'row',
                 borderBottomWidth: 1,
                 justifyContent: 'space-between',
-                paddingHorizontal: 20,
+                paddingHorizontal: 10,
               }}
             >
               <View
-                style={{flexDirection: 'row', width: '80%', paddingLeft: 10}}
+                style={{flexDirection: 'row', width: '60%', paddingLeft: 10}}
               >
-                <View style={{flex: 1}}>
-                  <Text style={{fontSize: 20}}>Status Pemesanan</Text>
+                <View style={{flex: 2}}>
+                  <Text style={{fontSize: 15}}>Status Pemesanan</Text>
                 </View>
                 <View
                   style={{
-                    flex: 5,
+                    flex: 2,
                     alignItems: 'center',
                     paddingHorizontal: 10,
                   }}
                 >
-                  <Text style={{fontSize: 20, alignSelf: 'center'}}>
+                  <Text style={{fontSize: 15, alignSelf: 'center'}}>
                     Nama Pelanggan
                   </Text>
                 </View>
                 <View
                   style={{
-                    flex: 1,
+                    flex: 2,
                     alignItems: 'center',
-                    paddingHorizontal: 10,
+                    // paddingHorizontal: 10,
                   }}
                 >
-                  <Text style={{fontSize: 20, alignSelf: 'center'}}>
+                  <Text style={{fontSize: 15, alignSelf: 'center'}}>
                     Jumlah Transaksi
                   </Text>
                 </View>
                 <View
                   style={{
-                    flex: 1,
+                    flex: 2,
                     alignItems: 'center',
                     paddingHorizontal: 10,
                   }}
                 >
-                  <Text style={{fontSize: 20, alignSelf: 'center'}}>
+                  <Text style={{fontSize: 15, alignSelf: 'center'}}>
                     Waktu Transaksi
                   </Text>
                 </View>
@@ -117,12 +117,12 @@ class Transactionlistpage extends React.Component<Props, State> {
               </View>
               <View
                 style={{
-                  width: '20%',
+                  width: '40%',
                   flexDirection: 'row',
                   paddingLeft: 10,
                 }}
               >
-                <Text style={{fontSize: 20, alignSelf: 'center'}}>Detail</Text>
+                <Text style={{fontSize: 15, alignSelf: 'center'}}>Detail</Text>
               </View>
               {/* end label kanan */}
             </View>
@@ -152,31 +152,30 @@ class Transactionlistpage extends React.Component<Props, State> {
                       borderBottomWidth: 1,
                     }}
                   >
-                    <View style={{flexDirection: 'row', width: '80%'}}>
-                      <View style={{flex: 1}}>
+                    <View style={{flexDirection: 'row', width: '60%'}}>
+                      <View style={{flex: 2}}>
                         <Text>{status}</Text>
                       </View>
                       {/* ^- status pemesanan*/}
                       <View
                         style={{
-                          flex: 5,
+                          flex: 2,
                           paddingHorizontal: 10,
                         }}
                       >
                         <Text>
                           {userData.name.slice(0, 60)}
                           {userData.name.length > 60 && '...'}
-                          Username
                         </Text>
                       </View>
                       {/* ^- user name */}
-                      <View style={{flex: 1, paddingLeft: 5}}>
+                      <View style={{flex: 2, paddingLeft: 5}}>
                         <Text style={{alignSelf: 'flex-start'}}>
                           {formatCurrency(totalPrice)}
                         </Text>
                       </View>
                       {/* ^- jumlah transaksi*/}
-                      <View style={{flex: 1, paddingLeft: 5}}>
+                      <View style={{flex: 2, paddingLeft: 5}}>
                         <Text style={{alignSelf: 'flex-start'}}>
                           {createdAt.split('T')[0]}
                         </Text>
@@ -186,7 +185,7 @@ class Transactionlistpage extends React.Component<Props, State> {
                     {/* for border */}
                     <View
                       style={{
-                        width: '20%',
+                        width: '40%',
                         flexDirection: 'row',
                         paddingLeft: 10,
                       }}

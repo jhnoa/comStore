@@ -150,7 +150,7 @@ class Userlistpage extends React.Component<Props, State> {
                     }}
                   >
                     <View style={{flexDirection: 'row', width: '85%'}}>
-                      <View style={{flex: 2}}>
+                      <View style={{flex: 3}}>
                         <Text>{_id}</Text>
                       </View>
                       {/* ^- user unique id */}

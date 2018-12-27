@@ -224,11 +224,13 @@ class simchoiceresult extends React.Component<Props, State> {
                     })}
                   </ScrollView>
                 </View>
-                <View
-                  style={{
+                <ScrollView
+                  style={{width: '100%', height: '90%'}}
+                  contentContainerStyle={{
                     flexDirection: 'column',
                     alignItems: 'baseline',
-                    padding: 5,
+                    paddingHorizontal: 5,
+                    marginTop: 10,
                     marginHorizontal: 10,
                     width: 355,
                     marginBottom: 10,
@@ -249,7 +251,7 @@ class simchoiceresult extends React.Component<Props, State> {
                   <Text syle={{fontSize: 20, fontWeight: '900'}}>
                     <b>Total Harga: {formatCurrency(this.state.totalPrice)}</b>
                   </Text>
-                </View>
+                </ScrollView>
               </View>
               {/* descbar */}
               {/* EoBar */}
@@ -299,8 +301,8 @@ class simchoiceresult extends React.Component<Props, State> {
 export default Auth(simchoiceresult);
 let styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width - 100,
-    height: 700,
+    width: Dimensions.get('window').width - 100,
+    height: Dimensions.get('window').height - 100,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',

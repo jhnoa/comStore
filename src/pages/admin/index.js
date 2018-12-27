@@ -11,6 +11,7 @@ import {
   Picker,
   Button,
   Dimensions,
+  TouchableOpacity,
 } from 'react-native';
 import Layout from '../../general/layouts/admin';
 import isAuthenticated from '../../general/helper/auth/auth';
@@ -18,6 +19,8 @@ import {navigateTo} from 'gatsby-link';
 import Capital from '../../general/helper/capitalize';
 import formatCurrency from '../../general/helper/numberToCurrency';
 import getClientListItem from '../../general/helper/catalog/getClientListItem';
+import Modal from 'modal-enhanced-react-native-web';
+import FragmentAdminDetail from '../../general/coreUI/fragmentadmindetail';
 const windowSize = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -36,37 +39,6 @@ type State = {
   isLoggedIn: boolean,
 };
 
-let defaultData = [
-  {
-    _id: '5c1c6c55f95fe531b86eaa2c',
-    removed: false,
-    itemId: 140,
-    name: 'Cougar QBX Gaming Mini ITX Case',
-    casing: 'all (mid-tower & tower)',
-    category: 'casing',
-    brand: 'cougar',
-    price: 671000,
-    picture: 'Cougar QBX Gaming Mini ITX Case.png',
-    createdAt: '2018-12-21T04:30:13.820Z',
-    updatedAt: '2018-12-21T04:30:13.820Z',
-    __v: 0,
-  },
-  {
-    _id: '5c1c6c55f95fe531b86eaa2d',
-    removed: false,
-    itemId: 141,
-    name: 'AMD Ryzen 5 1400',
-    casing: 'all (mid-tower & tower)',
-    category: 'proccesor',
-    brand: 'amd',
-    price: 2050000,
-    picture: 'AMD Ryzen 5 1400.png',
-    createdAt: '2018-12-21T04:30:13.826Z',
-    updatedAt: '2018-12-21T04:30:13.826Z',
-    __v: 0,
-  },
-];
-
 class IndexPage extends React.Component<Props, State> {
   state = {
     searchBy: '',
@@ -78,8 +50,10 @@ class IndexPage extends React.Component<Props, State> {
     allData: [],
     filteredData: [],
     searchFilteredData: [],
+    modalShow: -1,
+    selectedModal: {},
   };
-  async componentDidMount() {
+  initialize = async () => {
     let allData = await getClientListItem();
     let listCategory = [];
     let listBrand = [];
@@ -100,7 +74,13 @@ class IndexPage extends React.Component<Props, State> {
       listBrand,
       filteredData: allData,
       searchFilteredData: allData,
+      modalShow: -1,
+      selectedModal: {},
     });
+  };
+
+  async componentDidMount() {
+    await this.initialize();
   }
   _arrayIncludeString = (arr, str) => {
     for (let index = 0; index < arr.length; index++) {
@@ -196,6 +176,8 @@ class IndexPage extends React.Component<Props, State> {
     );
     state.filteredData = filteredData;
     state.searchFilteredData = searchFilteredData;
+    state.modalShow = -1;
+    state.selectedModal = {};
     if (listBrandFiltered.length > 0) {
       state.listBrand = listBrandFiltered;
     }
@@ -297,6 +279,9 @@ class IndexPage extends React.Component<Props, State> {
     );
     state.filteredData = filteredData;
     state.searchFilteredData = searchFilteredData;
+    state.modalShow = -1;
+    state.selectedModal = {};
+
     if (listCategoryFiltered.length > 0) {
       state.listCategory = listCategoryFiltered;
     }
@@ -358,7 +343,12 @@ class IndexPage extends React.Component<Props, State> {
   _searchBy = (value) => {
     let {filteredData} = this.state;
     let result = this._searchData(filteredData, value, 'name');
-    this.setState({searchFilteredData: result, searchBy: value});
+    this.setState({
+      searchFilteredData: result,
+      searchBy: value,
+      modalShow: -1,
+      selectedModal: {},
+    });
   };
   render() {
     console.log(this.state);
@@ -434,6 +424,15 @@ class IndexPage extends React.Component<Props, State> {
               {searchFilteredData.map((element, index) => {
                 let {category, brand, name, price} = element;
                 return (
+                    <TouchableOpacity
+                    style={{width:'100%'}}
+                      onPress={() => {
+                        this.setState({
+                          modalShow: index,
+                          selectedModal: element,
+                        });
+                      }}
+                    >
                   <View
                     key={index}
                     style={{
@@ -446,46 +445,47 @@ class IndexPage extends React.Component<Props, State> {
                       paddingHorizontal: 10,
                     }}
                   >
-                    <View style={{flexDirection: 'row', width: '85%'}}>
-                      <View style={{flex: 2}}>
-                        <Text>{Capital(category)}</Text>
+                      <View style={{flexDirection: 'row', width: '85%'}}>
+                        <View style={{flex: 2}}>
+                          <Text>{Capital(category)}</Text>
+                        </View>
+                        <View
+                          style={{
+                            flex: 2,
+                            borderLeftWidth: 1,
+                            alignItems: 'center',
+                          }}
+                        >
+                          <Text>{Capital(brand)}</Text>
+                        </View>
+                        <View
+                          style={{
+                            flex: 7,
+                            borderLeftWidth: 1,
+                            borderRightWidth: 1,
+                            paddingHorizontal: 10,
+                          }}
+                        >
+                          <Text>
+                            {name.slice(0, 60)}
+                            {name.length > 60 && '...'}
+                          </Text>
+                        </View>
                       </View>
                       <View
                         style={{
-                          flex: 2,
-                          borderLeftWidth: 1,
-                          alignItems: 'center',
+                          flexDirection: 'row',
+                          justifyContent: 'flex-start',
+                          alignItems: 'flex-start',
+                          alignSelf: 'flex-start',
                         }}
                       >
-                        <Text>{Capital(brand)}</Text>
-                      </View>
-                      <View
-                        style={{
-                          flex: 7,
-                          borderLeftWidth: 1,
-                          borderRightWidth: 1,
-                          paddingHorizontal: 10,
-                        }}
-                      >
-                        <Text>
-                          {name.slice(0, 60)}
-                          {name.length > 60 && '...'}
+                        <Text style={{alignSelf: 'flex-start'}}>
+                          {formatCurrency(price)}
                         </Text>
                       </View>
-                    </View>
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
-                        alignItems: 'flex-start',
-                        alignSelf: 'flex-start',
-                      }}
-                    >
-                      <Text style={{alignSelf: 'flex-start'}}>
-                        {formatCurrency(price)}
-                      </Text>
-                    </View>
                   </View>
+                    </TouchableOpacity>
                 );
               })}
             </ScrollView>
@@ -559,6 +559,28 @@ class IndexPage extends React.Component<Props, State> {
             </View>
           </View>
         </View>
+        <Modal
+          isVisible={this.state.modalShow !== -1}
+          onBackdropPress={() =>
+            this.setState({
+              modalShow: -1,
+            })
+          }
+        >
+          <FragmentAdminDetail
+            name={this.state.selectedModal.name || 'noName'}
+            brand={this.state.selectedModal.brand || 'noBrand'}
+            category={this.state.selectedModal.category || 'noCat'}
+            price={this.state.selectedModal.price || 0}
+            itemId={this.state.selectedModal.itemId || -1}
+            closeFunction={async () => {
+              this.setState({
+                modalShow: -1,
+              });
+              this.initialize();
+            }}
+          />
+        </Modal>
       </Layout>
     );
   }

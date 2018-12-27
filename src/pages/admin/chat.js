@@ -135,6 +135,7 @@ class Userlistpage extends React.Component<Props, State> {
                 let {name, lastChat, userId} = element;
                 return (
                   <TouchableOpacity
+                    style={{width: '100%'}}
                     onPress={() => {
                       navigateTo({
                         pathname: 'chatpersonal',
@@ -154,7 +155,9 @@ class Userlistpage extends React.Component<Props, State> {
                         //   paddingHorizontal: 10,
                       }}
                     >
-                      <View style={{flexDirection: 'row', width: '50%'}}>
+                      <View
+                        style={{flexDirection: 'row', width: '50%', flex: 1}}
+                      >
                         <View
                           style={{
                             flex: 1,
@@ -178,6 +181,7 @@ class Userlistpage extends React.Component<Props, State> {
                           width: '50%',
                           paddingHorizontal: 10,
                           borderRightWidth: 1,
+                          flex: 1,
                           alignSelf: 'center',
                         }}
                       >

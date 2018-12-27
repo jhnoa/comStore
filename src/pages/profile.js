@@ -108,7 +108,15 @@ class Profile extends React.Component {
                 }}
               />
             </View>
-            <View style={{alignSelf: 'center', marginTop: 10}}>
+            <View
+              style={{
+                alignSelf: 'center',
+                marginTop: 10,
+                flexDirection: 'row',
+                width: '100%',
+              }}
+            >
+              <View style={{flex: 1}} />
               <Button
                 title="Edit"
                 style={{alignSelf: 'center'}}
@@ -119,6 +127,7 @@ class Profile extends React.Component {
                 }}
                 disabled={this.state.mayEdit}
               />
+              <View style={{flex: 1}} />
               {this.state.mayEdit && (
                 <Button
                   title="Save"
@@ -149,6 +158,7 @@ class Profile extends React.Component {
                   }}
                 />
               )}
+              <View style={{flex: 1}} />
             </View>
           </View>
         </View>
