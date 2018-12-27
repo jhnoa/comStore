@@ -2,14 +2,16 @@
 
 type Config = {[string]: string};
 
+let mainURL = 'http://localhost:3030/';
 let config: Config = {
+  mainURL,
   companyName: 'Vinando Computer',
-  loginURL: 'http://localhost:3030/authentication',
-  registerURL: 'http://localhost:3030/registration',
-  catalogURL: 'http://localhost:3030/item-list',
-  userProfileURL: 'http://localhost:3030/user-profile',
-  simulasiURL: 'http://localhost:3030/simulasi',
-  templateSimulationURL: 'http://localhost:3030/preferensi',
+  loginURL: mainURL + 'authentication',
+  registerURL: mainURL + 'registration',
+  catalogURL: mainURL + 'item-list',
+  userProfileURL: mainURL + 'user-profile',
+  simulasiURL: mainURL + 'simulasi',
+  templateSimulationURL: mainURL + '/preferensi',
 };
 
 export default config;

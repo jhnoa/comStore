@@ -22,6 +22,7 @@ let login = async (email: string, password: string) => {
     );
     if (validation.isAuthenticated) {
       await setStorage('userType', validation.type);
+      await setStorage('userId', validation._id);
     }
     return true;
   } else {
