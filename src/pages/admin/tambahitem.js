@@ -15,6 +15,7 @@ import isAuthenticated from '../../general/helper/auth/auth';
 import {navigateTo} from 'gatsby-link';
 import Capital from '../../general/helper/capitalize';
 import formatCurrency from '../../general/helper/numberToCurrency';
+import createNewItem from '../../general/helper/catalog/createNewItem';
 const windowSize = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -32,11 +33,14 @@ type State = {
 
 class Userlistpage extends React.Component<Props, State> {
   state = {
-    data: [],
+    name: '',
+    category: '',
+    brand: '',
+    price: 0,
+    casing: 'none',
   };
   render() {
     console.log(this.state);
-    let {data} = this.state;
     return (
       <Layout
         title={'Home'}
@@ -53,6 +57,10 @@ class Userlistpage extends React.Component<Props, State> {
             <View style={styles.boxrow}>
               <Text style={{flex: 1}}>Nama Produk: </Text>
               <TextInput
+                value={this.state.name}
+                onChangeText={(name) => {
+                  this.setState({name});
+                }}
                 style={styles.textin}
                 placeholder={'ketik Nama produk'}
               />
@@ -60,6 +68,10 @@ class Userlistpage extends React.Component<Props, State> {
             <View style={styles.boxrow}>
               <Text style={{flex: 1}}>Kategori Produk: </Text>
               <TextInput
+                value={this.state.category}
+                onChangeText={(category) => {
+                  this.setState({category});
+                }}
                 style={styles.textin}
                 placeholder={'ketik Kategori produk'}
               />
@@ -67,6 +79,10 @@ class Userlistpage extends React.Component<Props, State> {
             <View style={styles.boxrow}>
               <Text style={{flex: 1}}>Brand Produk: </Text>
               <TextInput
+                value={this.state.brand}
+                onChangeText={(brand) => {
+                  this.setState({brand});
+                }}
                 style={styles.textin}
                 placeholder={'ketik Brand produk'}
               />
@@ -74,23 +90,52 @@ class Userlistpage extends React.Component<Props, State> {
             <View style={styles.boxrow}>
               <Text style={{flex: 1}}>Harga Produk: </Text>
               <TextInput
+                value={this.state.price}
+                onChangeText={(price) => {
+                  this.setState({price: parseInt(price, 10)});
+                }}
                 style={styles.textin}
-                placeholder={'ketik Harga produk (tanpa titik)'}
+                placeholder={'ketik Harga produk (hanya angka)'}
               />
             </View>
             <View style={styles.boxrow}>
               <Text style={{flex: 1}}>Tipe Casing: </Text>
-              <Picker style={styles.dropdown}>
-                <Picker.Item label="All" value="All" />
-                <Picker.Item label="Tower" value="Tower" />
-                <Picker.Item label="None" value="None" />
+              <Picker
+                style={styles.dropdown}
+                selectedValue={this.state.casing}
+                onValueChange={(casing) => {
+                  this.setState({casing});
+                }}
+              >
+                <Picker.Item label="All" value="all" />
+                <Picker.Item label="Tower" value="tower" />
+                <Picker.Item label="None" value="none" />
               </Picker>
             </View>
             <View style={styles.boxrow}>
               <View style={{flex: 1}} />
-              <Button title={'Batalkan'} onPress={() => {}} />
+              <Button
+                title={'Batalkan'}
+                onPress={() => {
+                  window.history.back();
+                }}
+              />
               <View style={{flex: 1}} />
-              <Button title={'Tambahkan'} onPress={() => {}} />
+              <Button
+                title={'Tambahkan'}
+                onPress={async () => {
+                  console.log(this.state);
+                  let {name, brand, price, category, casing} = this.state;
+                  await createNewItem({
+                    name,
+                    brand,
+                    price,
+                    category,
+                    casing,
+                  });
+                  navigateTo('/admin/');
+                }}
+              />
               <View style={{flex: 1}} />
             </View>
           </View>
