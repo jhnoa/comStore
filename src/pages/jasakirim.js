@@ -16,7 +16,7 @@ import fontSize from '../constant/fontsize';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import nextToPayment from '../general/helper/simulation/nextToPayment';
-import {navigateTo} from 'gatsby-link'
+import {navigateTo} from 'gatsby-link';
 
 const windowSize = Dimensions.get('window').width;
 type Props = {};
@@ -136,8 +136,8 @@ class jaskir extends React.Component<Props, State> {
                       ? false
                       : true
                     : this.state.denganKurir === false
-                      ? true
-                      : false
+                      ? false
+                      : true
                 }
               />
             </View>

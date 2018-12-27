@@ -17,6 +17,8 @@ import Header from '../general/coreUI/header';
 import Capital from '../general/helper/capitalize';
 import formatCurrency from '../general/helper/numberToCurrency';
 import Auth from '../general/helper/authMiddleware';
+import addParts from '../general/helper/simulation/addParts';
+import clearAllParts from '../general/helper/simulation/clearAllParts';
 import {navigateTo} from 'gatsby-link';
 
 const windowSize = Dimensions.get('window').width;
@@ -268,12 +270,22 @@ class simchoiceresult extends React.Component<Props, State> {
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Menuju Simulasi Manual"
-                onPress={() => {navigateTo('simManual')}}
+                onPress={() => {
+                  navigateTo('simManual');
+                }}
               />
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
                 title="Checkout"
-                onPress={() => {}}
+                onPress={async () => {
+                  let {data} = this.state;
+                  await clearAllParts();
+                  for (let index = 0; index < data.length; index++) {
+                    const {itemId, jumlah} = data[index];
+                    await addParts({itemId, jumlah});
+                  }
+                  navigateTo('shoppingCart');
+                }}
               />
             </View>
           </View>
