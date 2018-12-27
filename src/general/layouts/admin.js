@@ -53,9 +53,8 @@ class Layout extends React.Component<Props, State> {
       this.setState((state) => {
         return {...state, isLoggedIn};
       });
-    }
-    else {
-navigateTo('/');
+    } else {
+      navigateTo('/');
     }
   }
 
@@ -81,7 +80,11 @@ navigateTo('/');
           ]}
         />
         {/* space buat header */}
-        <Header />
+        <Header
+          onLogoutPressed={() => {
+            navigateTo('/');
+          }}
+        />
         <Modal
           isVisible={this.state.loginModal}
           onBackdropPress={() => {

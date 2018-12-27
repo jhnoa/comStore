@@ -32,8 +32,6 @@ let menuSection = (name, styles, children, onPress) => {
 };
 
 type Props = {
-  onLoginPressed: Function,
-  onRegPressed: Function,
   onLogoutPressed: Function,
   isLogin?: boolean,
 };

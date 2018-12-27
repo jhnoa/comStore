@@ -88,9 +88,12 @@ export default class Chat extends React.Component<{}, State> {
         style={{
           maxWidth: '70%',
           flexWrap: 'wrap',
+          padding: 5,
           alignSelf:
             props && props.sender === 'customer' ? 'flex-end' : 'flex-start',
-          backgroundColor: 'blue',
+          backgroundColor: props && props.sender === 'customer' ? 'deepskyblue' : 'silver',
+          marginVertical: 5,
+          borderRadius: 5,
         }}
       >
         <Text>{props && props.message}</Text>
@@ -106,9 +109,10 @@ export default class Chat extends React.Component<{}, State> {
       <View
         style={{
           borderWidth: 1,
+          borderRadius: 5,
           borderColor: 'gray',
-          width: 250,
-          backgroundColor: 'chocolate',
+          width: 350,
+          backgroundColor: 'dodgerblue',
         }}
         onLayout={this._onLayout}
       >
@@ -128,22 +132,29 @@ export default class Chat extends React.Component<{}, State> {
           <View
             style={{
               // borderRadius: 10,
-              width: 250,
-              height: 300,
+              width: 350,
+              height: 400,
               position: 'absolute',
-              backgroundColor: 'chocolate',
-              top: -300,
-              borderWidth: 1,
+              backgroundColor: 'white',
+              top: -400,
+              borderWidth: 2,
+              borderRadius: 5,
             }}
           >
             <ScrollView style={{flex: 1}}>
               {chatHistory.map((chat, index) => this.renderText(chat, index))}
             </ScrollView>
             <TextInput
-              value={this.state.chatText}
+              // value={this.state.chatText}
+              placeholder={'masukan chat anda'}
               onChangeText={(chatText) => this.setState({chatText})}
               onSubmitEditing={() => this.pushChat(this.state.chatText)}
-              style={{height: 30}}
+              style={{
+                height: 30,
+                borderWidth: 1,
+                borderTopWidth: 2,
+                borderRadius: 5,
+              }}
             />
           </View>
         )}

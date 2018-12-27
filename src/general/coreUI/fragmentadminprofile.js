@@ -4,26 +4,25 @@ import React from 'react';
 import {View, Text, StyleSheet, Image} from 'react-native';
 
 type Props = {
+  uuid: string,
   name: string,
-  category: string,
-  brand: string,
-  price: number,
-  picture: string,
+  contactNumber: string,
+  address: string,
+  createdAt: string,
 };
 type State = {};
 
 class userprofilefrag extends React.Component<Props, State> {
   state = {
-    name: this.props.name || 'AMD Ryzen 5 2600',
-    picture: this.props.picture || 'AMD Ryzen 5 2600.png',
-    category: this.props.category || 'This is Category',
-    brand:
-      this.props.brand ||
-      'Gading Serpong, Jl.Scientia Boulevar SDC-Learning Lab Lt.1 - unit C, Curug Sangereng, Klp. Dua, Tangerang, Banten 15810',
-    price: this.props.price || 25122018,
+    uuid: this.props.uuid || '5c2368298ffffe554844ffff',
+    name: this.props.name || 'someone',
+    contactNumber: this.props.contactNumber || '081100223344',
+    address: this.props.address || 'somewhere',
+    createdAt: this.props.createdAt || '25/12/2018',
   };
+
   render() {
-    let {name, brand, category, price, picture} = this.state;
+    let {name, address, contactNumber, uuid, createdAt} = this.state;
     console.log(this.state);
     return (
       <View style={styles.container}>
@@ -40,12 +39,11 @@ class userprofilefrag extends React.Component<Props, State> {
             padding: 10,
           }}
         >
-          {/* image */}
           {/* descbar */}
           <View style={styles.boxcol}>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemDesc}>Unique User ID:</Text>
-              <Text style={styles.itemLabel}>{name}</Text>
+              <Text style={styles.itemLabel}>{uuid}</Text>
             </View>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemDesc}>Nama Pelanggan:</Text>
@@ -53,15 +51,15 @@ class userprofilefrag extends React.Component<Props, State> {
             </View>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemDesc}>No. Telfon:</Text>
-              <Text style={styles.itemLabel}>{category}</Text>
+              <Text style={styles.itemLabel}>{contactNumber}</Text>
             </View>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemDesc}>Alamat:</Text>
-              <Text style={styles.itemLabel}>{brand}</Text>
+              <Text style={styles.itemLabel}>{address}</Text>
             </View>
             <View style={styles.boxrowv2}>
               <Text style={styles.itemDesc}>Waktu Pembuatan ID:</Text>
-              <Text style={styles.itemLabel}>{price}</Text>
+              <Text style={styles.itemLabel}>{createdAt}</Text>
             </View>
           </View>
           {/* EoBar */}
@@ -74,7 +72,7 @@ class userprofilefrag extends React.Component<Props, State> {
 export default userprofilefrag;
 let styles = StyleSheet.create({
   container: {
-    width: 600,
+    width: 800,
     padding: 20,
     backgroundColor: 'rgba(52, 52, 52, 0.4)',
     justifyContent: 'flex-start',

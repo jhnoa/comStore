@@ -57,7 +57,7 @@ class Transactionlistpage extends React.Component<Props, State> {
         <View style={styles.container}>
           {/* atas */}
           <Text style={{fontSize: 30, marginBottom: 20, fontWeight: 'bold'}}>
-            Items Catalog
+            List Transaksi
           </Text>
           {/* bawah */}
 
@@ -132,7 +132,13 @@ class Transactionlistpage extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainer}
             >
               {data.map((element) => {
-                let {status, userData, totalPrice, simulasiData} = element;
+                let {
+                  status,
+                  userData,
+                  totalPrice,
+                  simulasiData,
+                  createdAt,
+                } = element;
                 return (
                   <View
                     style={{
@@ -154,8 +160,6 @@ class Transactionlistpage extends React.Component<Props, State> {
                       <View
                         style={{
                           flex: 5,
-                          borderLeftWidth: 1,
-                          borderRightWidth: 1,
                           paddingHorizontal: 10,
                         }}
                       >
@@ -166,19 +170,15 @@ class Transactionlistpage extends React.Component<Props, State> {
                         </Text>
                       </View>
                       {/* ^- user name */}
-                      <View
-                        style={{flex: 1, borderRightWidth: 1, paddingLeft: 5}}
-                      >
+                      <View style={{flex: 1, paddingLeft: 5}}>
                         <Text style={{alignSelf: 'flex-start'}}>
                           {formatCurrency(totalPrice)}
                         </Text>
                       </View>
                       {/* ^- jumlah transaksi*/}
-                      <View
-                        style={{flex: 1, borderRightWidth: 1, paddingLeft: 5}}
-                      >
+                      <View style={{flex: 1, paddingLeft: 5}}>
                         <Text style={{alignSelf: 'flex-start'}}>
-                          {totalPrice}
+                          {createdAt.split('T')[0]}
                         </Text>
                       </View>
                       {/* ^- waktu transaksi*/}

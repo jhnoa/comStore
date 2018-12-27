@@ -21,10 +21,7 @@ const windowHeight = Dimensions.get('window').height;
 
 type Item = {
   name: string,
-  category: string,
-  brand: string,
-  price: number,
-  picture: string,
+  uuid: string,
 };
 type Props = {
   data: Array<Item>,
@@ -84,52 +81,12 @@ class Userlistpage extends React.Component<Props, State> {
         <View style={styles.container}>
           {/* atas */}
           <Text style={{fontSize: 30, marginBottom: 20, fontWeight: 'bold'}}>
-            List User
+            Chat Dari User
           </Text>
           {/* bawah */}
 
           <View style={styles.boxcol}>
             {/* label */}
-            <View
-              style={{
-                width: '100%',
-                alignItems: 'flex-start',
-                paddingTop: 5,
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingHorizontal: 20,
-              }}
-            >
-              <View
-                style={{flexDirection: 'row', width: '85%', paddingLeft: 10}}
-              >
-                <View style={{flex: 2}}>
-                  <Text style={{fontSize: 20}}>Unique User ID</Text>
-                </View>
-                <View
-                  style={{
-                    flex: 7,
-                    alignItems: 'center',
-                    paddingHorizontal: 10,
-                  }}
-                >
-                  <Text style={{fontSize: 20, alignSelf: 'center'}}>
-                    Nama Pelanggan
-                  </Text>
-                </View>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  paddingRight: 20,
-                }}
-              >
-                <Text style={{fontSize: 20, alignSelf: 'center'}}>
-                  No. Telfon
-                </Text>
-              </View>
-            </View>
             {/* ilist */}
             <ScrollView
               style={{width: '100%'}}
@@ -140,52 +97,70 @@ class Userlistpage extends React.Component<Props, State> {
                 return (
                   <View
                     style={{
-                      flexDirection: 'row',
-                      alignItems: 'flex-start',
+                      flexDirection: 'column',
                       justifyContent: 'space-between',
                       width: '100%',
-                      // borderWidth: 1,
                       // borderRadius: 5,
-                      paddingHorizontal: 10,
+                      //   paddingHorizontal: 10,
                     }}
                   >
-                    <View style={{flexDirection: 'row', width: '85%'}}>
-                      <View style={{flex: 2}}>
-                        <Text>{_id}</Text>
-                      </View>
-                      {/* ^- user unique id */}
-                      <View
-                        style={{
-                          flex: 7,
-                          borderLeftWidth: 1,
-                          borderRightWidth: 1,
-                          paddingHorizontal: 10,
-                        }}
-                      >
-                        <Text>
-                          {name.slice(0, 60)}
-                          {name.length > 60 && '...'}
-                        </Text>
-                      </View>
-                      {/* ^- user name */}
-                    </View>
                     <View
                       style={{
-                        flexDirection: 'row',
-                        justifyContent: 'flex-start',
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        flexDirection: 'column',
+                        padding: 5,
+                        flexWrap: 'wrap',
+                        maxWidth: '70%',
+                        width: '70%',
+                        marginVertical: 5,
                         alignItems: 'flex-start',
                         alignSelf: 'flex-start',
                       }}
                     >
-                      <Text style={{alignSelf: 'flex-start'}}>
-                        {contactNumber}
+                      <Text style={{fontSize: 10, fontWeight: 'bold'}}>
+                        admin:
                       </Text>
+                      <Text>Here's Chat from admin</Text>
                     </View>
-                    {/* ^- userphonenumber */}
+                    {/* ^- chat dari admin */}
+                    <View
+                      style={{
+                        borderWidth: 1,
+                        borderRadius: 10,
+                        flexDirection: 'column',
+                        padding: 5,
+                        flexWrap: 'wrap',
+                        maxWidth: '70%',
+                        width: '70%',
+                        marginVertical: 5,
+                        alignItems: 'flex-end',
+                        alignSelf: 'flex-end',
+                      }}
+                    >
+                      <Text style={{fontSize: 10, fontWeight: 'bold'}}>
+                        user:
+                      </Text>
+                      <Text>Here's Chat from user</Text>
+                    </View>
+                    {/* ^- chat dari user */}
                   </View>
                 );
               })}
             </ScrollView>
+            <TextInput
+              style={{
+                justifyContent: 'flex-start',
+                alignItems: 'center',
+                textAlign: 'center',
+                height: 40,
+                width: '100%',
+                borderColor: 'black',
+                borderWidth: 2,
+              }}
+              placeholder={'Masukan Chat Anda Disini'}
+              
+            />
           </View>
         </View>
       </Layout>
@@ -218,6 +193,7 @@ let styles = StyleSheet.create({
   },
   contentContainer: {
     padding: 20,
+
     alignItems: 'flex-start',
     justifyContent: 'space-between',
   },
@@ -235,7 +211,7 @@ let styles = StyleSheet.create({
     borderRadius: 5,
     padding: 5,
     marginHorizontal: 10,
-    width: '100%',
+    width: '85%',
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255, 0.8)',
   },
