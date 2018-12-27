@@ -20,10 +20,18 @@ class IndexPage extends React.Component<Props, State> {
     isLoggedIn: false,
   };
   render() {
+    console.log('indexLoggedIn', this.state.isLoggedIn);
     return (
       <Layout
         title={'Home'}
-        isLoggedIn={() => this.setState({isLoggedIn: true})}
+        isLoggedIn={() => {
+          console.log('indexIsLogging in');
+          this.setState({isLoggedIn: true});
+        }}
+        isLoggedOut={() => {
+          console.log('indexIsLogging out');
+          this.setState({isLoggedIn: false});
+        }}
       >
         <Carousel
           style={{flex: 1, paddingTop: 10}}

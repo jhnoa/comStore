@@ -11,7 +11,9 @@ let config: Config = {
   catalogURL: mainURL + 'item-list',
   userProfileURL: mainURL + 'user-profile',
   simulasiURL: mainURL + 'simulasi',
-  templateSimulationURL: mainURL + '/preferensi',
+  templateSimulationURL: mainURL + 'preferensi',
+  adminUserListURL: mainURL + 'admin-user-list',
+  adminTransactionURL: mainURL + 'transaction',
 };
 
 export default config;

@@ -108,6 +108,7 @@ export default class Chat extends React.Component<{}, State> {
           borderWidth: 1,
           borderColor: 'gray',
           width: 250,
+          backgroundColor: 'chocolate',
         }}
         onLayout={this._onLayout}
       >
@@ -130,7 +131,7 @@ export default class Chat extends React.Component<{}, State> {
               width: 250,
               height: 300,
               position: 'absolute',
-
+              backgroundColor: 'chocolate',
               top: -300,
               borderWidth: 1,
             }}

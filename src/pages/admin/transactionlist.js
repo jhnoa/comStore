@@ -15,7 +15,7 @@ import isAuthenticated from '../../general/helper/auth/auth';
 import {navigateTo} from 'gatsby-link';
 import Capital from '../../general/helper/capitalize';
 import formatCurrency from '../../general/helper/numberToCurrency';
-import getClientListItem from '../../general/helper/catalog/getClientListItem';
+import getAllTransaction from '../../general/helper/adminUser/getAllTransaction';
 const windowSize = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -34,56 +34,17 @@ type State = {
   isLoggedIn: boolean,
 };
 
-let defaultData = [
-  // {
-  //   _id: '5c1c6c55f95fe531b86eaa2c',
-  //   removed: false,
-  //   itemId: 140,
-  //   name: 'Cougar QBX Gaming Mini ITX Case',
-  //   casing: 'all (mid-tower & tower)',
-  //   category: 'casing',
-  //   brand: 'cougar',
-  //   price: 671000,
-  //   picture: 'Cougar QBX Gaming Mini ITX Case.png',
-  //   createdAt: '2018-12-21T04:30:13.820Z',
-  //   updatedAt: '2018-12-21T04:30:13.820Z',
-  //   __v: 0,
-  // },
-  // {
-  //   _id: '5c1c6c55f95fe531b86eaa2d',
-  //   removed: false,
-  //   itemId: 141,
-  //   name: 'AMD Ryzen 5 1400',
-  //   casing: 'all (mid-tower & tower)',
-  //   category: 'proccesor',
-  //   brand: 'amd',
-  //   price: 2050000,
-  //   picture: 'AMD Ryzen 5 1400.png',
-  //   createdAt: '2018-12-21T04:30:13.826Z',
-  //   updatedAt: '2018-12-21T04:30:13.826Z',
-  //   __v: 0,
-  // },
-];
-
 class Transactionlistpage extends React.Component<Props, State> {
   state = {
     isLoggedIn: false,
-    data: this.props.data || defaultData,
+    data: [],
     totalItem: {},
     totalPrice: 0,
   };
   async componentDidMount() {
-    let dataFromAPI = await getClientListItem();
+    let dataFromAPI = await getAllTransaction();
     let data = dataFromAPI;
-    // let {data} = this.state;
-    let total = 0;
-    let item = {};
-    for (let i = 0; i < data.length; i++) {
-      const part = data[i];
-      total += part.price;
-      item[part.category] = (item[part.category] || 0) + 1;
-    }
-    this.setState({data, totalPrice: total, totalItem: item});
+    this.setState({data});
   }
   render() {
     console.log(this.state);
@@ -171,7 +132,7 @@ class Transactionlistpage extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainer}
             >
               {data.map((element) => {
-                let {category, brand, name, price} = element;
+                let {category, brand, name, totalPrice} = element;
                 return (
                   <View
                     style={{
@@ -187,7 +148,7 @@ class Transactionlistpage extends React.Component<Props, State> {
                   >
                     <View style={{flexDirection: 'row', width: '80%'}}>
                       <View style={{flex: 1}}>
-                        <Text>{Capital(category)}</Text>
+                        <Text>{category}</Text>
                       </View>
                       {/* ^- status pemesanan*/}
                       <View
@@ -209,7 +170,7 @@ class Transactionlistpage extends React.Component<Props, State> {
                         style={{flex: 1, borderRightWidth: 1, paddingLeft: 5}}
                       >
                         <Text style={{alignSelf: 'flex-start'}}>
-                          {formatCurrency(price)}
+                          {formatCurrency(totalPrice)}
                         </Text>
                       </View>
                       {/* ^- jumlah transaksi*/}
@@ -217,7 +178,7 @@ class Transactionlistpage extends React.Component<Props, State> {
                         style={{flex: 1, borderRightWidth: 1, paddingLeft: 5}}
                       >
                         <Text style={{alignSelf: 'flex-start'}}>
-                          {formatCurrency(price)}
+                          {totalPrice}
                         </Text>
                       </View>
                       {/* ^- waktu transaksi*/}

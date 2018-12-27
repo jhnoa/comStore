@@ -14,6 +14,7 @@ import Auth from '../general/helper/authMiddleware';
 import Footer from '../general/coreUI/footer';
 import Header from '../general/coreUI/header';
 import Profiler from '../general/helper/auth/getProfile';
+import editProfile from '../general/helper/auth/editProfile';
 
 type Item = {
   name: string,
@@ -36,9 +37,12 @@ let defaultData = [
 
 class Profile extends React.Component {
   state = {
-    name: '-',
-    address: '-',
-    contactNumber: '-',
+    placeholderName: '',
+    placeholderAddress: '',
+    placeholderContactNumber: '',
+    name: '',
+    address: '',
+    contactNumber: '',
     mayEdit: false,
   };
   async componentDidMount() {
@@ -46,9 +50,9 @@ class Profile extends React.Component {
     console.log(result);
     let {name, address, contactNumber} = result;
     this.setState({
-      name,
-      address,
-      contactNumber,
+      placeholderName: name,
+      placeholderAddress: address,
+      placeholderContactNumber: contactNumber,
     });
   }
   render() {
@@ -71,16 +75,24 @@ class Profile extends React.Component {
               <Text style={{marginRight: 25, fontSize: 25}}>Nama:</Text>
               <TextInput
                 style={styles.textin}
-                placeholder={this.state.name}
+                placeholder={this.state.placeholderName}
                 editable={this.state.mayEdit}
+                value={this.state.name}
+                onChangeText={(name) => {
+                  this.setState({name});
+                }}
               />
             </View>
             <View style={styles.boxcon}>
               <Text style={{marginRight: 25, fontSize: 25}}>Telfon:</Text>
               <TextInput
                 style={styles.textin}
-                placeholder={this.state.contactNumber}
+                placeholder={this.state.placeholderContactNumber}
                 editable={this.state.mayEdit}
+                value={this.state.contactNumber}
+                onTextChange={(contactNumber) => {
+                  this.setState({contactNumber});
+                }}
               />
             </View>
             <View style={styles.boxcon}>
@@ -88,8 +100,12 @@ class Profile extends React.Component {
               <TextInput
                 style={styles.textin}
                 multiline
-                placeholder={this.state.address}
+                placeholder={this.state.placeholderAddress}
                 editable={this.state.mayEdit}
+                value={this.state.address}
+                onTextChange={(address) => {
+                  this.setState({address});
+                }}
               />
             </View>
             <View style={{alignSelf: 'center', marginTop: 10}}>
@@ -101,7 +117,38 @@ class Profile extends React.Component {
                     mayEdit: !state.mayEdit,
                   }));
                 }}
+                disabled={this.state.mayEdit}
               />
+              {this.state.mayEdit && (
+                <Button
+                  title="Save"
+                  style={{alignSelf: 'center'}}
+                  onPress={async () => {
+                    let {
+                      name,
+                      address,
+                      contactNumber,
+                      placeholderName,
+                      placeholderAddress,
+                      placeholderContactNumber,
+                    } = this.state;
+                    let newProfile = await editProfile({
+                      name: name || placeholderName,
+                      address: address || placeholderAddress,
+                      contactNumber: contactNumber || placeholderContactNumber,
+                    });
+                    this.setState((state) => ({
+                      name: '',
+                      address: '',
+                      contactNumber: '',
+                      placeholderName: newProfile.name,
+                      placeholderAddress: newProfile.address,
+                      placeholderContactNumber: newProfile.contactNumber,
+                      mayEdit: !state.mayEdit,
+                    }));
+                  }}
+                />
+              )}
             </View>
           </View>
         </View>

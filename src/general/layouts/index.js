@@ -21,6 +21,7 @@ type Props = {
   children: React$Node,
   title?: string,
   isLoggedIn?: Function,
+  isLoggedOut?: Function,
 };
 type State = {
   width: number,
@@ -49,9 +50,11 @@ class Layout extends React.Component<Props, State> {
   async componentDidMount() {
     Dimensions.addEventListener('change', this.handler);
     let isLoggedIn = await isAuthenticated();
-    console.log(isLoggedIn);
+    console.log('layoutmount', isLoggedIn);
     if (isLoggedIn.status === true) {
-      this.props.isLoggedIn && this.props.isLoggedIn();
+      if (this.props.isLoggedIn) {
+        this.props.isLoggedIn();
+      }
     }
     this.setState((state) => {
       return {...state, isLoggedIn: isLoggedIn.status};
@@ -88,6 +91,9 @@ class Layout extends React.Component<Props, State> {
             this.setState({regModal: true});
           }}
           onLogoutPressed={() => {
+            if (this.props.isLoggedOut) {
+              this.props.isLoggedOut();
+            }
             this.setState({isLoggedIn: false});
             navigateTo('/');
           }}
@@ -99,12 +105,15 @@ class Layout extends React.Component<Props, State> {
           }}
         >
           <Login
-            success={() =>
+            success={() => {
+              if (this.props.isLoggedIn) {
+                this.props.isLoggedIn();
+              }
               this.setState({
                 loginModal: false,
                 isLoggedIn: true,
-              })
-            }
+              });
+            }}
           />
         </Modal>
         {/* register modal */}
@@ -115,7 +124,7 @@ class Layout extends React.Component<Props, State> {
           <Reg success={() => this.setState({regModal: false})} />
         </Modal>
         {children}
-        <Footer />
+        <Footer isLoggedIn={isLoggedIn} />
       </View>
     );
   }

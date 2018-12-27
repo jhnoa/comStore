@@ -15,7 +15,7 @@ import isAuthenticated from '../../general/helper/auth/auth';
 import {navigateTo} from 'gatsby-link';
 import Capital from '../../general/helper/capitalize';
 import formatCurrency from '../../general/helper/numberToCurrency';
-import getClientListItem from '../../general/helper/catalog/getClientListItem';
+import getAllUser from '../../general/helper/adminUser/getAllUser';
 const windowSize = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
 
@@ -67,23 +67,11 @@ let defaultData = [
 
 class Userlistpage extends React.Component<Props, State> {
   state = {
-    isLoggedIn: false,
-    data: this.props.data || defaultData,
-    totalItem: {},
-    totalPrice: 0,
+    data: [],
   };
   async componentDidMount() {
-    let dataFromAPI = await getClientListItem();
-    let data = dataFromAPI;
-    // let {data} = this.state;
-    let total = 0;
-    let item = {};
-    for (let i = 0; i < data.length; i++) {
-      const part = data[i];
-      total += part.price;
-      item[part.category] = (item[part.category] || 0) + 1;
-    }
-    this.setState({data, totalPrice: total, totalItem: item});
+    let data = await getAllUser();
+    this.setState({data});
   }
   render() {
     console.log(this.state);
@@ -148,7 +136,7 @@ class Userlistpage extends React.Component<Props, State> {
               contentContainerStyle={styles.contentContainer}
             >
               {data.map((element) => {
-                let {category, brand, name, price} = element;
+                let {_id, name, contactNumber} = element;
                 return (
                   <View
                     style={{
@@ -163,7 +151,7 @@ class Userlistpage extends React.Component<Props, State> {
                   >
                     <View style={{flexDirection: 'row', width: '85%'}}>
                       <View style={{flex: 2}}>
-                        <Text>{Capital(category)} UID</Text>
+                        <Text>{_id}</Text>
                       </View>
                       {/* ^- user unique id */}
                       <View
@@ -177,7 +165,6 @@ class Userlistpage extends React.Component<Props, State> {
                         <Text>
                           {name.slice(0, 60)}
                           {name.length > 60 && '...'}
-                          Username
                         </Text>
                       </View>
                       {/* ^- user name */}
@@ -191,7 +178,7 @@ class Userlistpage extends React.Component<Props, State> {
                       }}
                     >
                       <Text style={{alignSelf: 'flex-start'}}>
-                        {formatCurrency(price)}
+                        {contactNumber}
                       </Text>
                     </View>
                     {/* ^- userphonenumber */}

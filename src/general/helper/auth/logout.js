@@ -6,6 +6,8 @@ let logout = async () => {
   await removeStorage('Authorization');
   await removeStorage('AuthorizationTime');
   await removeStorage('userType');
+  await removeStorage('userId');
+
   return true;
 };
 export default logout;

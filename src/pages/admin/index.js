@@ -69,29 +69,301 @@ let defaultData = [
 
 class IndexPage extends React.Component<Props, State> {
   state = {
-    isLoggedIn: false,
-    data: this.props.data || defaultData,
-    totalItem: {},
-    totalPrice: 0,
-    searchValue: '',
+    searchBy: '',
+    sortBy: 0,
+    selectedCategory: -1,
+    selectedBrand: -1,
+    listCategory: [],
+    listBrand: [],
+    allData: [],
+    filteredData: [],
+    searchFilteredData: [],
   };
   async componentDidMount() {
-    let dataFromAPI = await getClientListItem();
-    let data = dataFromAPI;
-    // let {data} = this.state;
-    let total = 0;
-    let item = {};
-    for (let i = 0; i < data.length; i++) {
-      const part = data[i];
-      total += part.price;
-      item[part.category] = (item[part.category] || 0) + 1;
+    let allData = await getClientListItem();
+    let listCategory = [];
+    let listBrand = [];
+    let includes = this._arrayIncludeString;
+
+    for (let index = 0; index < allData.length; index++) {
+      const element = allData[index];
+      if (!includes(listCategory, element.category)) {
+        listCategory.push(element.category);
+      }
+      if (!includes(listBrand, element.brand)) {
+        listBrand.push(element.brand);
+      }
     }
-    this.setState({data, totalPrice: total, totalItem: item});
+    this.setState({
+      allData,
+      listCategory,
+      listBrand,
+      filteredData: allData,
+      searchFilteredData: allData,
+    });
   }
+  _arrayIncludeString = (arr, str) => {
+    for (let index = 0; index < arr.length; index++) {
+      const element = arr[index];
+      if (str.toLowerCase() === element.toLowerCase()) {
+        return true;
+      }
+    }
+    return false;
+  };
+  _categoryFilter = (index) => {
+    index = parseInt(index, 10);
+    let {allData, selectedBrand, listCategory, listBrand} = this.state;
+    let filteredData = [];
+    let listBrandFiltered = [];
+    let listCategoryFiltered = [];
+    let includes = this._arrayIncludeString;
+    let selectedBrandAfter = -1;
+    let filteredByCategoryAndBrand = false;
+    if (index === -1 && selectedBrand === -1) {
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+
+        filteredData.push(element);
+        if (!includes(listBrandFiltered, element.brand)) {
+          listBrandFiltered.push(element.brand);
+        }
+        if (!includes(listCategoryFiltered, element.category)) {
+          listCategoryFiltered.push(element.category);
+        }
+      }
+    } else if (index !== -1 && selectedBrand === -1) {
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+        if (
+          element.category.toLowerCase() === listCategory[index].toLowerCase()
+        ) {
+          filteredData.push(element);
+          if (!includes(listBrandFiltered, element.brand)) {
+            listBrandFiltered.push(element.brand);
+          }
+        }
+        if (!includes(listCategoryFiltered, element.category)) {
+          listCategoryFiltered.push(element.category);
+        }
+      }
+    } else if (index === -1 && selectedBrand !== -1) {
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+        if (
+          element.brand.toLowerCase() === listBrand[selectedBrand].toLowerCase()
+        ) {
+          filteredData.push(element);
+          if (!includes(listCategoryFiltered, element.category)) {
+            listCategoryFiltered.push(element.category);
+          }
+        }
+        if (!includes(listBrandFiltered, element.brand)) {
+          if (
+            element.brand.toLowerCase() ===
+            listBrand[selectedBrand].toLowerCase()
+          ) {
+            selectedBrandAfter = listBrandFiltered.length;
+          }
+          listBrandFiltered.push(element.brand);
+        }
+      }
+    } else if (index !== -1 && selectedBrand !== -1) {
+      filteredByCategoryAndBrand = true;
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+        if (
+          element.brand.toLowerCase() ===
+            listBrand[selectedBrand].toLowerCase() &&
+          element.category.toLowerCase() === listCategory[index].toLowerCase()
+        ) {
+          filteredData.push(element);
+          if (!includes(listBrandFiltered, element.brand)) {
+            listBrandFiltered.push(element.brand);
+          }
+          if (!includes(listCategoryFiltered, element.category)) {
+            listCategoryFiltered.push(element.category);
+          }
+        }
+      }
+    }
+    let state = {selectedCategory: index};
+    filteredData = this._sortData(filteredData, this.state.sortBy, 'price');
+    let searchFilteredData = this._searchData(
+      filteredData,
+      this.state.searchBy,
+      'name',
+    );
+    state.filteredData = filteredData;
+    state.searchFilteredData = searchFilteredData;
+    if (listBrandFiltered.length > 0) {
+      state.listBrand = listBrandFiltered;
+    }
+    if (listCategoryFiltered.length > 0) {
+      state.listCategory = listCategoryFiltered;
+    }
+    if (filteredByCategoryAndBrand === true) {
+      state.selectedCategory = 0;
+      state.selectedBrand = 0;
+    }
+    if (selectedBrandAfter >= 0) {
+      state.selectedBrand = selectedBrandAfter;
+    }
+    this.setState(state);
+  };
+
+  _brandFilter = (index) => {
+    index = parseInt(index, 10);
+    let {allData, selectedCategory, listBrand, listCategory} = this.state;
+    let filteredData = [];
+    let listCategoryFiltered = [];
+    let listBrandFiltered = [];
+    let includes = this._arrayIncludeString;
+    let filteredByCategoryAndBrand = false;
+    let selectedCategoryAfter = -1;
+    if (index === -1 && selectedCategory === -1) {
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+
+        filteredData.push(element);
+        if (!includes(listBrandFiltered, element.brand)) {
+          listBrandFiltered.push(element.brand);
+        }
+        if (!includes(listCategoryFiltered, element.category)) {
+          listCategoryFiltered.push(element.category);
+        }
+      }
+    } else if (index !== -1 && selectedCategory === -1) {
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+        if (element.brand.toLowerCase() === listBrand[index].toLowerCase()) {
+          filteredData.push(element);
+          if (!includes(listCategoryFiltered, element.category)) {
+            listCategoryFiltered.push(element.category);
+          }
+        }
+        if (!includes(listBrandFiltered, element.brand)) {
+          listBrandFiltered.push(element.brand);
+        }
+      }
+    } else if (index === -1 && selectedCategory !== -1) {
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+        if (
+          element.category.toLowerCase() ===
+          listCategory[selectedCategory].toLowerCase()
+        ) {
+          filteredData.push(element);
+          if (!includes(listBrandFiltered, element.brand)) {
+            listBrandFiltered.push(element.brand);
+          }
+        }
+        if (!includes(listCategoryFiltered, element.category)) {
+          if (
+            element.category.toLowerCase() ===
+            listCategory[selectedCategory].toLowerCase()
+          ) {
+            selectedCategoryAfter = listCategoryFiltered.length;
+          }
+          listCategoryFiltered.push(element.category);
+        }
+      }
+    } else if (index !== -1 && selectedCategory !== -1) {
+      filteredByCategoryAndBrand = true;
+
+      for (let i = 0; i < allData.length; i++) {
+        const element = allData[i];
+        if (
+          element.category.toLowerCase() ===
+            listCategory[selectedCategory].toLowerCase() &&
+          element.brand.toLowerCase() === listBrand[index].toLowerCase()
+        ) {
+          filteredData.push(element);
+          if (!includes(listBrandFiltered, element.brand)) {
+            listBrandFiltered.push(element.brand);
+          }
+          if (!includes(listCategoryFiltered, element.category)) {
+            listCategoryFiltered.push(element.category);
+          }
+        }
+      }
+    }
+    let state = {selectedBrand: index};
+    filteredData = this._sortData(filteredData, this.state.sortBy, 'price');
+    let searchFilteredData = this._searchData(
+      filteredData,
+      this.state.searchBy,
+      'name',
+    );
+    state.filteredData = filteredData;
+    state.searchFilteredData = searchFilteredData;
+    if (listCategoryFiltered.length > 0) {
+      state.listCategory = listCategoryFiltered;
+    }
+    if (listBrandFiltered.length > 0) {
+      state.listBrand = listBrandFiltered;
+    }
+    if (filteredByCategoryAndBrand === true) {
+      state.selectedCategory = 0;
+      state.selectedBrand = 0;
+    }
+    if (selectedCategoryAfter >= 0) {
+      state.selectedCategory = selectedCategoryAfter;
+    }
+    this.setState(state);
+  };
+
+  _sortData = (arrayData, sortValue = 1, field) => {
+    let _sort = (a, b) => {
+      let data1 = field !== undefined ? a[field] : a;
+      let data2 = field !== undefined ? b[field] : b;
+      sortValue = parseInt(sortValue, 10);
+      if (data1 > data2) {
+        return -1 * sortValue;
+      } else if (data1 < data2) {
+        return sortValue;
+      } else {
+        return 0;
+      }
+    };
+    let result = arrayData.sort(_sort);
+    return result;
+  };
+
+  _sortBy = (value) => {
+    let {filteredData} = this.state;
+    filteredData = this._sortData(filteredData, value, 'price');
+    let searchFilteredData = this._searchData(
+      filteredData,
+      this.state.searchBy,
+      'name',
+    );
+    this.setState({filteredData, sortBy: value, searchFilteredData});
+  };
+
+  _searchData = (arrayData, searchValue = '', field) => {
+    let result = [];
+    for (let index = 0; index < arrayData.length; index++) {
+      const element = arrayData[index];
+      if (searchValue) {
+        if (element[field].includes(searchValue)) {
+          result.push(element);
+        }
+      } else {
+        result.push(element);
+      }
+    }
+    return result;
+  };
+  _searchBy = (value) => {
+    let {filteredData} = this.state;
+    let result = this._searchData(filteredData, value, 'name');
+    this.setState({searchFilteredData: result, searchBy: value});
+  };
   render() {
     console.log(this.state);
-    console.log('searchValue= ', this.state.searchValue);
-    let {data} = this.state;
+    console.log('searchValue= ', this.state.searchFilteredData);
+    let {searchFilteredData} = this.state;
     return (
       <Layout
         title={'Home'}
@@ -159,10 +431,11 @@ class IndexPage extends React.Component<Props, State> {
               style={{width: '100%'}}
               contentContainerStyle={styles.contentContainer}
             >
-              {data.map((element) => {
+              {searchFilteredData.map((element, index) => {
                 let {category, brand, name, price} = element;
                 return (
                   <View
+                    key={index}
                     style={{
                       flexDirection: 'row',
                       alignItems: 'flex-start',
@@ -231,27 +504,27 @@ class IndexPage extends React.Component<Props, State> {
             <View style={styles.dropdownbody}>
               <Text>Pilih Kategori Barang :</Text>
               <Picker
-                // selectedValue={this.state.selectedCategory}
+                selectedValue={this.state.selectedCategory}
                 style={styles.dropdown}
-                // onValueChange={this._categoryFilter}
+                onValueChange={this._categoryFilter}
               >
                 <Picker.Item label={'All Category'} value={-1} />
-                {/* {this.state.listCategory.map((element, index) => (
+                {this.state.listCategory.map((element, index) => (
                   <Picker.Item label={element} value={index} key={index} />
-                ))} */}
+                ))}
               </Picker>
             </View>
             <View style={styles.dropdownbody}>
               <Text>Pilih Brand yang diinginkan :</Text>
               <Picker
-                // selectedValue={this.state.selectedBrand}
+                selectedValue={this.state.selectedBrand}
                 style={styles.dropdown}
-                // onValueChange={this._brandFilter}
+                onValueChange={this._brandFilter}
               >
                 <Picker.Item label="All Brand" value={-1} />
-                {/* {this.state.listBrand.map((element, index) => (
+                {this.state.listBrand.map((element, index) => (
                   <Picker.Item label={element} value={index} key={index} />
-                ))} */}
+                ))}
               </Picker>
             </View>
             <View style={styles.dropdownbody}>
@@ -280,7 +553,8 @@ class IndexPage extends React.Component<Props, State> {
                 }}
                 placeholder="Apa yang ingin anda Cari?"
                 placeholderTextColor="white"
-                onChangeText={(text) => this.setState({searchValue: text})}
+                value={this.state.searchBy}
+                onChangeText={this._searchBy}
               />
             </View>
           </View>
@@ -288,15 +562,6 @@ class IndexPage extends React.Component<Props, State> {
       </Layout>
     );
   }
-
-  _simulate = () => {
-    if (!this.state.isLoggedIn) {
-      window.alert('Please Login To Continue!');
-    } else {
-      //navigate to simulate Option
-      navigateTo('simulateOptions');
-    }
-  };
 }
 
 export default IndexPage;
