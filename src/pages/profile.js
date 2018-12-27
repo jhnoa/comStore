@@ -90,7 +90,7 @@ class Profile extends React.Component {
                 placeholder={this.state.placeholderContactNumber}
                 editable={this.state.mayEdit}
                 value={this.state.contactNumber}
-                onTextChange={(contactNumber) => {
+                onChangeText={(contactNumber) => {
                   this.setState({contactNumber});
                 }}
               />
@@ -103,7 +103,7 @@ class Profile extends React.Component {
                 placeholder={this.state.placeholderAddress}
                 editable={this.state.mayEdit}
                 value={this.state.address}
-                onTextChange={(address) => {
+                onChangeText={(address) => {
                   this.setState({address});
                 }}
               />

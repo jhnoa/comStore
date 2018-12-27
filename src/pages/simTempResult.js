@@ -193,10 +193,11 @@ class simchoiceresult extends React.Component<Props, State> {
                     style={{width: 535}}
                     contentContainerStyle={styles.contentContainer}
                   >
-                    {data.map((element) => {
+                    {data.map((element, index) => {
                       let {category, brand, name, price} = element;
                       return (
                         <View
+                          key={index}
                           style={{
                             flexDirection: 'row',
                             alignItems: 'flex-start',
