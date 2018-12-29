@@ -78,8 +78,8 @@ class Layout extends React.Component<Props, State> {
         <Helmet
           title={pageTitle}
           meta={[
-            {name: 'description', content: 'Bayar & Cicil Tanpa Kartu Kredit'},
-            {name: 'keywords', content: 'loan, payment, vospay, credit'},
+            {name: 'description', content: ''},
+            {name: 'keywords', content: ''},
           ]}
         />
         <Header

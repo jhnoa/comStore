@@ -1,5 +1,5 @@
 {
-  "name": "vospay-website",
+  "name": "vinando-comstore",
   "version": "1.0.0",
   "private": true,
   "scripts": {
@@ -8,7 +8,8 @@
     "format": "prettier-eslint --write \"src/**/*.js\"",
     "lint": "eslint . --max-warnings 0",
     "typecheck": "flow",
-    "test": "yarn lint && yarn typecheck && jest --testPathPattern __tests__ --coverage",
+    "test":
+      "yarn lint && yarn typecheck && jest --testPathPattern __tests__ --coverage",
     "postinstall": "flow-typed install",
     "precommit": "yarn lint && yarn typecheck"
   },
@@ -66,9 +67,6 @@
   },
   "jest": {
     "verbose": true,
-    "testPathIgnorePatterns": [
-      "<rootDir>/node_modules/",
-      "<rootDir>/.cache/"
-    ]
+    "testPathIgnorePatterns": ["<rootDir>/node_modules/", "<rootDir>/.cache/"]
   }
 }
