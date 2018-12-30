@@ -186,7 +186,7 @@ class Userlistpage extends React.Component<Props, State> {
                         }}
                       >
                         <Text style={{alignSelf: 'flex-start'}}>
-                          {lastChat.message}
+                          {(lastChat && lastChat.message) || ''}
                         </Text>
                       </View>
                       {/* ^- last chat content*/}
