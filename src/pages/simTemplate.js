@@ -33,7 +33,6 @@ class simTemp extends React.Component<Props, State> {
   }
 
   render() {
-
     return (
       <Layout title={'Pilih Range Budget'}>
         <View
@@ -65,7 +64,7 @@ class simTemp extends React.Component<Props, State> {
                   <Image
                     resizeMode="contain"
                     style={styles.imej}
-                    source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                    source={require(`../assets/picture/${element.picture}`)}
                   />
                   <View style={styles.boxrowv2}>
                     <Text>{element.description}</Text>

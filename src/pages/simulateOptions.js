@@ -50,7 +50,7 @@ class simChoice extends React.Component<Props, State> {
                 <Image
                   resizeMode="contain"
                   style={styles.imej}
-                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                  source={require('../assets/picture/preferensi.png')}
                 />
                 <View style={styles.boxrowv2}>
                   <Text>
@@ -70,7 +70,7 @@ class simChoice extends React.Component<Props, State> {
                 <Image
                   resizeMode="contain"
                   style={styles.imej}
-                  source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
+                  source={require('../assets/picture/manual.png')}
                 />
                 <View style={styles.boxrowv2}>
                   <Text>

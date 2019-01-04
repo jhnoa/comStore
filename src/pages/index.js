@@ -43,10 +43,11 @@ class IndexPage extends React.Component<Props, State> {
           wrapAround={true}
           //renderCenterLeftControls={({previousSlide}) =>(<)}
         >
-          <img alt="1" src={require('../assets/picture/slide1.png')} />
-          <img alt="2" src={require('../assets/picture/slide2.png')} />
-          <img alt="3" src={require('../assets/picture/slide3.png')} />
-          <img alt="4" src={require('../assets/picture/slide4.png')} />
+          <img alt="1" src={require('../assets/picture/slider1.png')} />
+          <img alt="2" src={require('../assets/picture/slider2.png')} />
+          <img alt="3" src={require('../assets/picture/slider3.png')} />
+          <img alt="4" src={require('../assets/picture/slider4.png')} />
+          <img alt="5" src={require('../assets/picture/slider5.png')} />
         </Carousel>
         <View
           style={{
@@ -68,7 +69,7 @@ class IndexPage extends React.Component<Props, State> {
             <Image
               resizeMode="contain"
               style={{height: 150, width: 280}}
-              source={require('../assets/picture/google.png')}
+              source={require('../assets/picture/iklan.png')}
             />
           </View>
           <View>
@@ -90,7 +91,7 @@ class IndexPage extends React.Component<Props, State> {
           <Image
             resizeMode="contain"
             style={{height: 150, width: 280}}
-            source={require('../assets/picture/google.png')}
+            source={require('../assets/picture/iklan.png')}
           />
           <Button
             title="Catalog"
