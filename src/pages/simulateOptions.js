@@ -40,7 +40,7 @@ class simChoice extends React.Component<Props, State> {
               style={{
                 justifyContent: 'center',
                 alignItems: 'center',
-                width: 550,
+                width: 700,
                 flexDirection: 'row',
                 padding: 10,
               }}
@@ -52,12 +52,6 @@ class simChoice extends React.Component<Props, State> {
                   style={styles.imej}
                   source={require('../assets/picture/preferensi.png')}
                 />
-                <View style={styles.boxrowv2}>
-                  <Text>
-                    Pilih ini untuk menikmati rancangan yang telah disesuaikan
-                    dengan budget anda
-                  </Text>
-                </View>
                 <Button
                   title="Simulate"
                   onPress={() => {
@@ -72,12 +66,6 @@ class simChoice extends React.Component<Props, State> {
                   style={styles.imej}
                   source={require('../assets/picture/manual.png')}
                 />
-                <View style={styles.boxrowv2}>
-                  <Text>
-                    Pilih ini untuk menentukan sendiri rancangan yang anda
-                    inginkan
-                  </Text>
-                </View>
                 <Button
                   title="Simulate"
                   onPress={() => {
@@ -108,10 +96,11 @@ let styles = StyleSheet.create({
     flexDirection: 'column',
     justifyContent: 'center',
     backgroundColor: 'rgba(52, 52, 52, 0.7)',
-    width: 400,
-    height: 300,
+    width: 500,
+    height: 350,
     alignItems: 'center',
-    marginRight: 20,
+    marginVertical: 20,
+    marginHorizontal: 30,
   },
   boxrowv2: {
     flexDirection: 'row',
@@ -138,9 +127,10 @@ let styles = StyleSheet.create({
   },
   itemDesc: {fontSize: 15},
   imej: {
-    height: 150,
-    width: 150,
+    height: 250,
+    // width: '95%',
+    width: 480,
     alignSelf: 'center',
-    margin: 5,
+    margin: 10,
   },
 });

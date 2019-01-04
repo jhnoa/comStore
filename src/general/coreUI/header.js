@@ -43,7 +43,7 @@ class HeaderPart extends React.Component<Props> {
   headerMenu = {
     authenticated: [
       menuSection(
-        ' Vinando',
+        '',
         {},
         <Image
           resizeMode="contain"

@@ -90,7 +90,9 @@ class simulateManual extends React.Component<Props, State> {
                       this.setState({checkStd: props});
                     }}
                   />
-                  <Text>Pilih ini untuk Casing Standard</Text>
+                  <Text style={styles.textCh}>
+                    Pilih ini untuk Casing Standard
+                  </Text>
                 </View>
 
                 <View style={styles.boxrow2}>
@@ -145,7 +147,9 @@ class simulateManual extends React.Component<Props, State> {
                       this.setState({checkStd: !props});
                     }}
                   />
-                  <Text>Pilih ini untuk Casing Tower</Text>
+                  <Text style={styles.textCh}>
+                    Pilih ini untuk Casing Tower
+                  </Text>
                 </View>
 
                 <View style={styles.boxrow2}>
@@ -303,5 +307,9 @@ let styles = StyleSheet.create({
   dropdownbody: {
     paddingBottom: 10,
     paddingTop: 10,
+  },
+  textCh: {
+    fontSize: 20,
+    fontWeight: 'bold',
   },
 });

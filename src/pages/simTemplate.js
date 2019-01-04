@@ -66,9 +66,9 @@ class simTemp extends React.Component<Props, State> {
                     style={styles.imej}
                     source={require(`../assets/picture/${element.picture}`)}
                   />
-                  <View style={styles.boxrowv2}>
+                  {/* <View style={styles.boxrowv2}>
                     <Text>{element.description}</Text>
-                  </View>
+                  </View> */}
                   <Button
                     style={styles.btn}
                     title="Simulate"
@@ -110,7 +110,7 @@ let styles = StyleSheet.create({
   boxrow: {
     flexDirection: 'column',
     justifyContent: 'center',
-    backgroundColor: 'rgba(52, 52, 52, 0.7)',
+    backgroundColor: 'rgba(52, 52, 52, 0.5)',
     width: 400,
     height: 300,
     alignItems: 'center',
@@ -143,8 +143,8 @@ let styles = StyleSheet.create({
   itemDesc: {fontSize: 15},
   imej: {
     height: 150,
-    width: 150,
+    width: 350,
     alignSelf: 'center',
-    margin: 5,
+    margin: 15,
   },
 });

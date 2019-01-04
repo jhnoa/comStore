@@ -52,7 +52,7 @@ class IndexPage extends React.Component<Props, State> {
         <View
           style={{
             flex: 1,
-            backgroundColor: 'grey',
+            backgroundColor: 'silver',
             width: '95%',
             marginBottom: 5,
             marginTop: 10,
@@ -62,13 +62,10 @@ class IndexPage extends React.Component<Props, State> {
             padding: 10,
           }}
         >
-          {/* <View style={{flex: 1}}>
-        <Text style={{fontSize: 30}}>Description about Simulation</Text>
-      </View> */}
           <View>
             <Image
               resizeMode="contain"
-              style={{height: 150, width: 280}}
+              style={{height: 300, width: 840}}
               source={require('../assets/picture/iklan.png')}
             />
           </View>
@@ -79,7 +76,7 @@ class IndexPage extends React.Component<Props, State> {
         <View
           style={{
             flex: 1,
-            backgroundColor: 'purple',
+            backgroundColor: 'skyblue',
             width: '95%',
             marginTop: 5,
             marginBottom: 10,
@@ -90,7 +87,7 @@ class IndexPage extends React.Component<Props, State> {
         >
           <Image
             resizeMode="contain"
-            style={{height: 150, width: 280}}
+            style={{height: 300, width: 840}}
             source={require('../assets/picture/iklan.png')}
           />
           <Button
