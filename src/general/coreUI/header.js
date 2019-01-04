@@ -47,8 +47,8 @@ class HeaderPart extends React.Component<Props> {
         {},
         <Image
           resizeMode="contain"
-          style={{height: 20, width: 40}}
-          source={require('../../assets/picture/google.png')}
+          style={{height: 45, width: 100}}
+          source={require('../../assets/picture/logo.png')}
         />,
         () => {
           navigateTo('/');
@@ -76,8 +76,8 @@ class HeaderPart extends React.Component<Props> {
         {},
         <Image
           resizeMode="contain"
-          style={{height: 20, width: 40}}
-          source={require('../../assets/picture/google.png')}
+          style={{height: 45, width: 100}}
+          source={require('../../assets/picture/logo.png')}
         />,
         () => {
           navigateTo('/');
