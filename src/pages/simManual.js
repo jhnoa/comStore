@@ -76,7 +76,7 @@ class simulateManual extends React.Component<Props, State> {
           }}
         >
           <View style={styles.container}>
-            <Text style={{fontSize: 30, marginVertical: 10}}>
+            <Text style={{fontSize: 30, marginVertical: 20}}>
               Pilih Dahulu Tipe Casing
             </Text>
             <View style={styles.boxrowv3}>
@@ -97,23 +97,11 @@ class simulateManual extends React.Component<Props, State> {
 
                 <View style={styles.boxrow2}>
                   {/* image */}
-                  <View style={styles.boxrow2}>
-                    <Image
-                      resizeMode="contain"
-                      style={{height: 150, width: 150, alignSelf: 'center'}}
-                      source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
-                    />
-                  </View>
-                  {/* descbar */}
-                  <View style={styles.boxrowv3}>
-                    <Text style={styles.itemDesc}>
-                      Most first time builders don’t realize this, but picking
-                      the right computer case is a monumental decision. PC
-                      chassis come in a variety of sizes, from miniscule
-                      mini-ITX systems meant to sit on your desk, to massive
-                      full towers designed for maximum expandability.
-                    </Text>
-                  </View>
+                  <Image
+                    resizeMode="contain"
+                    style={{height: 250, width: '130%', alignSelf: 'center'}}
+                    source={require('../assets/picture/casing-std.png')}
+                  />
                   <Picker
                     selectedValue={this.state.caseStd}
                     style={styles.dropdown}
@@ -154,23 +142,11 @@ class simulateManual extends React.Component<Props, State> {
 
                 <View style={styles.boxrow2}>
                   {/* image */}
-                  <View style={styles.boxrow2}>
-                    <Image
-                      resizeMode="contain"
-                      style={{height: 150, width: 150, alignSelf: 'center'}}
-                      source={require('../assets/picture/catalog/AMD Ryzen 5 2600.png')}
-                    />
-                  </View>
-                  {/* descbar */}
-                  <View style={styles.boxrowv3}>
-                    <Text style={styles.itemDesc}>
-                      Most first time builders don’t realize this, but picking
-                      the right computer case is a monumental decision. PC
-                      chassis come in a variety of sizes, from miniscule
-                      mini-ITX systems meant to sit on your desk, to massive
-                      full towers designed for maximum expandability.
-                    </Text>
-                  </View>
+                  <Image
+                    resizeMode="contain"
+                    style={{height: 250, width: '130%', alignSelf: 'center'}}
+                    source={require('../assets/picture/casing-twr.png')}
+                  />
                   <Picker
                     selectedValue={this.state.caseTwr}
                     style={styles.dropdown}
@@ -196,7 +172,7 @@ class simulateManual extends React.Component<Props, State> {
             </View>
             {/* EoPartition */}
             {/* Buttonbelow */}
-            <View style={styles.boxrowv2}>
+            <View style={styles.boxrowv2withspace}>
               <Button
                 title="Kembali"
                 onPress={() => {
@@ -241,7 +217,7 @@ let styles = StyleSheet.create({
     height: 600,
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
-    justifyContent: 'flex-start',
+    justifyContent: 'center',
     alignItems: 'center',
     flexDirection: 'column',
   },
@@ -258,6 +234,13 @@ let styles = StyleSheet.create({
   btn: {marginBottom: 5},
   boxrowv2: {
     flexDirection: 'row',
+    width: '100%',
+    padding: 5,
+    marginHorizontal: 10,
+    // justifyContent: 'space-between',
+  },
+  boxrowv2withspace: {
+    flexDirection: 'row',
     width: 250,
     padding: 5,
     marginHorizontal: 10,
@@ -270,8 +253,10 @@ let styles = StyleSheet.create({
   boxcol: {
     flexDirection: 'column',
     alignItems: 'center',
+    justifyContent: 'center',
     padding: 5,
-    marginHorizontal: 5,
+    marginHorizontal: 10,
+    height: 400,
     width: 500,
     marginBottom: 10,
     backgroundColor: 'rgba(255,255,255, 0.8)',

@@ -24,7 +24,7 @@ class LoginPage extends React.Component {
           alignItems: 'center',
           alignSelf: 'center',
           borderRadius: 30,
-          backgroundColor: 'grey',
+          backgroundColor: 'rgba(200,200,200,1)',
           width: 400,
           height: 350,
         }}
@@ -33,7 +33,6 @@ class LoginPage extends React.Component {
           style={{
             height: 100,
             marginBottom: 5,
-            backgroundColor: 'grey',
             justifyContent: 'center',
             alignItems: 'center',
           }}
@@ -59,6 +58,7 @@ class LoginPage extends React.Component {
             <TextInput
               style={styles.textBox}
               placeholder="Masukan Email Anda"
+              placeholderTextColor="black"
               value={this.state.email}
               onChangeText={(text) => this.setState({email: text})}
             />
@@ -74,6 +74,7 @@ class LoginPage extends React.Component {
               style={styles.textBox}
               secureTextEntry
               placeholder={'Masukan Password'}
+              placeholderTextColor="black"
               value={this.state.password}
               onChangeText={(text) => this.setState({password: text})}
             />

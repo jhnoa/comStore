@@ -40,7 +40,7 @@ class RegisterPage extends React.Component<Props, State> {
           alignItems: 'center',
           alignSelf: 'center',
           borderRadius: 30,
-          backgroundColor: 'grey',
+          backgroundColor: 'rgba(200,200,200,1)',
           width: 500,
           height: 500,
         }}
@@ -67,7 +67,7 @@ class RegisterPage extends React.Component<Props, State> {
             <TextInput
               style={styles.textBox}
               placeholder={'Masukan Email Anda'}
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               value={this.state.email}
               onChangeText={(text) => this.setState({email: text})}
             />
@@ -83,7 +83,7 @@ class RegisterPage extends React.Component<Props, State> {
               style={styles.textBox}
               secureTextEntry
               placeholder={'Masukan Password'}
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               value={this.state.password}
               onChangeText={(text) => this.setState({password: text})}
             />
@@ -99,7 +99,7 @@ class RegisterPage extends React.Component<Props, State> {
               style={styles.textBox}
               secureTextEntry
               placeholder={'Masukan Ulang Password'}
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               value={this.state.repassword}
               onChangeText={(text) => this.setState({repassword: text})}
             />
@@ -114,7 +114,7 @@ class RegisterPage extends React.Component<Props, State> {
             <TextInput
               style={styles.textBox}
               placeholder={'Masukan Nama Anda'}
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               value={this.state.name}
               onChangeText={(text) => this.setState({name: text})}
             />
@@ -129,7 +129,7 @@ class RegisterPage extends React.Component<Props, State> {
             <TextInput
               style={styles.textBox}
               placeholder="Masukan No. HP Anda"
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               value={this.state.phone}
               onChangeText={(text) => this.setState({phone: text})}
             />
@@ -153,7 +153,7 @@ class RegisterPage extends React.Component<Props, State> {
                 marginHorizontal: 60,
               }}
               placeholder="Masukan Alamat Anda"
-              placeholderTextColor="white"
+              placeholderTextColor="black"
               multiline={true}
               numberOfLines={3}
               onChangeText={(text) => this.setState({address: text})}
