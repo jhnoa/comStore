@@ -153,13 +153,7 @@ class shoppingcart extends React.Component<Props, State> {
     let data = dataFromAPI.parts;
     // let {data} = this.state;
     let total = 0;
-    let item = {
-      'RAM,VGA & PSU': [],
-      Casing: [],
-      Motherboard: [],
-      Processor: [],
-      'Hard Drive': [],
-    };
+    let item = {};
     for (let i = 0; i < data.length; i++) {
       const part = data[i];
       total += part.price;
@@ -188,32 +182,26 @@ class shoppingcart extends React.Component<Props, State> {
             {/* atas */}
             <Text style={{fontSize: 30, marginBottom: 20}}>Shopping Cart</Text>
             {/* bawah */}
-            <View style={{flexDirection: 'column'}}>
-              <View style={styles.boxrow}>
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Casing</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Motherboard</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Processor</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>RAM, VGA, & PSU</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Hard Drive</Text>
-                </View>
-              </View>
-              {/* Header of items ends here */}
-              <View style={styles.boxrow}>
-                <View style={styles.encapsulator}>
-                  <ScrollView style={{height: '20vw'}}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                width: '95%',
+                height: '90%',
+                flexDirection: 'row',
+                padding: 10,
+              }}
+            >
+              {/* image */}
+              <View style={styles.boxcolv2}>
+                <View style={styles.boxcol}>
+                  {/* label */}
+                  <Text style={styles.textin}>Informasi Barang</Text>
+                  {/* ilist */}
+                  <ScrollView
+                    style={{width: 535, height: '100%'}}
+                    contentContainerStyle={styles.contentContainer}
+                  >
                     {data.map((element, index) => {
                       let {category, brand, name, price} = element;
                       return (
@@ -226,57 +214,73 @@ class shoppingcart extends React.Component<Props, State> {
                             width: '100%',
                           }}
                         >
-                          <Text style={{fontSize: 20}}>
-                            ({Capital(brand)}) {Capital(name)}
-                          </Text>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              width: '80%',
+                              height: '100%',
+                            }}
+                          >
+                            <Text>
+                              {Capital(category)}: ({Capital(brand)}){' '}
+                              {Capital(name)}
+                            </Text>
+                          </View>
+                          <View
+                            style={{
+                              flexDirection: 'row',
+                              alignSelf: 'flex-end',
+                            }}
+                          >
+                            <Text>{formatCurrency(price)}</Text>
+                          </View>
                         </View>
                       );
                     })}
                   </ScrollView>
                 </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Motherboard</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Processor</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>RAM, VGA, & PSU</Text>
-                </View>
-                <View style={{flex: 1}} />
-                <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Hard Drive</Text>
+                <View
+                  style={{
+                    flexDirection: 'column',
+                    alignItems: 'center',
+                    padding: 5,
+                    marginHorizontal: 10,
+                    width: 555,
+                    marginBottom: 10,
+                    backgroundColor: 'rgba(255,255,255, 0.8)',
+                  }}
+                >
+                  <Text syle={{fontSize: 20, fontWeight: '900'}}>
+                    <b>Total Harga: {formatCurrency(this.state.totalPrice)}</b>
+                  </Text>
                 </View>
               </View>
+              {/* descbar */}
+              {/* EoBar */}
             </View>
-            {/* descbar */}
-            {/* EoBar */}
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 555,
-            }}
-          >
-            <Button
-              style={{paddingRight: 20, alignSelf: 'flex-end'}}
-              title="Kembali"
-              onPress={() => {
-                window.history.back();
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: 555,
               }}
-            />
+            >
+              <Button
+                style={{paddingRight: 20, alignSelf: 'flex-end'}}
+                title="Kembali"
+                onPress={() => {
+                  window.history.back();
+                }}
+              />
 
-            <Button
-              style={{paddingRight: 20, alignSelf: 'flex-end'}}
-              title="Checkout"
-              onPress={() => {
-                navigateTo('jasakirim');
-              }}
-            />
+              <Button
+                style={{paddingRight: 20, alignSelf: 'flex-end'}}
+                title="Checkout"
+                onPress={() => {
+                  navigateTo('jasakirim');
+                }}
+              />
+            </View>
           </View>
         </View>
       </Layout>
@@ -295,20 +299,15 @@ let styles = StyleSheet.create({
     alignItems: 'center',
     flexDirection: 'column',
   },
-  encapsulator: {
-    backgroundColor: 'white',
-    width: '15%',
-    alignItems: 'center',
-    padding: 5,
-    flexWrap: 'wrap',
-    borderRadius: 5,
-  },
   boxrow: {
-    padding: 20,
-    marginVertical: 25,
-    backgroundColor: 'rgb(200,200,200)',
-    width: '100%',
     flexDirection: 'row',
+    flexWrap: 'nowrap',
+    justifyContent: 'center',
+    backgroundColor: 'rgba(52, 52, 52, 0.7)',
+    width: 1000,
+    height: Dimensions.get('window').height - 420,
+    alignItems: 'center',
+    marginHorizontal: 20,
   },
   btn: {marginBottom: 5},
   boxrowv2: {
@@ -364,6 +363,6 @@ let styles = StyleSheet.create({
   contentContainer: {
     padding: 20,
     alignItems: 'flex-start',
-    justifyContent: 'center',
+    justifyContent: 'space-between',
   },
 });
