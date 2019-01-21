@@ -130,49 +130,101 @@ let defaultData = [
   },
 ];
 
+let classification = [
+  {
+    category: 'RAM',
+    to: 'RAM,VGA & PSU',
+    index: 3,
+  },
+  {
+    category: 'VGA',
+    to: 'RAM,VGA & PSU',
+    index: 3,
+  },
+  {
+    category: 'PSU',
+    to: 'RAM,VGA & PSU',
+    index: 3,
+  },
+  {
+    category: 'casing',
+    to: 'Casing',
+    index: 0,
+  },
+  {
+    category: 'motherboard',
+    to: 'Motherboard',
+    index: 1,
+  },
+  {
+    category: 'proccesor',
+    to: 'Proccesor',
+    index: 2,
+  },
+  {
+    category: 'hard disk',
+    to: 'Hard Drive',
+    index: 4,
+  },
+];
+
 class shoppingcart extends React.Component<Props, State> {
   state = {
     data: this.props.data || defaultData,
-    totalItem: {
-      'RAM,VGA & PSU': [],
-      Casing: [],
-      Motherboard: [],
-      Processor: [],
-      'Hard Drive': [],
-    },
-    totalPrice: {
-      'RAM,VGA & PSU': 0,
-      Casing: 0,
-      Motherboard: 0,
-      Processor: 0,
-      'Hard Drive': 0,
-    },
+    item: [],
+    // totalItem: {
+    //   'RAM,VGA & PSU': [],
+    //   Casing: [],
+    //   Motherboard: [],
+    //   Processor: [],
+    //   'Hard Drive': [],
+    // },
+    // totalPrice: {
+    //   'RAM,VGA & PSU': 0,
+    //   Casing: 0,
+    //   Motherboard: 0,
+    //   Processor: 0,
+    //   'Hard Drive': 0,
+    // },
   };
   async componentDidMount() {
     let dataFromAPI = await getSimulation();
     let data = dataFromAPI.parts;
+    // let data = defaultData;
     // let {data} = this.state;
-    let total = 0;
-    let item = {
-      'RAM,VGA & PSU': [],
-      Casing: [],
-      Motherboard: [],
-      Processor: [],
-      'Hard Drive': [],
+    type Items = {
+      parts: Array<string>,
+      total: number,
+      title: string,
     };
+    type ArrayItems = Array<Items>;
+    let item: ArrayItems = [];
     for (let i = 0; i < data.length; i++) {
       const part = data[i];
-      total += part.price;
-      item[part.category] = (item[part.category] || 0) + 1;
-      if (part.category.toUpperCase() === 'VGA') {
-        item['RAM,VGA & PSU'].push(part);
+      // total += part.price;
+      // item[part.category] = (item[part.category] || 0) + 1;
+      // if (part.category.toUpperCase() === 'VGA') {
+      //   item['RAM,VGA & PSU'].push(part);
+      // }
+      for (let c of classification) {
+        if (part.category.toLowerCase() === c.category.toLowerCase()) {
+          let title = (item[c.index] && item[c.index].title) || c.to;
+          let parts = (item[c.index] && item[c.index].parts) || [];
+          let total = (item[c.index] && item[c.index].total) || 0;
+          item[c.index] = {
+            parts: [...parts, part],
+            total: total + part.price,
+            title,
+          };
+        }
       }
     }
     console.log('lift', item);
-    this.setState({data, totalPrice: total, totalItem: item});
+    console.log('data', data);
+    this.setState({data, item});
   }
   render() {
-    let {data} = this.state;
+    let {item} = this.state;
     console.log(this.state);
     return (
       <Layout title={'Hasil Rekomendasi'}>
@@ -214,69 +266,187 @@ class shoppingcart extends React.Component<Props, State> {
               <View style={styles.boxrow}>
                 <View style={styles.encapsulator}>
                   <ScrollView style={{height: '20vw'}}>
-                    {data.map((element, index) => {
-                      let {category, brand, name, price} = element;
-                      return (
-                        <View
-                          key={index}
-                          style={{
-                            flexDirection: 'row',
-                            alignItems: 'flex-start',
-                            justifyContent: 'space-between',
-                            width: '100%',
-                          }}
-                        >
-                          <Text style={{fontSize: 20}}>
-                            ({Capital(brand)}) {Capital(name)}
-                          </Text>
-                        </View>
-                      );
-                    })}
+                    {item[0] &&
+                      item[0].parts &&
+                      item[0].parts.map((element, index) => {
+                        let {brand, name} = element;
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-start',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}
+                          >
+                            <Text style={{fontSize: 20}}>
+                              ({Capital(brand)}) {Capital(name)}
+                            </Text>
+                          </View>
+                        );
+                      })}
                   </ScrollView>
                 </View>
                 <View style={{flex: 1}} />
                 <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Motherboard</Text>
+                  <ScrollView style={{height: '20vw'}}>
+                    {item[1] &&
+                      item[1].parts &&
+                      item[1].parts.map((element, index) => {
+                        let {brand, name} = element;
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-start',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}
+                          >
+                            <Text style={{fontSize: 20}}>
+                              ({Capital(brand)}) {Capital(name)}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                  </ScrollView>
                 </View>
                 <View style={{flex: 1}} />
                 <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Processor</Text>
+                  <ScrollView style={{height: '20vw'}}>
+                    {item[2] &&
+                      item[2].parts &&
+                      item[2].parts.map((element, index) => {
+                        let {brand, name} = element;
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-start',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}
+                          >
+                            <Text style={{fontSize: 20}}>
+                              ({Capital(brand)}) {Capital(name)}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                  </ScrollView>
                 </View>
                 <View style={{flex: 1}} />
                 <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>RAM, VGA, & PSU</Text>
+                  <ScrollView style={{height: '20vw'}}>
+                    {item[3] &&
+                      item[3].parts &&
+                      item[3].parts.map((element, index) => {
+                        let {brand, name} = element;
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-start',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}
+                          >
+                            <Text style={{fontSize: 20}}>
+                              ({Capital(brand)}) {Capital(name)}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                  </ScrollView>
                 </View>
                 <View style={{flex: 1}} />
                 <View style={styles.encapsulator}>
-                  <Text style={{fontSize: 20}}>Hard Drive</Text>
+                  <ScrollView style={{height: '20vw'}}>
+                    {item[4] &&
+                      item[4].parts &&
+                      item[4].parts.map((element, index) => {
+                        let {brand, name} = element;
+                        return (
+                          <View
+                            key={index}
+                            style={{
+                              flexDirection: 'row',
+                              alignItems: 'flex-start',
+                              justifyContent: 'space-between',
+                              width: '100%',
+                            }}
+                          >
+                            <Text style={{fontSize: 20}}>
+                              ({Capital(brand)}) {Capital(name)}
+                            </Text>
+                          </View>
+                        );
+                      })}
+                  </ScrollView>
+                </View>
+              </View>
+              <View style={styles.boxrow}>
+                <View style={styles.encapsulator}>
+                  <Text style={{fontSize: 20}}>
+                    {formatCurrency(item[0] && item[0].total)}
+                  </Text>
+                </View>
+                <View style={{flex: 1}} />
+                <View style={styles.encapsulator}>
+                  <Text style={{fontSize: 20}}>
+                    {formatCurrency(item[1] && item[1].total)}
+                  </Text>
+                </View>
+
+                <View style={{flex: 1}} />
+                <View style={styles.encapsulator}>
+                  <Text style={{fontSize: 20}}>
+                    {formatCurrency(item[2] && item[2].total)}
+                  </Text>
+                </View>
+                <View style={{flex: 1}} />
+                <View style={styles.encapsulator}>
+                  <Text style={{fontSize: 20}}>
+                    {formatCurrency(item[3] && item[3].total)}
+                  </Text>
+                </View>
+                <View style={{flex: 1}} />
+                <View style={styles.encapsulator}>
+                  <Text style={{fontSize: 20}}>
+                    {formatCurrency(item[4] && item[4].total)}
+                  </Text>
                 </View>
               </View>
             </View>
             {/* descbar */}
             {/* EoBar */}
-          </View>
-          <View
-            style={{
-              flexDirection: 'row',
-              justifyContent: 'space-between',
-              width: 555,
-            }}
-          >
-            <Button
-              style={{paddingRight: 20, alignSelf: 'flex-end'}}
-              title="Kembali"
-              onPress={() => {
-                window.history.back();
+            <View
+              style={{
+                flexDirection: 'row',
+                justifyContent: 'space-between',
+                width: 555,
               }}
-            />
+            >
+              <Button
+                style={{paddingRight: 20, alignSelf: 'flex-end'}}
+                title="Kembali"
+                onPress={() => {
+                  window.history.back();
+                }}
+              />
 
-            <Button
-              style={{paddingRight: 20, alignSelf: 'flex-end'}}
-              title="Checkout"
-              onPress={() => {
-                navigateTo('jasakirim');
-              }}
-            />
+              <Button
+                style={{paddingRight: 20, alignSelf: 'flex-end'}}
+                title="Checkout"
+                onPress={() => {
+                  navigateTo('jasakirim');
+                }}
+              />
+            </View>
           </View>
         </View>
       </Layout>
