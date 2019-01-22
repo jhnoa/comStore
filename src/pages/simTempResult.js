@@ -279,7 +279,7 @@ class simchoiceresult extends React.Component<Props, State> {
               />
               <Button
                 style={{paddingRight: 20, alignSelf: 'flex-end'}}
-                title="Checkout"
+                title="Pastikan ulang barang"
                 onPress={async () => {
                   let {data} = this.state;
                   await clearAllParts();
@@ -287,7 +287,7 @@ class simchoiceresult extends React.Component<Props, State> {
                     const {itemId, jumlah} = data[index];
                     await addParts({itemId, jumlah});
                   }
-                  navigateTo('shoppingCart');
+                  navigateTo('hierarchy');
                 }}
               />
             </View>

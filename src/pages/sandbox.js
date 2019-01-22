@@ -168,7 +168,7 @@ let classification = [
   },
 ];
 
-class shoppingcart extends React.Component<Props, State> {
+class hierarchy extends React.Component<Props, State> {
   state = {
     data: this.props.data || defaultData,
     item: [],
@@ -340,7 +340,7 @@ class shoppingcart extends React.Component<Props, State> {
                 </View>
                 <View style={{flex: 1}} />
                 <View style={styles.encapsulator}>
-                  <ScrollView style={{height: '20vw'}}>
+                  <ScrollView style={{height: '15vw'}}>
                     {item[3] &&
                       item[3].parts &&
                       item[3].parts.map((element, index) => {
@@ -427,23 +427,23 @@ class shoppingcart extends React.Component<Props, State> {
             <View
               style={{
                 flexDirection: 'row',
-                justifyContent: 'space-between',
-                width: 555,
+                justifyContent: 'center',
+                width: '50%',
               }}
             >
               <Button
-                style={{paddingRight: 20, alignSelf: 'flex-end'}}
+                style={{paddingRight: 20, flex: 1}}
                 title="Kembali"
                 onPress={() => {
                   window.history.back();
                 }}
               />
-
+              <View style={{flex: 1}} />
               <Button
-                style={{paddingRight: 20, alignSelf: 'flex-end'}}
+                style={{paddingRight: 20, flex: 1}}
                 title="Checkout"
                 onPress={() => {
-                  navigateTo('jasakirim');
+                  navigateTo('shoppingCart');
                 }}
               />
             </View>
@@ -454,11 +454,11 @@ class shoppingcart extends React.Component<Props, State> {
   }
 }
 
-export default shoppingcart;
+export default hierarchy;
 let styles = StyleSheet.create({
   container: {
-    width: Dimensions.get('screen').width - 100,
-    height: Dimensions.get('window').height - 100,
+    marginTop: 10,
+    width: '90%',
     padding: 40,
     backgroundColor: 'rgba(52, 52, 52, 0.2)',
     justifyContent: 'flex-start',
@@ -475,7 +475,7 @@ let styles = StyleSheet.create({
   },
   boxrow: {
     padding: 20,
-    marginVertical: 25,
+    marginVertical: 5,
     backgroundColor: 'rgb(200,200,200)',
     width: '100%',
     flexDirection: 'row',
